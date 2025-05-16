@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Campeonato - Club de Voleibol</title>
+  <link rel="stylesheet" href="styles/crear_campeonato.css">
+</head>
+<body>
+
+  <header>
+    <h1>Crear Campeonato</h1>
+  </header>
+
+  <main>
+    <form class="formulario" id="form-campeonato">
+      <label for="nombre-campeonato">Nombre del Campeonato:</label>
+      <input type="text" id="nombre-campeonato" name="nombre-campeonato" required>
+
+      <label for="fecha">Fecha de Inicio:</label>
+      <input type="date" id="fecha" name="fecha" required>
+
+      <label for="hora">Hora de Inicio:</label>
+      <input type="time" id="hora" name="hora" required>
+
+      <label for="sede">Sede:</label>
+      <input type="text" id="sede" name="sede" required>
+
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" name="categoria" required>
+        <option value="">Seleccionar Categoría</option>
+        <option value="benjamin">Benjamín</option>
+        <option value="mini">Mini</option>
+        <option value="infantil">Infantil</option>
+      </select>
+
+      <button type="submit" class="btn">Crear Campeonato</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <script src="scripts/crear_campeonato.js"></script>
+</body>
+</html>

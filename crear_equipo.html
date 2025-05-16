@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Equipo - Club de Voleibol</title>
+  <link rel="stylesheet" href="styles/principal_page.css">
+  <link rel="stylesheet" href="styles/registrar_deportista.css">
+  
+</head>
+<body>
+
+  <header>
+    <h1>Crear Equipo</h1>
+  </header>
+
+  <main>
+    <form class="formulario" id="form-equipo">
+      <label for="nombre-equipo">Nombre del Equipo:</label>
+      <input type="text" id="nombre-equipo" name="nombre-equipo" required>
+
+      <label for="categoria-equipo">Categoría:</label>
+      <select id="categoria-equipo" name="categoria-equipo" required>
+        <option value="">Seleccionar</option>
+        <option value="benjamin">Benjamín</option>
+        <option value="mini">Mini</option>
+        <option value="infantil">Infantil</option>
+      </select>
+
+      <div id="jugadores-container"></div>
+
+      <button type="submit" class="btn">Crear Equipo</button>
+      <button type="button" id="ver-jugadores" class="btn">Ver Jugadores Disponibles</button>
+      <button type="button" id="volver" class="btn" onclick="location.href='principal_page.html'">Volver al Menú Principal</button>
+
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <script src="scripts/crear_equipo.js"></script>
+</body>
+</html>
