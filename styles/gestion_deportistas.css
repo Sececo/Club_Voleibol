@@ -1,0 +1,178 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: rgb(12, 36, 97); /* Azul oscuro */
+    color: rgb(245, 245, 245); /* Blanco */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: transparent; /* Fondo transparente para el header */
+    color: rgb(245, 245, 245); /* Texto del header en blanco */
+    padding: 35px 0;
+    text-align: center;
+    margin-bottom: 40px;
+    width: 80%; /* Reducir el ancho del header */
+    box-shadow: none; /* Quitar la sombra del header */
+    border-radius: 0; /* Quitar el redondeo del header */
+}
+
+header h1 {
+    font-size: 3em;
+    margin-bottom: 15px;
+    letter-spacing: 1.2px;
+}
+
+main {
+    padding: 40px;
+    max-width: 70%; /* Reducir el ancho máximo del contenedor principal */
+    width: 100%;
+    background-color: rgb(245, 245, 245); /* Blanco */
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    color: rgb(0, 0, 0); /* Negro */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+h2 {
+    color: rgb(0, 0, 0); /* Negro para el título "Lista de Jugadores" */
+    margin-bottom: 35px;
+    text-align: center;
+    font-size: 2.6em;
+    letter-spacing: 0.8px;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+label {
+    font-weight: bold;
+    margin-right: 20px;
+    color: rgb(70, 70, 70);
+    font-size: 1.2em;
+}
+
+select {
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 300px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 97%;
+    background-position-y: center;
+    cursor: pointer;
+}
+
+#lista-deportistas {
+    margin-bottom: 40px;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+#lista-deportistas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.deportista-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    color: rgb(40, 40, 40);
+}
+
+.deportista-item:last-child {
+    border-bottom: none;
+}
+
+.accion-button {
+    background-color: rgb(255, 99, 71); /* Tomate */
+    color: rgb(245, 245, 245); /* Blanco */
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accion-button.consultar {
+    background-color: rgb(255, 99, 71); /* Tomate */
+}
+
+.accion-button.eliminar {
+    background-color: rgb(255, 99, 71); /* Tomate */
+}
+
+.accion-button:hover {
+    background-color: rgba(255, 99, 71, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+}
+
+button {
+    background-color: rgb(255, 99, 71); /* Tomate para el botón "Volver" */
+    color: rgb(245, 245, 245); /* Blanco */
+    border: none;
+    padding: 18px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin-top: 40px;
+    align-self: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: rgba(255, 99, 71, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+}
+
+#acciones-deportista {
+    margin-top: 40px;
+    padding: 25px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+#acciones-deportista p {
+    margin-bottom: 15px;
+    font-style: italic;
+    color: rgb(70, 70, 70);
+    font-size: 1.1em;
+}
+
+#lista-deportistas p {
+    color: rgb(70, 70, 70);
+    font-style: italic;
+    text-align: center;
+    font-size: 1.2em;
+}
