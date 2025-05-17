@@ -1,118 +1,80 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const listaDeportistasDiv = document.getElementById('lista-deportistas');
-    const accionesDeportistaDiv = document.getElementById('acciones-deportista');
+document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const accion = urlParams.get('accion');
+    const modo = urlParams.get("modo") || "consultar"; // "consultar" o "eliminar"
 
-    // Simulación inicial de la lista de deportistas - ¡INICIALMENTE VACÍA!
-    let deportistas = obtenerDeportistasSimulados();
-    mostrarListaSiHayJugadores(deportistas, accion); // Usamos la nueva función
+    const contenedor = document.getElementById("lista-deportistas");
+    const mensajeNoJugadores = document.getElementById("mensaje-no-jugadores");
+    const filtroContainer = document.getElementById("filtro-categorias");
 
-    if (accion === 'consultar') {
-        accionesDeportistaDiv.innerHTML = '<p>Seleccione un jugador para ver sus detalles.</p>';
-    } else if (accion === 'eliminar') {
-        accionesDeportistaDiv.innerHTML = '<p>Haga clic en "Eliminar" junto al jugador para eliminarlo.</p>';
-    }
+    function mostrarDeportistas(filtro = "todas") {
+        contenedor.innerHTML = "";
+        let deportistas = JSON.parse(localStorage.getItem("jugadores")) || [];
 
-    // Función simulada para agregar un nuevo deportista (esto no persiste)
-    window.agregarDeportistaSimulado = function(nuevoDeportista) {
-        deportistas.push(nuevoDeportista);
-        mostrarListaSiHayJugadores(deportistas, accion, document.getElementById('categoria')?.value); // Actualizamos al agregar
-    };
-
-    // ¡ELIMINAMOS LA CREACIÓN DEL BOTÓN DE PRUEBA!
-    // const botonAgregarSimulado = document.createElement('button');
-    // botonAgregarSimulado.textContent = 'Agregar Deportista de Prueba';
-    // botonAgregarSimulado.onclick = function() {
-    //     const nuevo = { id: Date.now(), nombre: 'Nuevo Jugador', categoria: obtenerCategorias()[Math.floor(Math.random() * obtenerCategorias().length)] };
-    //     agregarDeportistaSimulado(nuevo);
-    // };
-    // document.querySelector('main').appendChild(botonAgregarSimulado);
-});
-
-function obtenerDeportistasSimulados() {
-    return [
-        // ¡Comenta esta lista para que inicialmente no haya jugadores!
-        // { id: 1, nombre: 'Ana Pérez', categoria: 'Infantil' },
-        // { id: 2, nombre: 'Carlos López', categoria: 'Juvenil' },
-        // { id: 3, nombre: 'Sofía Gómez', categoria: 'Mayor' },
-        // { id: 4, nombre: 'Mateo Vargas', categoria: 'Infantil' }
-    ];
-}
-
-function obtenerCategorias() {
-    return ['Benjamin', 'Mini', 'Infantil'];
-}
-
-function mostrarListaSiHayJugadores(deportistas, accion, filtroCategoria = '') {
-    const listaDeportistasDiv = document.getElementById('lista-deportistas');
-    listaDeportistasDiv.innerHTML = ''; // Limpiar cualquier contenido previo
-
-    if (deportistas.length > 0) {
-        const categorias = obtenerCategorias();
-        let filtroHTML = '<div class="filter-container"><label for="categoria">Filtrar por categoría:</label>';
-        filtroHTML += '<select id="categoria" onchange="filtrarDeportistas(\'' + accion + '\')">';
-        filtroHTML += '<option value="">Todas</option>';
-        categorias.forEach(cat => {
-            filtroHTML += `<option value="${cat}">${cat}</option>`;
-        });
-        filtroHTML += '</select></div>';
-        listaDeportistasDiv.insertAdjacentHTML('beforebegin', filtroHTML);
-
-        const deportistasFiltrados = filtroCategoria
-            ? deportistas.filter(dep => dep.categoria.toLowerCase() === filtroCategoria.toLowerCase())
-            : deportistas;
-
-        if (deportistasFiltrados.length > 0) {
-            const listaHTML = '<ul>' + deportistasFiltrados.map(deportista => `
-                <li class="deportista-item">
-                    <span>${deportista.nombre} (Categoría: ${deportista.categoria})</span>
-                    ${accion === 'consultar' ? '<button class="accion-button consultar" onclick="consultarDeportista(' + deportista.id + ')">Consultar</button>' : ''}
-                    ${accion === 'eliminar' ? '<button class="accion-button eliminar" onclick="eliminarDeportista(' + deportista.id + ')">Eliminar</button>' : ''}
-                </li>
-            `).join('') + '</ul>';
-            listaDeportistasDiv.innerHTML = listaHTML;
+        if (deportistas.length === 0) {
+            mensajeNoJugadores.style.display = "block";
+            filtroContainer.innerHTML = "";
+            return;
         } else {
-            listaDeportistasDiv.innerHTML = '<p>No hay jugadores en la categoría seleccionada.</p>';
+            mensajeNoJugadores.style.display = "none";
         }
-    } else {
-        listaDeportistasDiv.innerHTML = '<p>No hay jugadores registrados.</p>';
+
+        const categorias = [...new Set(deportistas.map(j => j.categoria))];
+
+        filtroContainer.innerHTML = `
+            <div class="filter-container">
+                <label for="categoria-select">Filtrar por categoría:</label>
+                <select id="categoria-select">
+                    <option value="todas">Todas</option>
+                    ${categorias.map(cat => `<option value="${cat}">${cat}</option>`).join("")}
+                </select>
+            </div>
+        `;
+
+        document.getElementById("categoria-select").addEventListener("change", (e) => {
+            mostrarDeportistas(e.target.value);
+        });
+
+        const filtrados = filtro === "todas"
+            ? deportistas
+            : deportistas.filter(j => j.categoria === filtro);
+
+        if (filtrados.length === 0) {
+            contenedor.innerHTML = "<p>No hay deportistas en esta categoría.</p>";
+            return;
+        }
+
+        filtrados.forEach((jugador, index) => {
+            const div = document.createElement("div");
+            div.classList.add("estado-cuenta");
+
+            div.innerHTML = `
+                <p><strong>Nombre:</strong> ${jugador.nombres} ${jugador.apellidos}</p>
+                <p><strong>Categoría:</strong> ${jugador.categoria}</p>
+                <p><strong>Estado de Pago:</strong> ${jugador.pago ? "Al día" : "Pendiente"}</p>
+                ${modo === "eliminar" ? `<button class="btn-eliminar" data-index="${index}">Eliminar</button>` : ""}
+            `;
+
+            contenedor.appendChild(div);
+        });
+
+        if (modo === "eliminar") {
+            document.querySelectorAll(".btn-eliminar").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const idx = e.target.getAttribute("data-index");
+                    if (confirm("¿Estás seguro de que deseas eliminar este deportista?")) {
+                        eliminarDeportista(parseInt(idx), filtro);
+                    }
+                });
+            });
+        }
     }
-}
 
-function filtrarDeportistas(accion) {
-    const categoriaSeleccionada = document.getElementById('categoria').value;
-    const deportistas = obtenerDeportistasSimulados(); // Obtener la lista actual
-    mostrarListaSiHayJugadores(deportistas, accion, categoriaSeleccionada); // Usamos la nueva función
-}
+    function eliminarDeportista(index, filtro) {
+        let deportistas = JSON.parse(localStorage.getItem("jugadores")) || [];
+        deportistas.splice(index, 1);
+        localStorage.setItem("jugadores", JSON.stringify(deportistas));
+        mostrarDeportistas(filtro);
+    }
 
-function consultarDeportista(id) {
-    alert('Función para consultar al deportista con ID: ' + id + ' aún no implementada.');
-    console.log('Consultar deportista ID:', id);
-    // Aquí iría la lógica para mostrar los detalles del deportista
-}
-
-function eliminarDeportista(id) {
-    const listaDeportistasDiv = document.getElementById('lista-deportistas');
-    let deportistas = obtenerDeportistasSimulados(); // Obtener la lista actual
-    deportistas = deportistas.filter(dep => dep.id !== id);
-    // Aquí iría la lógica real para eliminar (actualizar la simulación)
-    window.obtenerDeportistasSimulados = function() { // Actualizar la función de obtención
-        return deportistas;
-    };
-    mostrarListaSiHayJugadores(deportistas, 'eliminar', document.getElementById('categoria')?.value); // Usamos la nueva función
-}
-
-function obtenerDeportistasSimulados() {
-    return [
-        // ¡Comenta esta lista para que inicialmente no haya jugadores!
-        // { id: 1, nombre: 'Ana Pérez', categoria: 'Infantil' },
-        // { id: 2, nombre: 'Carlos López', categoria: 'Juvenil' },
-        // { id: 3, nombre: 'Sofía Gómez', categoria: 'Mayor' },
-        // { id: 4, nombre: 'Mateo Vargas', categoria: 'Infantil' }
-    ];
-}
-
-function obtenerCategorias() {
-    return ['Benjamin', 'Mini', 'Infantil'];
-}
+    mostrarDeportistas();
+});

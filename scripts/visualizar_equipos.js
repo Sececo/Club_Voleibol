@@ -6,10 +6,8 @@ function mostrarEquipos() {
   const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
   const categoria = categoriaSelect.value;
 
-  // Filtrar equipos por categoría
   const equiposFiltrados = categoria === "" ? equipos : equipos.filter(equipo => equipo.categoria === categoria);
 
-  // Limpiar tabla
   tablaEquipos.innerHTML = "";
 
   if (equiposFiltrados.length === 0) {
@@ -21,12 +19,11 @@ function mostrarEquipos() {
       row.innerHTML = `
         <td>${equipo.nombre}</td>
         <td>${equipo.categoria}</td>
-        <td>${equipo.jugadores.length}</td>
+        <td>${equipo.deportistas ? equipo.deportistas.length : 0}</td>
       `;
     });
   }
 }
 
-// Mostrar equipos al cargar y al seleccionar categoría
 categoriaSelect.addEventListener("change", mostrarEquipos);
-mostrarEquipos();  // Llamar la función para mostrar al cargar la página
+mostrarEquipos();
