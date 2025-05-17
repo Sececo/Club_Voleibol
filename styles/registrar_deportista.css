@@ -78,7 +78,7 @@ footer {
 /*@media (min-width: 768px) {
   .formulario {
     max-width: 700px; /* Aumentar el ancho máximo en pantallas más grandes */
-    padding: 40px;    /* Mayor relleno en pantallas grandes 
+    /*padding: 40px;*/    /* Mayor relleno en pantallas grandes 
   }
   
   header {
