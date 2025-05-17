@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Asociar Equipos a Campeonatos</title>
+  <link rel="stylesheet" href="estilos_asociar_equipos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>Asociar Equipos a Campeonatos</h1>
+  </header>
+
+  <main>
+    <form class="formulario" id="form-asociar">
+      <label for="campeonato">Selecciona el Campeonato:</label>
+      <select id="campeonato" required>
+        <option value="">-- Selecciona --</option>
+      </select>
+
+      <label for="equipo">Selecciona Equipos:</label>
+      <div id="lista-equipos">
+        <!-- Aquí se insertan los equipos disponibles -->
+      </div>
+
+      <button type="submit" class="btn">Asociar Equipos</button>
+    </form>
+
+    <p id="mensaje" class="mensaje"></p>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <script src="scrips.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Deportista - Club de Voleibol</title>
+  <link rel="stylesheet" href="estilos_registro_deportista.css">
+</head>
+<body>
+
+  <header>
+    <h1>Registrar Deportista</h1>
+  </header>
+
+  <main>
+    <form class="formulario">
+      <label for="nombres">Nombres:</label>
+      <input type="text" id="nombres" name="nombres" required>
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" required>
+
+      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+
+      <label for="sexo">Sexo:</label>
+      <select id="sexo" name="sexo" required>
+        <option value="">Seleccionar</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+      </select>
+
+      <label for="telefono">Contacto Telefónico:</label>
+      <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10}" title="Ingrese 10 dígitos sin espacios ni símbolos" required>
+
+      <label for="tipo_documento">Tipo de Documento:</label>
+      <select id="tipo_documento" name="tipo_documento" required>
+        <option value="">Seleccionar</option>
+        <option value="CC">Cédula de Ciudadanía</option>
+        <option value="TI">Tarjeta de Identidad</option>
+        <option value="CE">Cédula de Extranjería</option>
+      </select>
+
+      <label for="documento">Número de Documento:</label>
+      <input type="text" id="documento" name="documento" pattern="[0-9]+" title="Solo números sin puntos ni comas" required>
+
+      <label for="email">Correo Electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" name="categoria" required>
+        <option value="">Seleccionar</option>
+        <option value="benjamin">Benjamín</option>
+        <option value="mini">Mini</option>
+        <option value="infantil">Infantil</option>
+      </select>
+
+      <label for="pago">Pago Realizado:</label>
+      <input type="checkbox" id="pago" name="pago">
+
+      <button type="submit" class="btn">Registrar Deportista</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <!-- Conexión al script -->
+  <script src="scrips.js"></script>
+</body>
+</html>
