@@ -1,24 +1,10 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: rgb(12, 36, 97); /* azul oscuro */
-  color: rgb(0, 0, 0); /* texto principal */
-}
-
-header {
-  background-color: rgb(12, 36, 97); /* azul oscuro */
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-}
-
 main {
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 5px 20px;
   max-width: 60%;
   margin: auto;
+  margin-bottom: 10px;
 }
 
 .formulario {
@@ -27,8 +13,9 @@ main {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;  /* Aumentar el ancho máximo */
-  margin: 0 auto;    /* Centrar el formulario */
+  margin: auto;    /* Centrar el formulario */
+  margin-bottom: 0;
+  padding-bottom: 5px;
 }
 
 .formulario label {
@@ -41,9 +28,9 @@ main {
 .formulario input,
 .formulario select {
   width: 100%;
-  padding: 10px;
+  padding: 10px 0 10px 0;
   margin-bottom: 15px;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid #3C3C3C;
   border-radius: 5px;
   background-color: rgb(245, 245, 245); /* fondo de campos */
   color: rgb(0, 0, 0); /* texto */
@@ -52,10 +39,11 @@ main {
 .formulario input[type="checkbox"] {
   width: auto;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .btn {
-  background-color: rgb(232, 91, 38); /* naranja */
+  background-color: #E85B26; /* naranja */
   color: white;
   border: none;
   padding: 12px;
@@ -64,11 +52,19 @@ main {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
+  margin:auto;
+  margin-bottom: 12px;
+}
+
+#volver{
+  background-color: #0C2461;
 }
 
 .btn:hover {
-  background-color: rgb(200, 70, 30);
+  background-color: #C8461E;
 }
+
+
 
 footer {
   background-color: rgb(12, 36, 97); /* azul oscuro */
@@ -79,17 +75,18 @@ footer {
 }
 
 /* Media Query para pantallas grandes */
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .formulario {
     max-width: 700px; /* Aumentar el ancho máximo en pantallas más grandes */
-    padding: 40px;    /* Mayor relleno en pantallas grandes */
+    padding: 40px;    /* Mayor relleno en pantallas grandes 
   }
   
   header {
-    padding: 40px 0;  /* Más espacio en el encabezado */
+    padding: 40px 0;  /* Más espacio en el encabezado 
   }
   
   footer {
-    padding: 20px 0;  /* Más espacio en el pie de página */
+    padding: 20px 0;  /* Más espacio en el pie de página 
   }
 }
+*/

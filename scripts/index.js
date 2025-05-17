@@ -18,6 +18,6 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
   }
 
   // Si todo está bien, redirige al menú principal
-  window.location.href = "principal_page/principal_page.html";
+  window.location.href = "../principal_page.html";
 
 });
