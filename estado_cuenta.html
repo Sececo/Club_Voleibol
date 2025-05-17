@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consultar Estado de Cuenta - Club de Voleibol</title>
+  <link rel="stylesheet" href="styles/estado_cuenta.css">
+</head>
+<body>
+
+  <header>
+    <h1>Consultar Estado de Cuenta</h1>
+  </header>
+
+  <main>
+    <div>
+      <label for="categoria">Filtrar por categoría:</label>
+      <select id="categoria">
+        <option value="todas">Todas</option>
+        <option value="benjamin">Benjamín</option>
+        <option value="mini">Mini</option>
+        <option value="infantil">Infantil</option>
+      </select>
+
+
+      <div id="contenedor-cuentas" class="estado-cuenta">
+        <!-- Aquí se mostrarán los jugadores o el mensaje si no hay -->
+      </div>
+    </div>
+
+    <button id="volver" class="btn" onclick="location.href='principal_page.html'" >Volver al Menú Principal</button>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <script src="scripts/estado_cuenta.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>

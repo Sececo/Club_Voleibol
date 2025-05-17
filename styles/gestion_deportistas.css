@@ -1,0 +1,143 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+header {
+    background-color: rgb(232, 91, 38);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+main {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+}
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2em;
+}
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.filter-container label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.filter-container select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 250px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+    cursor: pointer;
+}
+.filter-container select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+#lista-deportistas {
+    margin-bottom: 30px;
+}
+.estado-cuenta {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
+}
+.estado-cuenta:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.estado-cuenta p {
+    margin: 0;
+    color: #444;
+}
+.estado-cuenta p strong {
+    color: #333;
+}
+.btn {
+    background-color: rgb(232, 91, 38);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin-top: 10px;
+    display: inline-block;
+}
+.btn:hover {
+    background-color: rgba(232, 91, 38, 0.9);
+    transform: translateY(-2px);
+}
+.btn:last-child {
+    background-color: #6c757d;
+}
+.btn:last-child:hover {
+    background-color: #5a6268;
+}
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #777;
+    font-size: 0.9em;
+}
+#mensaje-no-jugadores{
+    text-align: center;
+    color: #777;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+    main {
+        width: 95%;
+    }
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .filter-container label {
+        margin-bottom: 5px;
+    }
+    .filter-container select {
+        width: 100%;
+        max-width: 300px;
+    }
+}
