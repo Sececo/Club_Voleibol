@@ -1,115 +1,238 @@
-/* Estilos Generales */
+/* styles/crear_equipo.css */
+
 body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: rgb(12, 36, 97); /* Azul oscuro */
-  color: #333;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0C2461; /* Azul oscuro consistente */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 header {
-  color: white;
-  padding: 20px 0;
-  text-align: center;
+    background-color: #0C2461;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: white;
 }
 
 main {
-  padding: 20px;
-  max-width: 60%;
-  margin: auto;
-}
-
-footer {
-  text-align: center;
-  color: white;
-  margin-top: 40px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+    background-color: white; /* Fondo blanco para el contenido */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra moderna */
+    width: 90%; /* Usar un porcentaje para mejor adaptabilidad */
+    max-width: 700px; /* Ancho máximo para pantallas grandes */
+    margin: 20px auto; /* Centrar el contenedor principal horizontalmente */
+    flex-grow: 1;
+    display: flex; /* Usar flexbox para organizar el contenido principal */
+    flex-direction: column; /* Apilar los elementos dentro de main */
+    align-items: center; /* Centrar los items del flex container (formulario, etc.) */
 }
 
 h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+  /* Ya estilizado en header */
 }
 
-/* Formulario */
+h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2em;
+    width: 100%; /* Asegurar que el h2 ocupe el ancho para centrado si main es flex */
+}
+
+
+/* Formulario - Centrar el formulario y sus elementos */
 .formulario {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Permitir que el formulario ocupe el ancho del main */
+  max-width: 600px; /* Opcional: ancho máximo para el formulario */
+  /* align-items: center; /* Centrar los items del formulario */
 }
+
+/* Centrar etiquetas y controles del formulario usando margin: auto */
+.formulario label,
+.formulario input[type="text"],
+.formulario select,
+.formulario #jugadores-seleccion-container,
+.formulario #equipo-nombre-container,
+.formulario #btn-crear-equipo,
+.formulario #mensaje-seleccion-jugadores {
+    display: block; /* Asegurar que sean elementos de bloque para margin auto */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* Ocupar todo el ancho disponible */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho */
+    max-width: 500px; /* Ancho máximo para centrar mejor los elementos */
+}
+
 
 label {
   font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
 }
 
 input[type="text"], select {
   padding: 10px;
-  font-size: 16px;
+  font-size: 1em;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Espacio debajo del input/select */
+  background-color: #f9f9f9; /* Fondo ligero */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button {
-  background-color: #0077b6;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
 }
 
-button:hover {
-  background-color: #023e8a;
+select {
+    appearance: none; /* Eliminar la apariencia nativa del select */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    cursor: pointer;
 }
 
-#jugadores-container {
+
+/* Estilos para la lista de selección de jugadores */
+#jugadores-seleccion-container {
   margin-top: 20px;
-  padding-top: 10px;
-  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
 }
 
-.jugador {
-  padding: 10px;
-  background-color: #f9f9f9;
+#mensaje-seleccion-jugadores {
+    text-align: center;
+    color: #777;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.deportista-item-seleccion { /* Estilo para cada jugador en la lista de selección */
+  background-color: #ffffff; /* Fondo blanco */
   border: 1px solid #ddd;
+  border-left: 5px solid #007bff; /* Borde izquierdo azul */
   border-radius: 5px;
+  padding: 10px 15px;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Añadir box-shadow para hover */
+  width: auto; /* Permitir que el flexbox controle el ancho */
+  max-width: 100%; /* No exceder el ancho del contenedor */
+  box-sizing: border-box;
+  margin-left: auto; /* Centrar el item del deportista */
+  margin-right: auto; /* Centrar el item del deportista */
 }
 
-.jugador p {
-  margin: 5px 0;
+.deportista-item-seleccion:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra sutil al pasar el mouse */
 }
 
-.alerta {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-size: 14px;
+.deportista-item-seleccion input[type="checkbox"] {
+    margin: 0;
+    width: auto;
+    cursor: pointer;
+    transform: scale(1.2);
+    flex-shrink: 0; /* Prevenir que el checkbox se encoja */
 }
 
-/* Estilos para el botón de "Ver Jugadores Disponibles" */
-#ver-jugadores {
-  margin-top: 10px;
-  background-color: #28a745;
-  color: white;
+.deportista-item-seleccion label {
+    margin: 0;
+    font-weight: normal;
+    color: #333;
+    flex-grow: 1;
+    cursor: pointer;
 }
 
-#ver-jugadores:hover {
-  background-color: #218838;
+/* Estilo para el contenedor del nombre del equipo */
+#equipo-nombre-container {
+    width: 100%;
 }
 
-/* Estilo para las alertas cuando no hay suficientes jugadores */
+
+/* Estilos para los botones */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: block; /* Usar block para centrar con margin auto */
+    font-size: 1em;
+    margin-top: 10px;
+    width: auto; /* Ancho automático */
+    margin-left: auto; /* Centrar botón */
+    margin-right: auto; /* Centrar botón */
+}
+
+/* Estilo para el botón de crear equipo */
+#btn-crear-equipo {
+    background-color: #28a745; /* Verde para crear */
+    color: white;
+    width: 100%; /* Ocupar todo el ancho del contenedor */
+    max-width: 500px; /* Ancho máximo para centrar */
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+#btn-crear-equipo:hover {
+    background-color: #218838;
+}
+
+#btn-crear-equipo:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* Estilo específico para centrar el botón de volver */
+.volver-btn {
+    background-color: #E85B26; /* Color naranja consistente */
+    color: #fff;
+    display: block;
+    margin: 20px auto 0;
+    font-size: 1.1em;
+    width: auto;
+    padding: 12px 24px;
+}
+
+.volver-btn:hover {
+    background-color: rgb(200, 75, 30);
+}
+
+
+/* Estilo para ocultar elementos */
+.hidden {
+  display: none;
+}
+
+/* Estilo para alertas o mensajes importantes */
 .alerta {
   background-color: #f8d7da;
   color: #721c24;
@@ -118,5 +241,74 @@ button:hover {
   margin-top: 10px;
   font-size: 14px;
   text-align: center;
+  border: 1px solid #f5c6cb;
+  width: 100%;
+  max-width: 500px; /* Ancho máximo para centrar */
+  box-sizing: border-box;
+  margin-left: auto; /* Centrar */
+  margin-right: auto; /* Centrar */
 }
 
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    main {
+        padding: 15px;
+        width: 98%;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    .formulario {
+        gap: 10px;
+    }
+
+    /* Ajustar centrado y ancho en móviles */
+    .formulario label,
+    .formulario input[type="text"],
+    .formulario select,
+    .formulario #jugadores-seleccion-container,
+    .formulario #equipo-nombre-container,
+    .formulario #btn-crear-equipo,
+    .formulario #mensaje-seleccion-jugadores,
+    .deportista-item-seleccion,
+    .alerta {
+        max-width: 100%; /* Ocupar todo el ancho disponible en móviles */
+    }
+
+
+    input[type="text"], select {
+        font-size: 0.9em;
+    }
+
+    .deportista-item-seleccion {
+        flex-direction: row;
+        align-items: center;
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .deportista-item-seleccion input[type="checkbox"] {
+         transform: scale(1.1);
+    }
+
+    .deportista-item-seleccion label {
+        font-size: 0.95em;
+    }
+
+
+    #btn-crear-equipo {
+        padding: 10px 15px;
+    }
+
+     .volver-btn {
+        width: auto;
+        padding: 10px 20px;
+    }
+
+    .alerta {
+        font-size: 12px;
+    }
+}

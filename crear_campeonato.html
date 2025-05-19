@@ -1,9 +1,10 @@
+<!-- crear_campeonato.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Crear Campeonato - Club de Voleibol</title>
-  <link rel="stylesheet" href="styles/principal_page.css">
+  <link rel="stylesheet" href="styles/principal.css">
   <link rel="stylesheet" href="styles/registrar_deportista.css">
 </head>
 <body>
@@ -14,6 +15,10 @@
 
   <main>
     <form class="formulario" id="form-campeonato">
+
+      <label for="id_campeonato">ID del Campeonato:</label>
+      <input type="text" id="id_campeonato" name="id_campeonato" readonly>
+
       <label for="nombre-campeonato">Nombre del Campeonato:</label>
       <input type="text" id="nombre-campeonato" name="nombre-campeonato" required>
 
@@ -42,6 +47,15 @@
     &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
   </footer>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let base = 100;
+      let id = localStorage.getItem("ultimoIdCampeonato");
+      id = id ? parseInt(id) + 1 : base;
+      document.getElementById("id_campeonato").value = id;
+      localStorage.setItem("ultimoIdCampeonato", id);
+    });
+  </script>
   <script src="scripts/crear_campeonato.js"></script>
 </body>
 </html>

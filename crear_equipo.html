@@ -1,10 +1,11 @@
+<!-- crear_equipo.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Crear Equipo - Club de Voleibol</title>
-  <link rel="stylesheet" href="styles/principal_page.css">
-  <link rel="stylesheet" href="styles/registrar_deportista.css">
+  <link rel="stylesheet" href="styles/principal.css">
+  <link rel="stylesheet" href="styles/crear_equipo.css">
 </head>
 <body>
 
@@ -14,22 +15,29 @@
 
   <main>
     <form class="formulario" id="form-equipo">
-      <label for="nombre-equipo">Nombre del Equipo:</label>
-      <input type="text" id="nombre-equipo" name="nombre-equipo" required>
+
+      <label for="id_equipo">ID del Equipo:</label>
+      <input type="text" id="id_equipo" name="id_equipo" readonly>
 
       <label for="categoria-equipo">Categoría:</label>
       <select id="categoria-equipo" name="categoria-equipo" required>
-        <option value="">Seleccionar</option>
+        <option value="">Seleccionar Categoría</option>
         <option value="benjamin">Benjamín</option>
         <option value="mini">Mini</option>
         <option value="infantil">Infantil</option>
       </select>
 
-      <div id="jugadores-container"></div>
+      <div id="jugadores-seleccion-container">
+        <p id="mensaje-seleccion-jugadores">Selecciona una categoría para ver los deportistas disponibles.</p>
+      </div>
 
-      <button type="submit" class="btn">Crear Equipo</button>
-      <button type="button" id="ver-jugadores" class="btn">Ver Deportistas Disponibles</button>
-      <button type="button" id="volver" class="btn" onclick="location.href='principal_page.html'">Volver al Menú Principal</button>
+      <div id="equipo-nombre-container" class="hidden">
+        <label for="nombre-equipo">Nombre del Equipo:</label>
+        <input type="text" id="nombre-equipo" name="nombre-equipo" required disabled>
+      </div>
+
+      <button type="submit" class="btn boton-volver" id="btn-crear-equipo" disabled>Crear Equipo</button>
+
     </form>
   </main>
 
@@ -37,6 +45,15 @@
     &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
   </footer>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let base = 1000;
+      let id = localStorage.getItem("ultimoIdEquipo");
+      id = id ? parseInt(id) + 1 : base;
+      document.getElementById("id_equipo").value = id;
+      localStorage.setItem("ultimoIdEquipo", id);
+    });
+  </script>
   <script src="scripts/crear_equipo.js"></script>
 </body>
 </html>
