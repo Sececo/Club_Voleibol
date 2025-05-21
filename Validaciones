@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Club Deportivo</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    table, th, td { border: 1px solid #333; border-collapse: collapse; padding: 8px; }
+    .formulario { margin-bottom: 40px; }
+    .btn { margin: 5px; padding: 8px 15px; }
+  </style>
+</head>
+<body>
+
+  <h1>📋 Gestión de Equipos y Campeonatos</h1>
+
+  <!-- Crear equipo -->
+  <section class="formulario">
+    <h2>Registrar Equipo</h2>
+    <form id="form-equipo">
+      <label>Nombre: <input type="text" id="nombre" required></label>
+      <label>Deporte: <input type="text" id="deporte" required></label>
+      <label>Categoría:
+        <select id="categoria" required>
+          <option value="">Seleccionar</option>
+          <option value="benjamin">Benjamín</option>
+          <option value="mini">Mini</option>
+          <option value="infantil">Infantil</option>
+        </select>
+      </label>
+      <label>Número de integrantes: <input type="number" id="integrantes" min="1" required></label>
+      <button type="submit" class="btn">Guardar Equipo</button>
+    </form>
+  </section>
+
+  <!-- Filtros y tabla -->
+  <section>
+    <h2>Lista de Equipos</h2>
+    <label>Filtrar por Deporte:
+      <input type="text" id="filtro-deporte" placeholder="Ej: Voleibol">
+    </label>
+    <label>Filtrar por Categoría:
+      <select id="filtro-categoria">
+        <option value="">Todas</option>
+        <option value="benjamin">Benjamín</option>
+        <option value="mini">Mini</option>
+        <option value="infantil">Infantil</option>
+      </select>
+    </label>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th><th>Deporte</th><th>Categoría</th><th>Integrantes</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-equipos"></tbody>
+    </table>
+  </section>
+
+  <!-- Crear campeonato -->
+  <section class="formulario">
+    <h2>Crear Campeonato</h2>
+    <form id="form-campeonato">
+      <label>Nombre: <input type="text" id="nombre-campeonato" required></label>
+      <label>Fecha: <input type="date" id="fecha" required></label>
+      <label>Hora: <input type="time" id="hora" required></label>
+      <label>Sede: <input type="text" id="sede" required></label>
+      <label>Deporte:
+        <input type="text" id="deporte-campeonato" required>
+      </label>
+      <button type="submit" class="btn">Crear Campeonato</button>
+    </form>
+  </section>
+
+  <script>
+    const formEquipo = document.getElementById('form-equipo');
+    const tablaEquipos = document.getElementById('tabla-equipos');
+    const filtroDeporte = document.getElementById('filtro-deporte');
+    const filtroCategoria = document.getElementById('filtro-categoria');
+
+    let equipos = JSON.parse(localStorage.getItem('equipos') || '[]');
+    let modoEdicion = false;
+    let equipoEditandoId = null;
+
+    function guardarEquipos() {
+      localStorage.setItem('equipos', JSON.stringify(equipos));
+    }
+
+    function renderEquipos() {
+      tablaEquipos.innerHTML = "";
+      let filtroDep = filtroDeporte.value.toLowerCase();
+      let filtroCat = filtroCategoria.value;
+
+      const filtrados = equipos.filter(e =>
+        e.deporte.toLowerCase().includes(filtroDep) &&
+        (filtroCat === "" || e.categoria === filtroCat)
+      );
+
+      if (filtrados.length === 0) {
+        tablaEquipos.innerHTML = "<tr><td colspan='5'>No hay equipos registrados.</td></tr>";
+        return;
+      }
+
+      filtrados.forEach((equipo, index) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${equipo.nombre}</td>
+          <td>${equipo.deporte}</td>
+          <td>${equipo.categoria}</td>
+          <td>${equipo.integrantes}</td>
+          <td>
+            <button onclick="editarEquipo(${index})">Editar</button>
+            <button onclick="eliminarEquipo(${index})">Eliminar</button>
+          </td>
+        `;
+        tablaEquipos.appendChild(fila);
+      });
+    }
+
+    formEquipo.addEventListener('submit', e => {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const deporte = document.getElementById('deporte').value;
+      const categoria = document.getElementById('categoria').value;
+      const integrantes = document.getElementById('integrantes').value;
+
+      if (modoEdicion) {
+        equipos[equipoEditandoId] = { nombre, deporte, categoria, integrantes };
+        modoEdicion = false;
+        equipoEditandoId = null;
+        alert("Equipo editado exitosamente.");
+      } else {
+        equipos.push({ nombre, deporte, categoria, integrantes });
+        alert("Equipo registrado exitosamente.");
+      }
+
+      guardarEquipos();
+      formEquipo.reset();
+      renderEquipos();
+    });
+
+    function editarEquipo(id) {
+      const equipo = equipos[id];
+      document.getElementById('nombre').value = equipo.nombre;
+      document.getElementById('deporte').value = equipo.deporte;
+      document.getElementById('categoria').value = equipo.categoria;
+      document.getElementById('integrantes').value = equipo.integrantes;
+
+      modoEdicion = true;
+      equipoEditandoId = id;
+    }
+
+    function eliminarEquipo(id) {
+      if (confirm("¿Deseas eliminar este equipo?")) {
+        equipos.splice(id, 1);
+        guardarEquipos();
+        renderEquipos();
+      }
+    }
+
+    filtroDeporte.addEventListener('input', renderEquipos);
+    filtroCategoria.addEventListener('change', renderEquipos);
+
+    // Crear campeonato
+    document.getElementById('form-campeonato').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre-campeonato').value;
+      const fecha = document.getElementById('fecha').value;
+      const hora = document.getElementById('hora').value;
+      const sede = document.getElementById('sede').value;
+      const deporte = document.getElementById('deporte-campeonato').value;
+
+      const campeonatos = JSON.parse(localStorage.getItem("campeonatos") || "[]");
+
+      const conflicto = campeonatos.some(c =>
+        c.fecha === fecha && c.deporte.toLowerCase() === deporte.toLowerCase()
+      );
+
+      if (conflicto) {
+        alert("⚠️ Ya existe un campeonato ese día para el mismo deporte.");
+        return;
+      }
+
+      campeonatos.push({ nombre, fecha, hora, sede, deporte });
+      localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
+
+      alert("✅ Campeonato creado con éxito.");
+      this.reset();
+    });
+
+    // Inicializar tabla
+    renderEquipos();
+  </script>
+</body>
+</html>
