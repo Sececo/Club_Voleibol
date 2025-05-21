@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizar Equipos - Club de Voleibol</title>
+  <link rel="stylesheet" href="styles/visualizar_equipos.css">
+</head>
+<body>
+
+  <header>
+    <h1>Visualizar Equipos</h1>
+  </header>
+
+  <main>
+    <label for="categoria">Seleccionar Categoría:</label>
+    <select id="categoria" name="categoria">
+      <option value="">Todas</option>
+      <option value="benjamin">Benjamín</option>
+      <option value="mini">Mini</option>
+      <option value="infantil">Infantil</option>
+    </select>
+
+    <table id="tabla-equipos">
+      <thead>
+        <tr>
+          <th>Nombre del Deportista</th>
+          <th>Categoría</th>
+          <th>Documento</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpo-tabla">
+        <tr>
+          <td colspan="3">No hay deportistas registrados.</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const selectCategoria = document.getElementById("categoria");
+      const cuerpoTabla = document.getElementById("cuerpo-tabla");
+
+      function cargarDeportistas() {
+        const categoria = selectCategoria.value;
+        const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+        cuerpoTabla.innerHTML = "";
+
+        const filtrados = jugadores.filter(j => categoria === "" || j.categoria === categoria);
+
+        if (filtrados.length === 0) {
+          cuerpoTabla.innerHTML = "<tr><td colspan='3'>No hay deportistas registrados para esta categoría.</td></tr>";
+          return;
+        }
+
+        filtrados.forEach(j => {
+          const fila = document.createElement("tr");
+          fila.innerHTML = `
+            <td>${j.nombres} ${j.apellidos}</td>
+            <td>${j.categoria}</td>
+            <td>${j.documento}</td>
+          `;
+          cuerpoTabla.appendChild(fila);
+        });
+      }
+
+      selectCategoria.addEventListener("change", cargarDeportistas);
+      cargarDeportistas();
+    });
+  </script>
+</body>
+</html>
