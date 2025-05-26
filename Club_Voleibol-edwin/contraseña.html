@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio de Sesión - Club Voleibol</title>
+  <link rel="stylesheet" href="styles/contraseña.css" />
+</head>
+<body>
+  <div class="login-box">
+    <div class="avatar">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="avatar">
+    </div>
+    <h2>Resuelve la operación para ingresar</h2>
+    <p id="operation"></p>
+    <form id="loginForm" onsubmit="validarYRedirigir(event)">
+      <div class="input-group">
+        <label for="respuesta">Tu respuesta</label>
+        <input type="number" id="respuesta" required />
+      </div>
+      <button type="submit">INGRESAR</button>
+    </form>
+    <p id="error-msg"></p>
+  </div>
+  <script src="scripts/contraseña.js"></script>
+</body>
+</html>

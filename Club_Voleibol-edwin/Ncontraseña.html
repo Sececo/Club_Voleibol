@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restablecer contraseña - Club Voleibol</title>
+  <link rel="stylesheet" href="styles/Ncontraseña.css" />
+</head>
+<body>
+  <div class="login-box">
+    <div class="avatar">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="avatar">
+    </div>
+    <h2>Restablecer contraseña</h2>
+    <form id="loginForm" onsubmit="validarYRedirigir(event)">
+      <div class="input-group">
+        <label for="new-password">Nueva contraseña</label>
+        <p class="msg-error" id="msg-new-password"></p>
+        <input type="password" id="new-password" oninput="validarLongitud('new-password', 'msg-new-password')" required />
+      </div>
+      <div class="input-group">
+        <label for="confirm-password">Confirmar contraseña</label>
+        <p class="msg-error" id="msg-confirm-password"></p>
+        <input type="password" id="confirm-password" oninput="validarLongitud('confirm-password', 'msg-confirm-password')" required />
+      </div>
+      <p id="error-msg"></p>
+      <button type="submit">Confirmar nueva contraseña</button>
+    </form>
+  </div>
+  <script src="scripts/Ncontraseña.js"></script>
+</body>
+</html>

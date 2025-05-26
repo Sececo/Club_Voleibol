@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Principal - Club de Voleibol</title>
+    <link rel="stylesheet" href="styles/principal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+</head>
+<body>
+
+    <!-- Botón de salida -->
+    <button class="salir" title="Salir" onclick="abrirModal()">
+        <i class="fas fa-arrow-right-from-bracket"></i>
+    </button>
+
+    <!-- Modal de confirmación -->
+    <div id="modalConfirmacion" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas salir?</p>
+            <div class="modal-buttons">
+                <button class="confirm" onclick="confirmarSalida()">Sí</button>
+                <button class="cancel" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <h1>Club Deportivo de Voleibol<br>Chaina</h1>
+        <p>Bienvenido, Administrador</p>
+    </header>
+
+    <div class="menu">
+        <div class="menu-item" onclick="location.href='deportistas.html'">
+            <i class="fas fa-user"></i>
+            <p>Deportistas</p>
+        </div>
+        <div class="menu-item" onclick="location.href='equipos.html'">
+            <i class="fas fa-people-line"></i>
+            <p>Equipos</p>
+        </div>
+        <div class="menu-item" onclick="location.href='campeonatos.html'">
+            <i class="fas fa-trophy"></i>
+            <p>Campeonatos</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+    </footer>
+    <script src="scripts/principal_page.js"></script>
+   
+</body>
+</html>
+
