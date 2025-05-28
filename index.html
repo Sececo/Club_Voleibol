@@ -22,13 +22,25 @@
         <input type="password" id="password" required />
       </div>
       <div class="options">
-        <label id ="cb"><input type="checkbox" /> Recordarme</label>
-        <a href="#">¿Olvidaste tu contraseña?</a>
+        <label id="cb"><input type="checkbox" /> Recordarme</label>
+        <a href="#" id="registroLink">Registrarme</a>
       </div>
       <button type="submit">INGRESAR</button>
     </form>
     <p id="error-msg"></p>
   </div>
+
+  <!-- Modal centrado -->
+  <div id="modalRegistro" class="modal">
+    <div class="modal-content">
+      <p>¿Quién está ahí?</p>
+      <button onclick="redirigirRegistro('jugador')">Jugador</button>
+      <button onclick="redirigirRegistro('admin')">Administrador</button>
+    </div>
+  </div>
+
   <script src="scripts/index.js"></script>
 </body>
 </html>
+
+

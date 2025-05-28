@@ -54,9 +54,11 @@ form.addEventListener("submit", e => {
     return;
   }
 
-  campeonatos[index].equiposAsociados = seleccionados;
+  // Si quieres guardar objetos completos en vez de solo nombres:
+  campeonatos[index].equiposAsociados = equipos.filter(e => seleccionados.includes(e.nombre));
   localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
   mensaje.textContent = "Equipos asociados correctamente al campeonato.";
+  alert('Equipo guardado correctamente.');
   form.reset();
   listaEquipos.innerHTML = "";
 });

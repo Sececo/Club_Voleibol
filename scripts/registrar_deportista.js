@@ -176,6 +176,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Control dinámico de tipo documento y representante según edad ---
+  const tipoDocumentoSelect = document.getElementById('tipo_documento');
+  const representanteCamposIds = [
+    'nombre_representante',
+    'fecha_nacimiento_representante',
+    'sexo_representante',
+    'telefono_representante',
+    'tipo_documento_representante',
+    'documento_representante'
+  ];
+
+  // Función para limpiar campos de representante
+  function limpiarRepresentante() {
+    representanteCamposIds.forEach(id => {
+      const campo = document.getElementById(id);
+      if (campo) {
+        if (campo.tagName === 'SELECT') campo.selectedIndex = 0;
+        else campo.value = '';
+        eliminarError(campo);
+      }
+    });
+    if (tieneRepresentanteCheckbox) tieneRepresentanteCheckbox.checked = false;
+    if (representanteSection) representanteSection.style.display = 'none';
+  }
+
+  // Función para controlar opciones de tipo documento y representante
+  function controlarEdadYDocumento() {
+    const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
+    let edad = 0;
+    if (fechaNacimiento) edad = calcularEdad(fechaNacimiento);
+
+    // Habilitar/deshabilitar opción "CC" según edad
+    if (tipoDocumentoSelect) {
+      Array.from(tipoDocumentoSelect.options).forEach(opt => {
+        if (opt.value === 'CC') {
+          opt.disabled = edad < 18;
+          if (edad < 18 && tipoDocumentoSelect.value === 'CC') tipoDocumentoSelect.selectedIndex = 0;
+        }
+      });
+    }
+
+    // Mostrar/ocultar sección representante
+    if (edad < 18) {
+      if (tieneRepresentanteCheckbox) {
+        tieneRepresentanteCheckbox.checked = true;
+        tieneRepresentanteCheckbox.disabled = true;
+      }
+      if (representanteSection) representanteSection.style.display = 'block';
+    } else {
+      if (tieneRepresentanteCheckbox) {
+        tieneRepresentanteCheckbox.checked = false;
+        tieneRepresentanteCheckbox.disabled = false;
+      }
+      limpiarRepresentante();
+    }
+  }
+
+  // Escuchar cambios en fecha de nacimiento
+  const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
+  if (fechaNacimientoInput) {
+    fechaNacimientoInput.addEventListener('change', controlarEdadYDocumento);
+    fechaNacimientoInput.addEventListener('input', controlarEdadYDocumento);
+  }
+
+  // También controlar al cargar la página
+  controlarEdadYDocumento();
+
   // Validar al enviar el formulario
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -214,6 +281,29 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       const edad = calcularEdad(fechaNacimiento);
       if (edad < 5 || edad > 20) errores.push({input: 'fecha_nacimiento', msg: 'Edad debe estar entre 5 y 20 años.'});
+      // No permitir "CC" si es menor
+      if (edad < 18 && tipoDocumento === 'CC') {
+        errores.push({input: 'tipo_documento', msg: 'No puede seleccionar CC si es menor de edad.'});
+      }
+      // Si es menor, representante obligatorio y todos sus campos requeridos
+      if (edad < 18) {
+        if (!tieneRepresentanteCheckbox || !tieneRepresentanteCheckbox.checked) {
+          errores.push({input: 'tiene_representante', msg: 'Debe registrar un representante si es menor de edad.'});
+        }
+        if (!validarNombre(nombreRepresentante)) errores.push({input: 'nombre_representante', msg: 'Nombre representante inválido.'});
+        if (!fechaNacimientoRepresentante) errores.push({input: 'fecha_nacimiento_representante', msg: 'Fecha nacimiento representante obligatoria.'});
+        else {
+          const edadRep = calcularEdad(fechaNacimientoRepresentante);
+          if (edadRep < 25 || edadRep > 80) errores.push({input: 'fecha_nacimiento_representante', msg: 'Edad representante entre 25 y 80 años.'});
+        }
+        if (!['masculino', 'femenino', 'otro'].includes(sexoRepresentante)) errores.push({input: 'sexo_representante', msg: 'Sexo representante inválido.'});
+        if (!/^\+?[\d\s-]{7,15}$/.test(telefonoRepresentante)) errores.push({input: 'telefono_representante', msg: 'Teléfono representante inválido.'});
+        if (!['CC', 'CE'].includes(tipoDocumentoRepresentante)) errores.push({input: 'tipo_documento_representante', msg: 'Tipo documento representante inválido.'});
+        if (!/^\d+$/.test(documentoRepresentante)) errores.push({input: 'documento_representante', msg: 'Documento representante debe ser numérico.'});
+      } else {
+        // Si es mayor, limpiar representante
+        limpiarRepresentante();
+      }
     }
     if (!['masculino', 'femenino', 'otro'].includes(sexo)) errores.push({input: 'sexo', msg: 'Seleccione sexo.'});
     if (!/^\+?[\d\s-]{7,15}$/.test(telefono)) errores.push({input: 'telefono', msg: 'Teléfono inválido.'});
@@ -222,8 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errores.push({input: 'email', msg: 'Email inválido.'});
     if (!categoria) errores.push({input: 'categoria', msg: 'Seleccione categoría.'});
 
-    // Validar representante solo si visible
-    if (tieneRepresentanteCheckbox && tieneRepresentanteCheckbox.checked) {
+    // Validar representante solo si visible y mayor de edad (por si acaso)
+    if (tieneRepresentanteCheckbox && tieneRepresentanteCheckbox.checked && fechaNacimiento && calcularEdad(fechaNacimiento) >= 18) {
       if (nombreRepresentante && !validarNombre(nombreRepresentante)) errores.push({input: 'nombre_representante', msg: 'Nombre representante inválido.'});
       if (fechaNacimientoRepresentante) {
         const edadRep = calcularEdad(fechaNacimientoRepresentante);
@@ -260,6 +350,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si todo OK, enviar formulario (aquí solo mostramos alert o simular envío)
     alert('Formulario validado correctamente. Enviando...');
     form.submit();
-  });
-});
 
+    if (errores.length === 0) {
+      // Obtener los deportistas actuales
+      const deportistas = JSON.parse(localStorage.getItem('deportistas')) || [];
+      // Crear el nuevo deportista (ajusta los campos según tu formulario)
+      const nuevoDeportista = {
+        nombres,
+        apellidos,
+        usuario,
+        fecha_nacimiento: fechaNacimiento,
+        sexo,
+        telefono,
+        tipo_documento: tipoDocumento,
+        documento,
+        email,
+        categoria,
+        pago: false, // o true si corresponde
+        estado: 'activo',
+        // ...otros campos...
+      };
+      deportistas.push(nuevoDeportista);
+      // Guardar en ambas claves
+      guardarDeportistas(deportistas);
+      alert('Deportista registrado correctamente');
+      form.reset();
+      // ...otros procesos...
+    }
+  });
+
+  function guardarDeportistas(arrayDeDeportistas) {
+    localStorage.setItem('deportistas', JSON.stringify(arrayDeDeportistas));
+    localStorage.setItem('jugadores', JSON.stringify(arrayDeDeportistas));
+  }
+});

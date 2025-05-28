@@ -1,0 +1,188 @@
+/* Todo tu CSS existente */
+
+body {
+  margin: auto;
+  font-family: 'Roboto', sans-serif;
+  background-color: #0C2461; /* Azul oscuro */
+  color: rgb(0, 0, 0); /* Negro */
+  max-width: 70%;
+}
+
+header {
+  padding-top: 10px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  max-width: 85%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-size: 46px;
+}
+
+header h2 {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  max-width: 70%;
+  margin: auto;
+}
+
+.menu-item {
+  background-color: #fff; /* Blanco */
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 12px #5fddb144;
+  background-color: #E85B26;
+  color: #fff;
+}
+
+.menu-item i {
+  font-size: 55px;
+  margin: 15px;
+  color: #3C3C3C; /* Gris oscuro */
+}
+
+.menu-item p {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000; /* Negro */
+}
+
+/* Botón principal */
+.btn {
+  background-color: #E85B26;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 20px auto 0 auto; /* Centrado horizontal y algo de margen arriba */
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 200px; /* ancho fijo para que se note el centrado */
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #C8461E;
+}
+
+/* Botones secundarios (nav-buttons, flechas, etc) */
+.btn-secondary,
+nav.nav-buttons button,
+button[title^="Volver"],
+button[title^="Ir a Inicio"],
+button[title^="Volver a inicio"] {
+  background-color: #fff;
+  color: #0C2461;
+  border: 2px solid #E85B26;
+  padding: 8px 18px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 10px 10px 10px 0;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn-secondary:hover,
+nav.nav-buttons button:hover,
+button[title^="Volver"]:hover,
+button[title^="Ir a Inicio"]:hover,
+button[title^="Volver a inicio"]:hover {
+  background-color: #E85B26;
+  color: #fff;
+  border-color: #C8461E;
+}
+
+/* Botón flecha lateral (si se usa en posición absoluta) */
+button[title^="Volver"], button[title^="Volver a inicio"] {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  background: #fff;
+  color: #0C2461;
+  border: 2px solid #E85B26;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+button[title^="Volver"]:hover,
+button[title^="Volver a inicio"]:hover {
+  background: #E85B26;
+  color: #fff;
+  border-color: #C8461E;
+}
+
+/* Nav-buttons container */
+.nav-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0 10px 0;
+  gap: 10px;
+}
+
+/* Responsive para botones y menú */
+@media (max-width: 700px) {
+  .menu {
+    grid-template-columns: 1fr;
+    padding: 10px;
+    max-width: 100%;
+  }
+  .btn, .btn-secondary, nav.nav-buttons button {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+  button[title^="Volver"], button[title^="Volver a inicio"] {
+    left: 10px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+}
+
+footer {
+  background-color: #0C2461; /* azul oscuro */
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 40px;
+}

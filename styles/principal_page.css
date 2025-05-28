@@ -12,7 +12,7 @@ header {
   text-align: center;
   color: #fff;
   border-bottom: 1px solid #fff;
-  max-width: 100%;
+  max-width: 85%;
   margin:auto;
   margin-bottom: 20px;
 }
@@ -29,11 +29,10 @@ header p {
 
 .menu {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
   padding: 40px;
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 70%;
   margin: auto;
 }
 
@@ -70,46 +69,32 @@ header p {
 }
 
 
-
-
 footer {
-  max-width: 100%;
-  position: sticky;
-  
-  bottom: 0;
-  left: 5%;
-  right: 5%;
   background-color: #0C2461; /* azul oscuro */
   color: white;
   text-align: center;
-  padding: 2px 0 10px 0;
+  padding: 15px 0;
+  margin-top: 40px;
 }
-
 /*registrar usuario*/
 
 
 #volver{
-
   background-color: #E85B26;
-  border-radius: 10px;
-  border: none;
-  margin-bottom: 15px;
-  width: 15%;
-  height: 30px;
-  color: #fff;
-  cursor: pointer;
-}
-
-#volver.hover{
-  background-color: #C8461E;
+  width: 100%;
 }
 
 /* Fin de registrar usuario */
 
 /*estado de cuenta*/
 
-
-
+main {
+  padding: 20px;
+  max-width: 60%;
+  margin: auto;
+  background: #fff;
+    border-radius: 4px;
+}
 
 
 label {
@@ -131,7 +116,7 @@ select {
   padding: 15px 20px;
   margin-bottom: 15px;
   border-radius: 8px;
-  box-shadow: 10px 10px 5px #3c3c3c59;
+    box-shadow: 10px 10px 5px #3c3c3c59;
 
 }
 
@@ -164,53 +149,6 @@ select {
   background-color: #C8461E;
 }
 
-
 /* Fin de estado de cuenta */
 
 
-
-/* Media Query para pantallas grandes */
-@media (min-width: 768px) {
-  .formulario {
-    max-width: 700px; /* Aumentar el ancho máximo en pantallas más grandes */
-    padding: 40px;    /* Mayor relleno en pantallas grandes */
-  }
-  
-  header {
-    padding: 40px 0;  /* Más espacio en el encabezado */
-  }
-  
-  footer {
-    padding: 20px 0;  /* Más espacio en el pie de página */
-  }
-}
-/* Media Query para pantallas medianas */
-@media (max-width: 767px) and (max-width: 767px) {
-  .formulario {
-    max-width: 500px; /* Aumentar el ancho máximo en pantallas medianas */
-    padding: 30px;    /* Mayor relleno en pantallas medianas */
-  }
-  
-  header {
-    padding: 30px 0;  /* Más espacio en el encabezado */
-  }
-  
-  footer {
-    padding: 15px 0;  /* Más espacio en el pie de página */
-  }
-}
-/* Media Query para pantallas pequeñas */
-@media (max-width: 479px) {
-  .formulario {
-    max-width: 100%; /* Ancho completo en pantallas pequeñas */
-    padding: 20px;   /* Relleno reducido en pantallas pequeñas */
-  }
-  
-  header {
-    padding: 20px 0;  /* Menos espacio en el encabezado */
-  }
-  
-  footer {
-    padding: 10px 0;  /* Menos espacio en el pie de página */
-  }
-}

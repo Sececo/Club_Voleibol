@@ -97,3 +97,52 @@ button:hover {
   color: red;
   margin-top: 10px;
 }
+
+
+
+/* Estilos para login */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #0055a5;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #003f7d;
+}
+
+/* Aquí puedes agregar estilos para login-box, inputs, etc. */
