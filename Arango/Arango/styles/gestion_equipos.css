@@ -1,0 +1,260 @@
+/* styles/gestion_equipos.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Usamos el color de fondo azul oscuro consistente */
+    background-color: #0C2461;
+    color: #333; /* Color de texto oscuro por defecto para el contenido principal */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ocupar al menos toda la altura de la ventana */
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #0C2461;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: white;
+}
+
+main {
+    background-color: white; /* Fondo blanco para el contenido */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 900px; /* Ancho máximo para pantallas grandes */
+    margin: 20px auto;
+    flex-grow: 1;
+}
+
+h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2em;
+}
+
+/* Estilos para el filtro de categoría de equipos */
+#filtro-categorias-equipos { /* Usamos el ID específico del HTML */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.filter-container {
+    display: inline-block;
+    text-align: left;
+}
+
+
+.filter-container label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+}
+
+.filter-container select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 250px;
+    appearance: none;
+    background-color: #f9f9f9;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filter-container select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+
+/* Estilos para la lista de equipos */
+#lista-equipos { /* Usamos el ID específico del HTML */
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.equipo-item { /* Nueva clase para cada item de equipo */
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    /* Usamos un color de borde izquierdo para diferenciarlo de deportistas, quizás el naranja? */
+    border-left: 5px solid #E85B26; /* Color naranja */
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.equipo-item:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+.equipo-item p {
+    margin: 0;
+    color: #444;
+    flex-grow: 1;
+}
+
+.equipo-item p strong {
+    color: #333;
+}
+
+/* Estilos para los botones generales (pueden usarse en el botón de volver) */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+}
+
+
+/* Estilos para el botón de eliminar equipo */
+/* Usamos la misma clase btn-eliminar que en deportistas pero asegúrate de que los colores sean consistentes */
+.btn-eliminar {
+    background-color: #dc3545; /* Color rojo para eliminar */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}
+
+
+/* Estilo específico para centrar el botón de volver */
+.boton-volver {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 30px;
+  background-color: #E85B26;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.boton-volver:hover {
+  background-color: #c74318;
+}
+
+
+/* Estilo para el mensaje de no hay equipos */
+#mensaje-no-equipos { /* Usamos el ID específico del HTML */
+    text-align: center;
+    color: #777;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: white;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+        width: 95%;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+     .filter-container select {
+        width: 100%;
+        max-width: none;
+    }
+
+    .equipo-item { /* Ajustamos para la clase de equipo */
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .equipo-item p {
+        margin-bottom: 10px;
+    }
+
+    .equipo-item .btn-eliminar { /* Selecciona el botón de eliminar dentro de equipo-item */
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+    }
+
+     .volver-btn {
+        width: 80%;
+    }
+}
+.btn:hover {
+  background-color: #C8461E;
+}
+.boton-volver {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 30px;
+  background-color: #E85B26;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.boton-volver:hover {
+  background-color: #c74318;
+}
+
+/* Fin de estado de cuenta */

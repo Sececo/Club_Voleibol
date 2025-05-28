@@ -1,0 +1,216 @@
+body {
+  margin: auto;
+  font-family: 'Roboto', sans-serif;
+  background-color: #0C2461; /* Azul oscuro */
+  color: rgb(0, 0, 0); /* Negro */
+  max-width: 70%;
+
+}
+
+header {
+  padding-top: 10px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  max-width: 100%;
+  margin:auto;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-size: 46px;
+}
+
+header p {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 30px;
+  padding: 40px;
+  max-width: 80%;
+  max-height: 80%;
+  margin: auto;
+}
+
+.menu-item {
+  background-color: #fff; /* Blanco */
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 12px #5fddb144;
+  background-color: #E85B26;
+  color: #fff;
+}
+
+.menu-item i {
+  font-size: 55px;
+  margin: 15px;
+  color: #3C3C3C; /* Gris oscuro */
+}
+
+
+
+.menu-item p {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000; /* Negro */
+}
+
+
+
+
+footer {
+  max-width: 100%;
+  position: sticky;
+  
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  background-color: #0C2461; /* azul oscuro */
+  color: white;
+  text-align: center;
+  padding: 2px 0 10px 0;
+}
+
+/*registrar usuario*/
+
+
+#volver{
+
+  background-color: #E85B26;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 15px;
+  width: 15%;
+  height: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#volver.hover{
+  background-color: #C8461E;
+}
+
+/* Fin de registrar usuario */
+
+/*estado de cuenta*/
+
+
+
+
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select {
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.estado-cuenta {
+  background-color: white;
+  border-left: 5px solid #000;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 10px 10px 5px #3c3c3c59;
+
+}
+
+.estado-cuenta:hover {
+  box-shadow: 10px 10px 5px #E85B26;
+}
+
+#contenedor-cuentas{
+  border: none;
+    box-shadow: none
+}
+
+.estado-cuenta p {
+  margin: 5px 0;
+}
+
+.btn {
+  background-color: #E85B26;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #C8461E;
+}
+
+
+/* Fin de estado de cuenta */
+
+
+
+/* Media Query para pantallas grandes */
+@media (min-width: 768px) {
+  .formulario {
+    max-width: 700px; /* Aumentar el ancho máximo en pantallas más grandes */
+    padding: 40px;    /* Mayor relleno en pantallas grandes */
+  }
+  
+  header {
+    padding: 40px 0;  /* Más espacio en el encabezado */
+  }
+  
+  footer {
+    padding: 20px 0;  /* Más espacio en el pie de página */
+  }
+}
+/* Media Query para pantallas medianas */
+@media (max-width: 767px) and (max-width: 767px) {
+  .formulario {
+    max-width: 500px; /* Aumentar el ancho máximo en pantallas medianas */
+    padding: 30px;    /* Mayor relleno en pantallas medianas */
+  }
+  
+  header {
+    padding: 30px 0;  /* Más espacio en el encabezado */
+  }
+  
+  footer {
+    padding: 15px 0;  /* Más espacio en el pie de página */
+  }
+}
+/* Media Query para pantallas pequeñas */
+@media (max-width: 479px) {
+  .formulario {
+    max-width: 100%; /* Ancho completo en pantallas pequeñas */
+    padding: 20px;   /* Relleno reducido en pantallas pequeñas */
+  }
+  
+  header {
+    padding: 20px 0;  /* Menos espacio en el encabezado */
+  }
+  
+  footer {
+    padding: 10px 0;  /* Menos espacio en el pie de página */
+  }
+}

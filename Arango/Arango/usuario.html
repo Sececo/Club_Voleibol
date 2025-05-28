@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restablecer contraseña - Club Voleibol</title>
+  <link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+  <div class="login-box">
+    <div class="avatar">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="avatar">
+    </div>
+    <h2>Crea una cuenta</h2>
+    <form id="loginForm" onsubmit="validarYRedirigir(event)">
+      <div class="input-group">
+        <label for="new-password">Ingresa tu correo electrónico</label>
+        <p class="msg-error" id="msg-new-password"></p>
+        <input type="email" id="new-password" oninput="validarLongitud('new-password', 'msg-new-password')" required />
+      </div>
+
+      <div class="input-group">
+        <label for="confirm-password">Crea una contraseña</label>
+        <p class="msg-error" id="msg-confirm-password"></p>
+        <input type="password" id="confirm-password" oninput="validarLongitud('confirm-password', 'msg-confirm-password')" required />
+      </div>
+
+      <p id="error-msg"></p>
+      <button type="submit">Confirmar</button>
+    </form>
+  </div>
+  <script src="scripts/usuario.js"></script>
+</body>
+</html>
+
+

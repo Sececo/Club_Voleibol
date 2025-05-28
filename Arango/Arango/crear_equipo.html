@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crear Equipo - Club de Voleibol</title>
+  <link rel="stylesheet" href="styles/Formularios.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Crear Equipo</h1>
+    </header>
+
+    <nav class="nav-buttons" aria-label="Navegación principal">
+      <button class="btn-secondary" title="Volver" onclick="location.href='equipos.html'">
+        &#8592; Volver a Equipos
+      </button>
+      <button class="btn-secondary" title="Menu Principal" onclick="location.href='inicio.html'">
+        &#8962; Inicio
+      </button>
+    </nav>
+
+    <main>
+      <form id="formEquipo" autocomplete="off" novalidate>
+        <div class="form-group">
+          <label for="nombre_equipo">Nombre del Equipo *</label>
+          <input type="text" id="nombre_equipo" name="nombre_equipo" required />
+        </div>
+
+        <div class="form-group">
+          <label for="categoria_equipo">Categoría *</label>
+          <select id="categoria_equipo" name="categoria_equipo" required>
+            <option value="" disabled selected>Seleccione</option>
+            <option value="benjamin">Benjamín</option>
+            <option value="mini">Mini</option>
+            <option value="infantil">Infantil</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sexo_equipo">Sexo *</label>
+          <select id="sexo_equipo" name="sexo_equipo" required>
+            <option value="" disabled selected>Seleccione</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="mixto">Mixto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="entrenador">Nombre del Entrenador *</label>
+          <input type="text" id="entrenador" name="entrenador" required />
+        </div>
+
+        <div class="form-group">
+          <label for="telefono_entrenador">Teléfono del Entrenador *</label>
+          <input type="tel" id="telefono_entrenador" name="telefono_entrenador" placeholder="+57 300 1234567" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email_entrenador">Correo Electrónico del Entrenador *</label>
+          <input type="email" id="email_entrenador" name="email_entrenador" placeholder="correo@ejemplo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="jugadores_disponibles">Jugadores Disponibles</label>
+          <div class="jugadores-wrapper">
+            <select id="jugadores_disponibles" name="jugadores_disponibles">
+              <option value="" disabled selected>Seleccione un jugador</option>
+              <!-- Jugadores registrados aparecerán aquí -->
+            </select>
+            <button type="button" class="btn-add" title="Agregar jugador">+</button>
+            <button type="button" class="btn-remove" title="Quitar jugador">−</button>
+          </div>
+        </div>
+
+        <div id="jugadores_agregados" class="lista-jugadores">
+          <!-- Aquí se mostrarán los jugadores seleccionados -->
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Guardar</button>
+          <button type="reset" class="btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </main>
+
+    <footer>
+      &copy; 2025 Club Deportivo de Voleibol
+    </footer>
+  </div>
+
+  <script src="scripts/crear_equipo.js"></script>
+
+</body>
+</html>
