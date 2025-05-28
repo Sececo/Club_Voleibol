@@ -32,9 +32,10 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     return;
   }
 
-  // Guardar correo y contraseña
-  localStorage.setItem('correoRegistrado', email);
-  localStorage.setItem('contraseñaRegistrada', password);
+  // Guardar usuario en el array de usuarios
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  usuarios.push({ email, password });
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
   alert('Formulario válido. Usuario registrado correctamente.');
 
