@@ -1,0 +1,156 @@
+/* styles/gestion.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0C2461;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #0C2461;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: white;
+}
+
+main {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+
+h2 {
+    margin-top: 0;
+    color: #0C2461;
+}
+
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-container label {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+select.filtro-select {
+    padding: 8px 12px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #0C2461;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select.filtro-select:hover,
+select.filtro-select:focus {
+    border-color: #1e40af;
+    box-shadow: 0 0 5px #1e40af;
+}
+
+#lista-items {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.item {
+    border: 1px solid #0C2461;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 12px rgba(12, 36, 97, 0.2);
+    transition: transform 0.3s ease;
+    background: #f0f4ff;
+}
+
+.item:hover {
+    transform: scale(1.02);
+}
+
+.item p {
+    margin: 6px 0;
+    font-size: 1.1em;
+    color: #0C2461;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+    user-select: none;
+}
+
+.btn-descargar {
+    background-color: #0C2461;
+    color: white;
+}
+
+.btn-descargar:hover {
+    background-color: #1e40af;
+}
+
+.btn-eliminar {
+    background-color: #c0392b;
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #e74c3c;
+}
+
+.boton-volver {
+    background-color: #0C2461;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin: 10px 15px 0 0;
+    transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: #1e40af;
+}
+
+footer {
+    background-color: #0C2461;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9em;
+    flex-shrink: 0;
+}

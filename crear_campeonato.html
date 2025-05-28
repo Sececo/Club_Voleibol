@@ -1,61 +1,75 @@
-<!-- crear_campeonato.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Campeonato - Club de Voleibol</title>
-  <link rel="stylesheet" href="styles/principal.css">
-  <link rel="stylesheet" href="styles/registrar_deportista.css">
+  <link rel="stylesheet" href="styles/Formularios.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <header>
-    <h1>Crear Campeonato</h1>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Crear Campeonato</h1>
+    </header>
 
-  <main>
-    <form class="formulario" id="form-campeonato">
+    <nav class="nav-buttons">
+      <button class="btn-secondary" onclick="location.href='lista_campeonatos.html'" title="Volver a Campeonatos">
+        &#8592; Volver
+      </button>
+      <button class="btn-secondary" onclick="location.href='index.html'" title="Ir a Inicio">
+        &#8962; Inicio
+      </button>
+    </nav>
 
-      <label for="id_campeonato">ID del Campeonato:</label>
-      <input type="text" id="id_campeonato" name="id_campeonato" readonly>
+    <main>
+      <form id="formCampeonato" autocomplete="off" novalidate>
 
-      <label for="nombre-campeonato">Nombre del Campeonato:</label>
-      <input type="text" id="nombre-campeonato" name="nombre-campeonato" required>
+        <input type="hidden" id="id_campeonato" name="id_campeonato" />
 
-      <label for="fecha">Fecha de Inicio:</label>
-      <input type="date" id="fecha" name="fecha" required>
+        <div class="form-group">
+          <label for="nombre_campeonato">Nombre del Campeonato *</label>
+          <input type="text" id="nombre_campeonato" name="nombre_campeonato" required />
+        </div>
 
-      <label for="hora">Hora de Inicio:</label>
-      <input type="time" id="hora" name="hora" required>
+        <div class="form-group">
+          <label for="fecha">Fecha de Inicio *</label>
+          <input type="date" id="fecha" name="fecha" required />
+        </div>
 
-      <label for="sede">Sede:</label>
-      <input type="text" id="sede" name="sede" required>
+        <div class="form-group">
+          <label for="hora">Hora de Inicio *</label>
+          <input type="time" id="hora" name="hora" required />
+        </div>
 
-      <label for="categoria">Categoría:</label>
-      <select id="categoria" name="categoria" required>
-        <option value="">Seleccionar Categoría</option>
-        <option value="benjamin">Benjamín</option>
-        <option value="mini">Mini</option>
-        <option value="infantil">Infantil</option>
-      </select>
+        <div class="form-group">
+          <label for="sede">Sede *</label>
+          <input type="text" id="sede" name="sede" required />
+        </div>
 
-      <button type="submit" class="btn">Crear Campeonato</button>
-    </form>
-  </main>
+        <div class="form-group">
+          <label for="categoria">Categoría *</label>
+          <select id="categoria" name="categoria" required>
+            <option value="" disabled selected>Seleccionar Categoría</option>
+            <option value="benjamin">Benjamín</option>
+            <option value="mini">Mini</option>
+            <option value="infantil">Infantil</option>
+          </select>
+        </div>
 
-  <footer>
-    &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
-  </footer>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Guardar</button>
+          <button type="reset" class="btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </main>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      let base = 100;
-      let id = localStorage.getItem("ultimoIdCampeonato");
-      id = id ? parseInt(id) + 1 : base;
-      document.getElementById("id_campeonato").value = id;
-      localStorage.setItem("ultimoIdCampeonato", id);
-    });
-  </script>
+    <footer>
+      &copy; 2025 Club Deportivo de Voleibol
+    </footer>
+  </div>
+
   <script src="scripts/crear_campeonato.js"></script>
 </body>
 </html>

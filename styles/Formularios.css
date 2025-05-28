@@ -1,0 +1,205 @@
+/* Fuentes modernas */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0C2461; /* Azul oscuro */
+  margin: 0;
+  color: #000; /* Negro */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 15px;
+}
+
+.container {
+  background: #fff; /* Blanco */
+  max-width: 700px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 40px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #E85B26; /* Naranja intenso */
+  text-align: center;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.nav-buttons button {
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: 2px solid #E85B26; /* Naranja */
+  background: transparent;
+  color: #E85B26; /* Naranja */
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-buttons button:hover {
+  background: #E85B26;
+  color: white;
+  box-shadow: 0 4px 15px rgba(232, 91, 38, 0.6);
+}
+
+main {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form-section {
+  border-top: 3px solid #E85B26; /* Naranja */
+  padding-top: 20px;
+}
+
+.form-section h2 {
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: #E85B26; /* Naranja */
+  border-left: 6px solid #E85B26; /* Naranja */
+  padding-left: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #000; /* Negro */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
+select {
+  padding: 12px 15px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #000; /* Negro */
+  background: #fff; /* Blanco */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus,
+select:focus {
+  border-color: #E85B26; /* Naranja */
+  box-shadow: 0 0 8px rgba(232, 91, 38, 0.4);
+  outline: none;
+  color: #000;
+  background: #fff;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.btn-primary {
+  background-color: #E85B26; /* Naranja */
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 14px 45px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232, 91, 38, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #BF4A1C; /* Naranja oscuro */
+  box-shadow: 0 6px 25px rgba(191, 74, 28, 0.7);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid #E85B26; /* Naranja */
+  color: #E85B26; /* Naranja */
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 14px 45px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #E85B26;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #fff; /* Blanco para buen contraste sobre azul oscuro */
+  margin-top: 30px;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+  }
+}
+
+.input-error {
+  border-color: red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 2px;
+  display: block;
+}

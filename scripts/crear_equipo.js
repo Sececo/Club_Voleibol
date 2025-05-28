@@ -1,107 +1,105 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const selectCategoriaEquipo = document.getElementById("categoria-equipo");
-    const jugadoresSeleccionContainer = document.getElementById("jugadores-seleccion-container");
-    const equipoNombreContainer = document.getElementById("equipo-nombre-container");
-    const inputNombreEquipo = document.getElementById("nombre-equipo");
-    const btnCrearEquipo = document.getElementById("btn-crear-equipo");
-    const mensajeSeleccionJugadores = document.getElementById("mensaje-seleccion-jugadores");
-    const formEquipo = document.getElementById("form-equipo");
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('formEquipo');
+  const selectJugadores = document.getElementById('jugadores_disponibles');
+  const listaJugadores = document.getElementById('jugadores_agregados');
+  const btnAdd = document.querySelector('.btn-add');
+  const btnRemove = document.querySelector('.btn-remove');
 
-    let deportistasDisponibles = [];
-    const MIN_JUGADORES_EQUIPO = 9;
+  // Simulación de jugadores registrados (debería venir de backend)
+  const jugadoresRegistrados = [
+    "Camila López",
+    "Mateo Torres",
+    "Valentina Ruiz",
+    "Santiago Pérez",
+    "Mariana Gómez"
+  ];
 
-    function mostrarJugadores() {
-        jugadoresSeleccionContainer.innerHTML = "";
+  // Rellenar el select con los jugadores
+  jugadoresRegistrados.forEach(nombre => {
+    const option = document.createElement('option');
+    option.value = nombre;
+    option.textContent = nombre;
+    selectJugadores.appendChild(option);
+  });
 
-        deportistasDisponibles.forEach((d, index) => {
-            const label = document.createElement("label");
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.value = d.id || index;
-            checkbox.name = "jugadores";
-            checkbox.dataset.nombre = `${d.nombres} ${d.apellidos}`;
+  // Lista de jugadores seleccionados
+  const jugadoresAgregados = [];
 
-            checkbox.addEventListener("change", validarSeleccion);
+  // Agregar jugador
+  btnAdd.addEventListener('click', () => {
+    const seleccionado = selectJugadores.value;
+    if (!seleccionado || jugadoresAgregados.includes(seleccionado)) return;
 
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(` ${d.nombres} ${d.apellidos}`));
-            jugadoresSeleccionContainer.appendChild(label);
-            jugadoresSeleccionContainer.appendChild(document.createElement("br"));
-        });
+    jugadoresAgregados.push(seleccionado);
+    renderizarLista();
+  });
+
+  // Quitar jugador
+  btnRemove.addEventListener('click', () => {
+    const seleccionado = selectJugadores.value;
+    const index = jugadoresAgregados.indexOf(seleccionado);
+    if (index > -1) {
+      jugadoresAgregados.splice(index, 1);
+      renderizarLista();
+    }
+  });
+
+  // Mostrar los jugadores agregados
+  function renderizarLista() {
+    listaJugadores.innerHTML = '';
+    jugadoresAgregados.forEach(jugador => {
+      const div = document.createElement('div');
+      div.textContent = jugador;
+      listaJugadores.appendChild(div);
+    });
+  }
+
+  // Validar formulario
+  function validarFormulario() {
+    const nombre = document.getElementById('nombre_equipo').value.trim();
+    const categoria = document.getElementById('categoria_equipo').value;
+    const sexo = document.getElementById('sexo_equipo').value;
+    const entrenador = document.getElementById('entrenador').value.trim();
+    const telefono = document.getElementById('telefono_entrenador').value.trim();
+    const correo = document.getElementById('email_entrenador').value.trim();
+
+    if (!nombre || !categoria || !sexo || !entrenador || !telefono || !correo) {
+      alert('Por favor, complete todos los campos obligatorios.');
+      return false;
     }
 
-    function validarSeleccion() {
-        const seleccionados = jugadoresSeleccionContainer.querySelectorAll("input[type='checkbox']:checked");
-
-        if (seleccionados.length >= MIN_JUGADORES_EQUIPO) {
-            equipoNombreContainer.classList.remove("hidden");
-            inputNombreEquipo.disabled = false;
-            btnCrearEquipo.disabled = false;
-            mensajeSeleccionJugadores.innerHTML = "";
-        } else {
-            equipoNombreContainer.classList.add("hidden");
-            inputNombreEquipo.disabled = true;
-            btnCrearEquipo.disabled = true;
-            mensajeSeleccionJugadores.innerHTML = `<div class="alert alert-warning">Selecciona al menos ${MIN_JUGADORES_EQUIPO} jugadores.</div>`;
-        }
+    if (jugadoresAgregados.length === 0) {
+      alert('Debe seleccionar al menos un jugador.');
+      return false;
     }
 
-    selectCategoriaEquipo.addEventListener("change", () => {
-        const categoriaSeleccionada = selectCategoriaEquipo.value;
-        equipoNombreContainer.classList.add("hidden");
-        inputNombreEquipo.disabled = true;
-        btnCrearEquipo.disabled = true;
-        mensajeSeleccionJugadores.innerHTML = "";
-        deportistasDisponibles = [];
+    return true;
+  }
 
-        if (!categoriaSeleccionada) {
-            mensajeSeleccionJugadores.textContent = "Selecciona una categoría para ver los deportistas disponibles.";
-            jugadoresSeleccionContainer.innerHTML = "";
-            return;
-        }
+  // Guardar equipo (simulado con localStorage)
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        const todosDeportistas = JSON.parse(localStorage.getItem("jugadores")) || [];
+    if (!validarFormulario()) return;
 
-        deportistasDisponibles = todosDeportistas.filter(d =>
-            d.categoria === categoriaSeleccionada && d.pago === true
-        );
+    const equipo = {
+      nombre: document.getElementById('nombre_equipo').value.trim(),
+      categoria: document.getElementById('categoria_equipo').value,
+      sexo: document.getElementById('sexo_equipo').value,
+      entrenador: document.getElementById('entrenador').value.trim(),
+      telefono: document.getElementById('telefono_entrenador').value.trim(),
+      correo: document.getElementById('email_entrenador').value.trim(),
+      jugadores: [...jugadoresAgregados]
+    };
 
-        if (deportistasDisponibles.length === 0) {
-            jugadoresSeleccionContainer.innerHTML = "<p>No hay deportistas disponibles para esta categoría.</p>";
-            return;
-        }
+    // Simulación de guardado
+    const equiposGuardados = JSON.parse(localStorage.getItem('equipos')) || [];
+    equiposGuardados.push(equipo);
+    localStorage.setItem('equipos', JSON.stringify(equiposGuardados));
 
-        mostrarJugadores();
-    });
-
-    formEquipo.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const nombre = inputNombreEquipo.value.trim();
-        if (nombre === "") {
-            alert("El nombre del equipo no puede estar vacío.");
-            return;
-        }
-
-        const seleccionados = jugadoresSeleccionContainer.querySelectorAll("input[type='checkbox']:checked");
-        const jugadores = Array.from(seleccionados).map(c => ({
-            id: c.value,
-            nombre: c.dataset.nombre
-        }));
-
-        const nuevoEquipo = {
-            nombre: nombre,
-            categoria: selectCategoriaEquipo.value,
-            jugadores: jugadores
-        };
-
-        const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
-        equipos.push(nuevoEquipo);
-        localStorage.setItem("equipos", JSON.stringify(equipos));
-
-        alert("¡Equipo creado exitosamente!");
-        formEquipo.reset();
-        jugadoresSeleccionContainer.innerHTML = "";
-        equipoNombreContainer.classList.add("hidden");
-    });
+    alert('Equipo guardado correctamente.');
+    form.reset();
+    jugadoresAgregados.length = 0;
+    renderizarLista();
+  });
 });

@@ -1,57 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Equipos - Club de Voleibol</title>
-    <link rel="stylesheet" href="styles/gestion_equipos.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        .boton-volver {
-            display: block;
-            margin: 20px auto;
-            padding: 12px 30px;
-            background-color: #E85B26;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s ease;
-            width: fit-content;
-        }
-
-        .boton-volver:hover {
-            background-color: #c74318;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión Equipos</title>
+    <link rel="stylesheet" href="styles/Gestiones.css" />
 </head>
-<body>
+<body data-tipo="equipos">
     <header>
         <h1>Gestión de Equipos</h1>
     </header>
-
     <main>
         <h2>Lista de Equipos</h2>
-
-        <div id="filtro-categorias-equipos"></div>
-
-        <div id="lista-equipos">
-            <p id="mensaje-no-equipos">No hay equipos registrados.</p>
-        </div>
-
-        <!-- Botón para volver a la pagina anterior -->
-        <button onclick="location.href='equipos.html'" class="boton-volver">Volver a la pagina anterior</button>
-
-        <!-- Botón para volver al menú principal -->
-        <button onclick="window.location.href='inicio.html'" class="boton-volver">Volver al Menú Principal</button>
+        <div id="filtro-categorias"></div>
+        <div id="lista-items"></div>
+        <p id="mensaje-no-items" style="display:none;">No hay equipos registrados.</p>
     </main>
-
     <footer>
-        &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+        <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-
-    <script src="scripts/gestion_equipos.js"></script>
+    <script src="scripts/Gestiones.js"></script>
 </body>
 </html>

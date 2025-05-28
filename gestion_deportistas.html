@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Deportistas - Club de Voleibol</title>
-    <link rel="stylesheet" href="styles/gestion_deportistas.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión Deportistas</title>
+    <link rel="stylesheet" href="styles/Gestiones.css" />
 </head>
-<body>
+<body data-tipo="deportistas">
     <header>
         <h1>Gestión de Deportistas</h1>
     </header>
-
     <main>
         <h2>Lista de Deportistas</h2>
-
-        <div id="filtro-categorias">
-             </div>
-        <div id="lista-deportistas">
-            <p id="mensaje-no-jugadores">No hay deportistas registrados.</p>
-        </div>
-        <!-- Botón para volver a la pagina anterior -->
-        <button onclick="location.href='deportistas.html'" class="boton-volver">Volver a la pagina anterior</button>
-
-        <!-- Botón para volver al menú principal -->
-        <button onclick="window.location.href='inicio.html'" class="boton-volver">Volver al Menú Principal</button>
+        <div id="filtro-categorias"></div>
+        <div id="lista-items"></div>
+        <p id="mensaje-no-items" style="display:none;">No hay deportistas registrados.</p>
     </main>
-
     <footer>
-        &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+        <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="scripts/gestion_deportistas.js"></script>
+    <script src="scripts/Gestiones.js"></script>
 </body>
 </html>
