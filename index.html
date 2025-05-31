@@ -3,30 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
   <title>Inicio de Sesión - Club Voleibol</title>
   <link rel="stylesheet" href="styles/index.css" />
 </head>
 <body>
+
   <div class="login-box">
+
     <div class="avatar">
       <img src="assets/volleyball-ball-solid.svg" alt="avatar">
     </div>
+
     <h2>Inicio de Sesión</h2>
+
     <form id="loginForm" onsubmit="validarYRedirigir(event)">
+
       <div class="input-group">
         <label for="email">Correo Electrónico</label>
         <input type="email" id="email" required />
       </div>
+
       <div class="input-group">
         <label for="password">Contraseña</label>
         <input type="password" id="password" required />
       </div>
+
       <div class="options">
         <label id="cb"><input type="checkbox" /> Recordarme</label>
         <a href="#" id="registroLink">Registrarme</a>
       </div>
+
       <button type="submit">INGRESAR</button>
     </form>
+
     <p id="error-msg"></p>
   </div>
 

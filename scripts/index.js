@@ -17,6 +17,9 @@ window.onclick = function(event) {
   }
 };
 
+
+
+
 // Cargar datos si están guardados (Recordarme)
 window.addEventListener("DOMContentLoaded", () => {
   const savedEmail = localStorage.getItem("email");

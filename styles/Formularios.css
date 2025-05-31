@@ -33,24 +33,23 @@ header h1 {
   margin: 0;
   font-weight: 700;
   font-size: 2.2rem;
-  color: #E85B26; /* Naranja intenso */
+  color: #0C2461; /* Naranja intenso */
   text-align: center;
 }
 
 .nav-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
 }
 
 .nav-buttons button {
-  padding: 10px 25px;
+  padding: 10px 65px;
   border-radius: 30px;
-  border: 2px solid #E85B26; /* Naranja */
-  background: transparent;
-  color: #E85B26; /* Naranja */
+  background: #E85B26;
+  color: #FFF; /* Naranja */
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -72,7 +71,7 @@ form {
 }
 
 .form-section {
-  border-top: 3px solid #E85B26; /* Naranja */
+  border-top: 3px solid #0C2461; /* Naranja */
   padding-top: 20px;
 }
 
@@ -80,8 +79,8 @@ form {
   font-weight: 600;
   font-size: 1.3rem;
   margin-bottom: 20px;
-  color: #E85B26; /* Naranja */
-  border-left: 6px solid #E85B26; /* Naranja */
+  color: #0C2461; /* Naranja */
+  border-left: 6px solid #0C2461; /* Naranja */
   padding-left: 10px;
 }
 
@@ -139,6 +138,9 @@ select:focus {
   display: flex;
   justify-content: center;
   gap: 25px;
+  font-size: 2rem;
+  padding: 10px 65px;
+  width: 100%;
 }
 
 .btn-primary {
@@ -146,51 +148,86 @@ select:focus {
   border: none;
   color: white;
   font-weight: 700;
-  font-size: 1.1rem;
-  padding: 14px 45px;
+  
   border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(232, 91, 38, 0.5);
+  
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #BF4A1C; /* Naranja oscuro */
-  box-shadow: 0 6px 25px rgba(191, 74, 28, 0.7);
+  box-shadow: 0 6px 25px #5c74b1;
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background: transparent;
   border: 2px solid #E85B26; /* Naranja */
   color: #E85B26; /* Naranja */
   font-weight: 600;
-  font-size: 1.1rem;
-  padding: 14px 45px;
+  
+  
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background-color: #E85B26;
+  background-color: #BF4A1C;
+  border: 2px solid #BF4A1C; /* Naranja oscuro */
+  box-shadow: 0 6PX 25PX #eb2a2afb;
   color: white;
+  transition: background-color 0.35s ease, color 0.3s ease;
 }
 
 footer {
+  position: relative;
+  width: 100%;
+  bottom: 6px;
   text-align: center;
   font-size: 0.85rem;
+  background-color: transparent;
   color: #fff; /* Blanco para buen contraste sobre azul oscuro */
   margin-top: 30px;
 }
 
 @media (max-width: 480px) {
+  body{
+    font-size: 1fr;
+  }
+  .nav-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    justify-content: center;
+    gap: 10px;
+  }
+
+
+
+  .nav-buttons button {
+  padding: 8px 15px;
+  font-size: 1.5rem;
+}
+
+
   .form-row {
     flex-direction: column;
   }
 
-  .btn-primary, .btn-secondary {
-    width: 100%;
+  .container {
+    padding: 20px;
+    
   }
+
+  .btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    font-size: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap:15px;
+  }
+
 }
 
 .input-error {
@@ -203,3 +240,4 @@ footer {
   margin-top: 2px;
   display: block;
 }
+

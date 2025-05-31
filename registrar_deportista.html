@@ -4,8 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registrar Deportista - Club de Voleibol</title>
+  
   <link rel="stylesheet" href="styles/Formularios.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 
@@ -16,10 +19,10 @@
 
     <nav class="nav-buttons" aria-label="Navegación principal">
       <button class="btn-secondary" title="Volver a Lista de Deportistas" onclick="location.href='deportistas.html'">
-        &#8592; Volver
+        <i class="fas fa-arrow-left"></i>
       </button>
       <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
-        &#8962; Menu Principal
+        <i class="fas fa-home"></i>
       </button>
     </nav>
 
@@ -150,18 +153,21 @@
           </div>
         </section>
 
-        <div class="form-actions">
-          <button type="submit" class="btn-primary">Guardar</button>
-          <button type="reset" class="btn-secondary">Cancelar</button>
-        </div>
+        <nav class="nav-buttons">
+          <button type="submit" class="btn-primary" id="btn-guardar">
+            <i class="fas fa-save"></i>
+          </button>
+          <button type="reset" class="btn-secondary" id="btn-limpiar">
+            <i class="fas fa-eraser"></i>
+          </button>
       </form>
     </main>
-
+    
     <footer>
-      &copy; 2025 Club Deportivo de Voleibol
+      <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol</i>
     </footer>
   </div>
-
+  
   <!-- Vinculación del script JavaScript -->
   <script src="scripts/registrar_deportista.js"></script>
 

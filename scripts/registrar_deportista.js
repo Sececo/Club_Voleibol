@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Función para controlar opciones de tipo documento y representante
   function controlarEdadYDocumento() {
     const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
-    let edad = 0;
+    let edad = 18;
     if (fechaNacimiento) edad = calcularEdad(fechaNacimiento);
 
     // Habilitar/deshabilitar opción "CC" según edad
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!fechaNacimientoRepresentante) errores.push({input: 'fecha_nacimiento_representante', msg: 'Fecha nacimiento representante obligatoria.'});
         else {
           const edadRep = calcularEdad(fechaNacimientoRepresentante);
-          if (edadRep < 25 || edadRep > 80) errores.push({input: 'fecha_nacimiento_representante', msg: 'Edad representante entre 25 y 80 años.'});
+          if (edadRep < 18 || edadRep > 99) errores.push({input: 'fecha_nacimiento_representante', msg: 'Edad representante entre 18 y 80 años.'});
         }
         if (!['masculino', 'femenino', 'otro'].includes(sexoRepresentante)) errores.push({input: 'sexo_representante', msg: 'Sexo representante inválido.'});
         if (!/^\+?[\d\s-]{7,15}$/.test(telefonoRepresentante)) errores.push({input: 'telefono_representante', msg: 'Teléfono representante inválido.'});
