@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Consultar Deportistas</title>
+    <link rel="stylesheet" href="styles/Formularios.css" />
+    <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+</head>
+<body data-tipo="deportistas">
+
+
+  <header>
+    <h1>Gestión de Deportistas</h1>
+  </header>
+  
+  <container class="container">
+    <nav class="nav-buttons" aria-label="Navegación principal">
+      <button class="btn-secondary" title="Volver a Lista de Deportistas" onclick="location.href='deportistas.html'">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
+        <i class="fas fa-home"></i>
+      </button>
+    </nav>
+
+    <main>
+        <h2>Lista de Deportistas</h2>
+        <div id="filtro-categorias"></div>
+        <div id="lista-items"></div>
+        <p id="mensaje-no-items" style="display:none;">No hay deportistas registrados.</p>
+    </main>
+
+  </container>
+  
+    <footer>
+        <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol - Todos los derechos reservados.</i>
+    </footer>
+    <script type="module" src="/scripts/mostrar_items.js"></script>
+
+</body>
+</html>

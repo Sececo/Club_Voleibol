@@ -71,5 +71,5 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
   }
 
   // Redirige a la página de inicio
-  window.location.href = "inicio.html";
+  window.location.href = "principal.html";
 });

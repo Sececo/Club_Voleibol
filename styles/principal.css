@@ -1,10 +1,8 @@
-/* Todo tu CSS existente */
-
 body {
   margin: auto;
   font-family: 'Roboto', sans-serif;
   background-color: #0C2461; /* Azul oscuro */
-  color: rgb(0, 0, 0); /* Negro */
+  color: #000; /* Negro */
   max-width: 70%;
 }
 
@@ -23,10 +21,11 @@ header h1 {
   font-size: 46px;
 }
 
-header h2 {
+header h2, p {
   margin-top: 0;
   font-size: 28px;
 }
+
 
 .menu {
   display: grid;
@@ -75,7 +74,7 @@ header h2 {
 /* Botón principal */
 .btn {
   background-color: #E85B26;
-  color: white;
+  color: #fff;
   border: none;
   padding: 10px 16px;
   margin: 20px auto 0 auto; /* Centrado horizontal y algo de margen arriba */
