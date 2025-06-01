@@ -153,9 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('No puede agregar jugadores repetidos.');
       return false;
     }
-    // No permitir más de 12 jugadores ni menos de 6
-    if (jugadoresAgregados.length < 6 || jugadoresAgregados.length > 12) {
-      alert('El equipo debe tener entre 6 y 12 jugadores.');
+    // No permitir más de 12 jugadores ni menos de 1
+    if (jugadoresAgregados.length < 1 || jugadoresAgregados.length > 12) {
+      alert('El equipo debe tener entre 1 y 12 jugadores.');
       return false;
     }
     return true;

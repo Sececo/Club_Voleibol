@@ -1,64 +1,103 @@
-const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
-const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
-const form = document.getElementById("form-asociar");
-const selectCampeonato = document.getElementById("campeonato");
-const listaEquipos = document.getElementById("lista-equipos");
-const mensaje = document.getElementById("mensaje");
+document.addEventListener("DOMContentLoaded", () => {
+  const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
+  const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
+  const form = document.getElementById("form-asociar-equipos");
+  const listaEquipos = document.getElementById("equipos-disponibles");
+  const mensaje = document.getElementById("mensaje-asociar");
+  const selectCampeonato = null; // No hay select, se asocia desde el botón en la lista
 
-// Cargar campeonatos al <select>
-campeonatos.forEach((c, i) => {
-  const option = document.createElement("option");
-  option.value = i;
-  option.textContent = `${c.nombre} - ${c.categoria}`;
-  selectCampeonato.appendChild(option);
-});
+  // Renderizar campeonatos en la lista principal
+  function renderizarCampeonatos() {
+    const lista = document.getElementById('lista-items');
+    lista.innerHTML = '';
+    if (!campeonatos || campeonatos.length === 0) {
+      document.getElementById('mensaje-no-items').style.display = '';
+      return;
+    }
+    document.getElementById('mensaje-no-items').style.display = 'none';
+    campeonatos.forEach((c, idx) => {
+      const div = document.createElement('div');
+      div.className = 'campeonato-item';
+      div.innerHTML = `
+        <strong>${c.nombre}</strong> - ${c.categoria} - ${c.fecha} - ${c.sede}
+        <button class="btn-asociar" data-index="${idx}">Asociar equipos</button>
+      `;
+      lista.appendChild(div);
+    });
 
-selectCampeonato.addEventListener("change", () => {
-  const index = selectCampeonato.value;
-  listaEquipos.innerHTML = "";
-  mensaje.textContent = "";
-
-  if (index === "") return;
-
-  const categoria = campeonatos[index].categoria;
-  const equiposFiltrados = equipos.filter(e => e.categoria === categoria);
-
-  if (equiposFiltrados.length < 4) {
-    mensaje.textContent = `No hay suficientes equipos en la categoría "${categoria}". Mínimo 4.`;
-    return;
+    // Asignar evento a los botones de asociar
+    document.querySelectorAll('.btn-asociar').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = this.getAttribute('data-index');
+        mostrarAsociarEquipos(idx);
+      });
+    });
   }
 
-  equiposFiltrados.forEach((e, i) => {
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "equipo";
-    checkbox.value = e.nombre;
-    label.appendChild(checkbox);
-    label.append(` ${e.nombre}`);
-    listaEquipos.appendChild(label);
-    listaEquipos.appendChild(document.createElement("br"));
+  // Mostrar sección para asociar equipos
+  function mostrarAsociarEquipos(idxCampeonato) {
+    const section = document.getElementById('asociar-equipos-section');
+    const equiposDisponiblesDiv = document.getElementById('equipos-disponibles');
+    const mensaje = document.getElementById('mensaje-asociar');
+    mensaje.textContent = '';
+    equiposDisponiblesDiv.innerHTML = '';
+
+    const campeonato = campeonatos[idxCampeonato];
+    if (!campeonato) return;
+
+    // Filtrar equipos por categoría
+    const equiposFiltrados = equipos.filter(e => e.categoria === campeonato.categoria);
+
+    if (equiposFiltrados.length < 1) {
+      equiposDisponiblesDiv.innerHTML = `<p>No hay suficientes equipos en la categoría "${campeonato.categoria}". Mínimo 1.</p>`;
+      section.style.display = '';
+      return;
+    }
+
+    equiposFiltrados.forEach(e => {
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.name = 'equipo';
+      checkbox.value = e.nombre;
+      // Si ya está asociado, marcarlo
+      if (campeonato.equiposAsociados && campeonato.equiposAsociados.includes(e.nombre)) {
+        checkbox.checked = true;
+      }
+      label.appendChild(checkbox);
+      label.append(` ${e.nombre}`);
+      equiposDisponiblesDiv.appendChild(label);
+      equiposDisponiblesDiv.appendChild(document.createElement('br'));
+    });
+
+    // Guardar el índice del campeonato seleccionado en el form para el submit
+    form.setAttribute('data-campeonato-idx', idxCampeonato);
+    section.style.display = '';
+  }
+
+  // Evento para guardar equipos asociados
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const idx = form.getAttribute('data-campeonato-idx');
+    if (idx === null) return;
+
+    const seleccionados = Array.from(document.querySelectorAll("#equipos-disponibles input[name='equipo']:checked"))
+      .map(cb => cb.value);
+
+    if (seleccionados.length < 1) {
+      mensaje.textContent = "Debes seleccionar al menos 1 equipo para asociar.";
+      return;
+    }
+
+    campeonatos[idx].equiposAsociados = seleccionados;
+    localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
+    mensaje.textContent = "Equipos asociados correctamente al campeonato.";
+    alert('Equipos guardados correctamente.');
+    form.reset();
+    document.getElementById('asociar-equipos-section').style.display = 'none';
+    renderizarCampeonatos();
   });
-});
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const index = selectCampeonato.value;
-  if (index === "") return;
-
-  const seleccionados = Array.from(document.querySelectorAll("input[name='equipo']:checked"))
-    .map(cb => cb.value);
-
-  if (seleccionados.length < 4) {
-    mensaje.textContent = "Debes seleccionar al menos 4 equipos para asociar.";
-    return;
-  }
-
-  // Si quieres guardar objetos completos en vez de solo nombres:
-  campeonatos[index].equiposAsociados = equipos.filter(e => seleccionados.includes(e.nombre));
-  localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
-  mensaje.textContent = "Equipos asociados correctamente al campeonato.";
-  alert('Equipo guardado correctamente.');
-  form.reset();
-  listaEquipos.innerHTML = "";
+  // Inicializar lista de campeonatos
+  renderizarCampeonatos();
 });
