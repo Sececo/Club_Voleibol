@@ -233,8 +233,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Escuchar cambios en fecha de nacimiento
+  // Limitar fecha de nacimiento a hoy como máximo
   const fechaNacimientoInput = document.getElementById('fecha_nacimiento');
+  if (fechaNacimientoInput) {
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    fechaNacimientoInput.max = `${yyyy}-${mm}-${dd}`;
+  }
+
+  // Escuchar cambios en fecha de nacimiento
   if (fechaNacimientoInput) {
     fechaNacimientoInput.addEventListener('change', controlarEdadYDocumento);
     fechaNacimientoInput.addEventListener('input', controlarEdadYDocumento);

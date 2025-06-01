@@ -80,6 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // Validar que haya al menos 1 equipo inscrito (ajusta según tu lógica)
+    const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
+    if (equipos.length < 1) {
+      alert("Debe haber al menos 1 equipo registrado para crear un campeonato.");
+      return;
+    }
+
     // Obtener el ID actual del input (siempre el siguiente disponible)
     const id = idInput.value;
 
