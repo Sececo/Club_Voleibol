@@ -70,40 +70,8 @@ console.log("hola mundo"),
     contenedor.innerHTML = "";
     let items = JSON.parse(localStorage.getItem(claveLS)) || [];
 
-        // Si no hay elementos, mostrar mensaje y salir
-        if (items.length === 0) {
-            mensajeNoItems.style.display = "block";
-            filtroContainer.innerHTML = "";
-            return;
-        } else {
-            mensajeNoItems.style.display = "none";
-            // Crear filtro de categorías si no existe
-            if (!document.getElementById("categoria-select")) {
-                const categorias = [...new Set(items.map(i => i[filtroClave]))];
-                filtroContainer.innerHTML = `
-                    <div class="filter-container">
-                        <label for="categoria-select">Filtrar por categoría:</label>
-                        <select id="categoria-select" class="filtro-select">
-                            <option value="todas">Selecciona</option>
-                            ${categorias.map(cat => `<option value="${cat}">${cat}</option>`).join("")}
-                        </select>
-                    </div>
-                `;
-                document.getElementById("categoria-select").addEventListener("change", e => {
-                    mostrarItems(e.target.value);
-                });
-                const currentFilter = urlParams.get("filtroCategoria") || "todas";
-                document.getElementById("categoria-select").value = currentFilter;
-            }
 
-            // Actualizar valor del filtro si cambió
-            const categoriaSelect = document.getElementById("categoria-select");
-            if (categoriaSelect && categoriaSelect.value !== filtro) {
-                categoriaSelect.value = filtro;
-                }
-            }
-
-        // Filtrar elementos según categoría seleccionada
+// Filtrar elementos según categoría seleccionada
         const filtrados = filtro === "todas"
             ? items
             : items.filter(i => i[filtroClave] === filtro);
@@ -116,6 +84,8 @@ console.log("hola mundo"),
 
         // Mostrar cada elemento
         filtrados.forEach((item, idxFiltrado) => {
+
+
             // Buscar índice real en el array original
             const idxOriginal = items.findIndex(i => JSON.stringify(i) === JSON.stringify(item));
             if (idxOriginal === -1) return;
@@ -124,9 +94,11 @@ console.log("hola mundo"),
             let contenido = "";
             if (tipo === "deportistas") {
                 contenido = `
-                    <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
-                    <p><strong>Categoría:</strong> ${item.categoria}</p>
-                    <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
+                    <container class="containerjs">
+                        <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
+                        <p><strong>Categoría:</strong> ${item.categoria}</p>
+                        <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
+                    
                 `;
             } else if (tipo === "campeonatos") {
                 contenido = `
@@ -143,6 +115,8 @@ console.log("hola mundo"),
                 `;
             }
 
+
+
             // Crear div para el elemento
             const div = document.createElement("div");
             div.classList.add("item");
@@ -150,11 +124,51 @@ console.log("hola mundo"),
                 ${contenido}
                 ${
                     modo === "consultar"
-                    ? `<button class="btn btn-descargar" data-index="${idxOriginal}">Descargar PDF</button>`
+                    ? `<button class="btn btn-descargar" id= "btnjs" data-index="${idxOriginal}">Descargar PDF</button>`
                     : `<button class="btn btn-eliminar" data-index="${idxOriginal}">Eliminar</button>`
                 }
             `;
             contenedor.appendChild(div);
+
+
+
+
+        // Si no hay elementos, mostrar mensaje y salir
+        if (items.length === 0) {
+            mensajeNoItems.style.display = "block";
+            filtroContainer.innerHTML = "";
+            return;
+        } else {
+            mensajeNoItems.style.display = "none";
+            // Crear filtro de categorías si no existe
+            if (!document.getElementById("categoria-select")) {
+                const categorias = [...new Set(items.map(i => i[filtroClave]))];
+                filtroContainer.innerHTML = `
+                    <div class="filter-container">
+                        <label for="categoria-select">Filtrar por categoría:</label>
+                        <select id="categoria-select" class="filtro-select">
+                            <option value="todas">Todas</option>
+                            ${categorias.map(cat => `<option value="${cat}">${cat}</option>`).join("")}
+                        </select>
+                    </div>
+                `;
+                document.getElementById("categoria-select").addEventListener("change", e => {
+                    mostrarItems(e.target.value);
+                });
+                const urlParams = new URLSearchParams(window.location.search);
+
+                const currentFilter = urlParams.get("filtroCategoria") || "todas";
+                document.getElementById("categoria-select").value = currentFilter;
+            }
+
+            // Actualizar valor del filtro si cambió
+            const categoriaSelect = document.getElementById("categoria-select");
+            if (categoriaSelect && categoriaSelect.value !== filtro) {
+                categoriaSelect.value = filtro;
+                }
+            }
+
+        
         });
 
         // Asignar eventos a los botones según el modo

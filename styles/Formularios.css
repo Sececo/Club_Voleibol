@@ -8,18 +8,21 @@
 body {
   font-family: 'Inter', sans-serif;
   background: #0C2461; /* Azul oscuro */
-  margin: 0;
+  margin: auto;
   color: #000; /* Negro */
-  display: flex;
+  
   justify-content: center;
-  align-items: flex-start;
+  
   min-height: 100vh;
   padding: 40px 15px;
 }
 
-.container {
+
+
+.container, .containerjs {
   background: #fff; /* Blanco */
-  max-width: 700px;
+  margin:auto;
+  max-width: 80%;
   width: 100%;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -29,13 +32,44 @@ body {
   gap: 30px;
 }
 
-header h1 {
-  margin: 0;
-  font-weight: 700;
-  font-size: 2.2rem;
-  color: #0C2461; /* Naranja intenso */
-  text-align: center;
+.containerjs {
+  font-size: 1.3rem;
+  padding: 3px;
+  box-shadow: 0 3px 20px#0C2461;
+  border-left: solid  4px #E85B26 ;
+  border-radius: 2px 12px 12px 2px ;
+  margin-top: 30px;
+  padding: 5px 10px 10px 10px;
 }
+
+.containerjs p{
+  padding: 5px 0;
+  margin: 0;
+  
+}
+
+header {
+  padding-top: 10px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  max-width: 85%;
+  margin:auto;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-size: 46px;
+}
+
+header p {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+
+
 
 .nav-buttons {
   display: grid;
@@ -49,7 +83,7 @@ header h1 {
   background: #E85B26;
   color: #FFF; /* Naranja */
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -70,12 +104,12 @@ form, main {
   gap: 30px;
 }
 
-.form-section {
+.form-section{
   border-top: 3px solid #0C2461; /* Naranja */
   padding-top: 20px;
 }
 
-.form-section h2 {
+.form-section h2{
   font-weight: 600;
   font-size: 1.3rem;
   margin-bottom: 20px;
@@ -134,7 +168,7 @@ select:focus {
   flex: 1;
 }
 
-.form-actions {
+.form-actions{
   display: flex;
   justify-content: center;
   gap: 25px;
@@ -143,19 +177,19 @@ select:focus {
   width: 100%;
 }
 
-.btn-primary {
+.btn-primary, #btnjs {
   background-color: #E85B26; /* Naranja */
   border: none;
-  color: white;
+  color: #fff;
   font-weight: 700;
   
   border-radius: 30px;
   cursor: pointer;
-  
+  border: 2px solid #BF4A1C; /* Naranja oscuro */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, #btnjs:hover {
   background-color: #BF4A1C; /* Naranja oscuro */
   box-shadow: 0 6px 25px #5c74b1;
   border: 2px solid #BF4A1C; /* Naranja oscuro */
@@ -180,6 +214,8 @@ select:focus {
   color: white;
   transition: background-color 0.35s ease, color 0.3s ease;
 }
+
+
 
 footer {
   position: relative;
@@ -215,10 +251,7 @@ footer {
     flex-direction: column;
   }
 
-  .container {
-    padding: 20px;
-    
-  }
+
 
   .btn-primary, .btn-secondary {
     padding: 10px 20px;
