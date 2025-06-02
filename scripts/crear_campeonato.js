@@ -1,115 +1,145 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("form-campeonato");
+  const form = document.getElementById("formCampeonato");
   const idInput = document.getElementById("id_campeonato");
 
   // Función para obtener el siguiente ID disponible
   function getNextId() {
     const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
     if (campeonatos.length === 0) return 100;
-    // Buscar el mayor ID existente y sumar 1
     return Math.max(...campeonatos.map(c => Number(c.id) || 100)) + 1;
   }
 
   // Mostrar el siguiente ID disponible
-  idInput.value = getNextId();
+  if (idInput) idInput.value = getNextId();
+
+  // Validadores
+  const validadores = {
+    nombre_campeonato: {
+      fn: val => /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(val) && val.length >= 3,
+      msg: 'Debe iniciar con mayúscula, mínimo 3 letras y solo letras/espacios.'
+    },
+    fecha: {
+      fn: val => !!val,
+      msg: 'Fecha obligatoria.'
+    },
+    hora: {
+      fn: val => /^\d{2}:\d{2}$/.test(val),
+      msg: 'Formato HH:MM.'
+    },
+    sede: {
+      fn: val => /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(val) && val.length >= 3,
+      msg: 'Debe iniciar con mayúscula, mínimo 3 letras y solo letras/espacios.'
+    },
+    categoria: {
+      fn: val => !!val,
+      msg: 'Seleccione categoría.'
+    }
+  };
+
+  Object.keys(validadores).forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.addEventListener('input', () => {
+        eliminarError(input);
+        if (!validadores[id].fn(input.value.trim())) {
+          mostrarError(input, validadores[id].msg);
+        }
+      });
+    }
+  });
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const nombre = document.getElementById("nombre-campeonato").value.trim();
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
-    const sede = document.getElementById("sede").value.trim();
-    const categoria = document.getElementById("categoria").value;
+    // Limpiar errores anteriores
+    form.querySelectorAll('.error-message').forEach(e => e.remove());
+    form.querySelectorAll('.input-error').forEach(i => i.classList.remove('input-error'));
 
-    const soloLetras = /^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/;
+    let errores = [];
 
-    if (!nombre || !fecha || !hora || !sede || !categoria) {
-      alert("Todos los campos son obligatorios.");
-      return;
-    }
-    if (!soloLetras.test(nombre) || nombre.length < 3) {
-      alert("El nombre del campeonato debe tener mínimo 3 letras, iniciar cada palabra con mayúscula y contener solo letras y espacios.");
-      return;
-    }
-    if (!soloLetras.test(sede) || sede.length < 3) {
-      alert("La sede debe tener mínimo 3 letras, iniciar cada palabra con mayúscula y contener solo letras y espacios.");
-      return;
-    }
+    Object.keys(validadores).forEach(id => {
+      const input = document.getElementById(id);
+      if (input && !validadores[id].fn(input.value.trim())) {
+        errores.push({input, msg: validadores[id].msg});
+      }
+    });
 
+    // Validaciones adicionales de fecha y hora
+    const fecha = document.getElementById("fecha");
+    const hora = document.getElementById("hora");
     const hoy = new Date();
-    const fechaInicio = new Date(fecha);
+    const fechaInicio = new Date(fecha.value);
     hoy.setHours(0, 0, 0, 0);
-
     const mañana = new Date(hoy);
     mañana.setDate(mañana.getDate() + 1);
-
     const maxFecha = new Date(hoy);
     maxFecha.setMonth(maxFecha.getMonth() + 6);
 
-    if (fechaInicio < mañana) {
-      alert("La fecha debe ser al menos a partir de mañana.");
-      return;
-    }
-    if (fechaInicio > maxFecha) {
-      alert("La fecha no puede ser mayor a 6 meses desde hoy.");
-      return;
+    if (fecha.value && (fechaInicio < mañana || fechaInicio > maxFecha)) {
+      errores.push({input: fecha, msg: "La fecha debe ser entre mañana y 6 meses desde hoy."});
     }
 
-    if (!/^\d{2}:\d{2}$/.test(hora)) {
-      alert("La hora debe tener el formato HH:MM.");
-      return;
-    }
-    const [horaInicio, minutos] = hora.split(":").map(Number);
-    if (
-      isNaN(horaInicio) || isNaN(minutos) ||
-      horaInicio < 8 || horaInicio > 20 ||
-      minutos < 0 || minutos > 59
-    ) {
-      alert("La hora debe estar entre las 08:00 y 20:00, y los minutos entre 00 y 59.");
-      return;
+    if (hora.value) {
+      const [horaInicio, minutos] = hora.value.split(":").map(Number);
+      if (
+        isNaN(horaInicio) || isNaN(minutos) ||
+        horaInicio < 8 || horaInicio > 20 ||
+        minutos < 0 || minutos > 59
+      ) {
+        errores.push({input: hora, msg: "Hora entre 08:00 y 20:00, minutos entre 00 y 59."});
+      }
     }
 
-    const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
-    const existe = campeonatos.some(c =>
-      c.nombre.toLowerCase() === nombre.toLowerCase() &&
-      c.fecha === fecha
-    );
-    if (existe) {
-      alert("Ya existe un campeonato con ese nombre y fecha.");
-      return;
-    }
-
-    // Validar que haya al menos 1 equipo inscrito (ajusta según tu lógica)
+    // Validar que haya al menos 1 equipo registrado
     const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
     if (equipos.length < 1) {
-      alert("Debe haber al menos 1 equipo registrado para crear un campeonato.");
-      return;
+      errores.push({input: document.getElementById("categoria"), msg: "Debe haber al menos 1 equipo registrado."});
     }
 
-    // Obtener el ID actual del input (siempre el siguiente disponible)
-    const id = idInput.value;
+    // Mostrar errores o guardar
+    if (errores.length > 0) {
+      errores.forEach(({input, msg}) => mostrarError(input, msg));
+      const primerError = form.querySelector('.input-error');
+      if (primerError) primerError.focus();
+      return false;
+    }
 
-    // Si todo es válido, guardar
+    // Recuperar campeonatos existentes
+    const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
+
+    // Crear el objeto campeonato
     const campeonato = {
-      id,
-      nombre,
-      fecha,
-      hora,
-      sede,
-      categoria,
-      estado: 'activo'
+      id: getNextId(),
+      nombre: document.getElementById("nombre_campeonato").value.trim(),
+      fecha: document.getElementById("fecha").value,
+      hora: document.getElementById("hora").value,
+      sede: document.getElementById("sede").value.trim(),
+      categoria: document.getElementById("categoria").value,
+      estado: 'activo',
+      equiposAsociados: [] // Para futuras asociaciones
     };
-
-    console.log("Guardando campeonato:", campeonato); // <-- Depuración
 
     campeonatos.push(campeonato);
     localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
 
-    alert("Campeonato creado exitosamente:\n" + JSON.stringify(campeonato, null, 2));
+    alert("¡Campeonato registrado correctamente!");
     form.reset();
-
-    // Mostrar el siguiente ID disponible después de guardar
-    idInput.value = getNextId();
+    if (idInput) idInput.value = getNextId();
+    window.location.href = "gestion_campeonatos.html?modo=consultar";
   });
+
+  function mostrarError(input, mensaje) {
+    eliminarError(input);
+    const error = document.createElement('small');
+    error.classList.add('error-message');
+    error.textContent = mensaje;
+    input.parentNode.appendChild(error);
+    input.classList.add('input-error');
+  }
+  function eliminarError(input) {
+    const parent = input.parentNode;
+    const error = parent.querySelector('.error-message');
+    if (error) parent.removeChild(error);
+    input.classList.remove('input-error');
+  }
 });

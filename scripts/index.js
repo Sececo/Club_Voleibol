@@ -1,9 +1,3 @@
-// Mostrar modal al hacer clic en "Registrarme"
-document.getElementById('registroLink').addEventListener('click', function(e) {
-  e.preventDefault();
-  document.getElementById('modalRegistro').style.display = 'flex';
-});
-
 // Redirección según tipo de registro
 function redirigirRegistro(tipo) {
   window.location.href = "usuario.html";
@@ -17,9 +11,6 @@ window.onclick = function(event) {
   }
 };
 
-
-
-
 // Cargar datos si están guardados (Recordarme)
 window.addEventListener("DOMContentLoaded", () => {
   const savedEmail = localStorage.getItem("email");
@@ -31,45 +22,68 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Función para mostrar error debajo del campo
+function mostrarError(input, mensaje) {
+  eliminarError(input);
+  input.classList.add('input-error');
+  const error = document.createElement('div');
+  error.className = 'input-error-msg';
+  error.textContent = mensaje;
+  input.parentNode.appendChild(error);
+}
+
+// Función para eliminar error
+function eliminarError(input) {
+  input.classList.remove('input-error');
+  const error = input.parentNode.querySelector('.input-error-msg');
+  if (error) error.remove();
+}
+
 // Validar e iniciar sesión con verificación de usuario registrado
 document.getElementById('loginForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
+  const emailOrUser = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const recordar = document.querySelector("#cb input").checked;
   const errorMsg = document.getElementById('error-msg');
 
-  // Validación del correo
-  if (!email.includes('@') || email.includes(' ')) {
-    errorMsg.textContent = "Por favor, introduce un correo electrónico válido.";
+  // Validar campos vacíos
+  if (emailOrUser === "" || password === "") {
+    errorMsg.textContent = "Por favor, completa todos los campos.";
     return;
   }
 
-  // Validación de contraseña vacía
-  if (password.trim() === "") {
-    errorMsg.textContent = "La contraseña no puede estar vacía.";
+  // Buscar en deportistas (por correo o usuario)
+  const deportistas = JSON.parse(localStorage.getItem("deportistas")) || [];
+  const deportista = deportistas.find(d =>
+    (d.email === emailOrUser || d.usuario === emailOrUser) && d.password === password
+  );
+
+  // Si existe como deportista (usuario o correo), permite el login sin validar correo
+  if (deportista) {
+    localStorage.setItem("email", deportista.email);
+    localStorage.setItem("usuario", deportista.usuario);
+    window.location.href = "Deportista.html";
     return;
   }
 
-  // Verificar si el usuario está registrado
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password);
+  // Buscar en administradores (solo por correo)
+  const administradores = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const admin = administradores.find(u => u.email === emailOrUser && u.password === password);
 
-  if (!usuarioEncontrado) {
-    errorMsg.textContent = "Debes registrarte primero para poder iniciar sesión.";
+  // Si no es deportista, exige correo válido para admin
+  const esCorreoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrUser);
+  if (!esCorreoValido) {
+    errorMsg.textContent = "Ingresa un correo válido.";
     return;
   }
 
-  // Guardar en localStorage si se seleccionó "Recordarme"
-  if (recordar) {
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-  } else {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+  if (admin) {
+    localStorage.setItem("email", admin.email);
+    window.location.href = "principal.html";
+    return;
   }
 
-  // Redirige a la página de inicio
-  window.location.href = "principal.html";
+  errorMsg.textContent = "Credenciales incorrectas. Intenta de nuevo.";
 });

@@ -145,4 +145,39 @@ button:hover {
   background-color: #003f7d;
 }
 
+.msg-error, .input-error-msg {
+  color: #d32f2f;
+  font-size: 0.9em;
+  margin: 4px 0 0 0;
+  padding: 0;
+}
+.input-error {
+  border: 1px solid #d32f2f;
+}
+
 /* Aquí puedes agregar estilos para login-box, inputs, etc. */
+
+/* Medidor de contraseña */
+#password-strength {
+  height: 8px;
+  width: 100%;
+  background: #eee;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+#password-strength-bar {
+  height: 100%;
+  width: 0%;
+  background: red;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+#password-strength-text {
+  display: block;
+  margin-top: 2px;
+  color: #888;
+}
+#msg-confirm-password {
+  color: red;
+  font-size: 0.9em;
+}

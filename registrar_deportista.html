@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
-
 </head>
 <body>
 
@@ -21,18 +20,20 @@
       <button class="btn-secondary" title="Volver a Lista de Deportistas" onclick="location.href='deportistas.html'">
         <i class="fas fa-arrow-left"></i>
       </button>
-      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
+      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
         <i class="fas fa-home"></i>
       </button>
     </nav>
+
+    <!-- Título fuera del formulario -->
+    <h2 style="text-align:center; color:#0C2461; margin-bottom: 0;">Datos del Deportista</h2>
 
     <main>
       <form id="formDeportista" autocomplete="off" novalidate>
         <input type="hidden" id="id_deportista" name="id_deportista" />
 
+        <!-- El resto del formulario inicia aquí, elimina el h2 de "Datos del Deportista" dentro del form -->
         <section class="form-section">
-          <h2>Datos del Deportista</h2>
-
           <div class="form-group">
             <label for="nombres">Nombres *</label>
             <input type="text" id="nombres" name="nombres" required />
@@ -93,8 +94,8 @@
           </div>
 
           <div class="form-group">
-            <label for="email">Correo Electrónico *</label>
-            <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com" />
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" name="email" required autocomplete="off" />
           </div>
 
           <div class="form-group">

@@ -81,6 +81,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Validadores
+  const validadores = {
+    nombre_equipo: {
+      fn: val => /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(val) && val.length >= 3,
+      msg: 'Debe iniciar con mayúscula, mínimo 3 letras y solo letras/espacios.'
+    },
+    entrenador: {
+      fn: val => /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(val) && val.length >= 3,
+      msg: 'Debe iniciar con mayúscula, mínimo 3 letras y solo letras/espacios.'
+    },
+    telefono_entrenador: {
+      fn: val => /^\+?[\d\s-]{7,15}$/.test(val),
+      msg: 'Teléfono no válido.'
+    },
+    email_entrenador: {
+      fn: val => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+      msg: 'Correo no válido.'
+    }
+  };
+
+  Object.keys(validadores).forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.addEventListener('input', () => {
+        eliminarError(input);
+        if (!validadores[id].fn(input.value.trim())) {
+          mostrarError(input, validadores[id].msg);
+        }
+      });
+    }
+  });
+
   // Validaciones estrictas
   function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -204,7 +236,34 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (!validarFormulario()) return;
+    // Limpiar errores anteriores
+    form.querySelectorAll('.error-message').forEach(e => e.remove());
+    form.querySelectorAll('.input-error').forEach(i => i.classList.remove('input-error'));
+
+    let errores = [];
+
+    // Validar campos principales
+    Object.keys(validadores).forEach(id => {
+      const input = document.getElementById(id);
+      if (input && !validadores[id].fn(input.value.trim())) {
+        errores.push({input, msg: validadores[id].msg});
+      }
+    });
+
+    if (!categoriaEquipo.value) errores.push({input: categoriaEquipo, msg: 'Seleccione la categoría.'});
+    if (!sexoEquipo.value) errores.push({input: sexoEquipo, msg: 'Seleccione el sexo.'});
+    if (jugadoresAgregados.length === 0)
+      errores.push({input: selectJugadores, msg: 'Debe seleccionar al menos un jugador.'});
+    if (jugadoresAgregados.length > 12)
+      errores.push({input: selectJugadores, msg: 'Máximo 12 jugadores por equipo.'});
+
+    // Mostrar errores o guardar
+    if (errores.length > 0) {
+      errores.forEach(({input, msg}) => mostrarError(input, msg));
+      const primerError = form.querySelector('.input-error');
+      if (primerError) primerError.focus();
+      return false;
+    }
 
     const equipo = {
       nombre: document.getElementById('nombre_equipo').value.trim(),
@@ -230,6 +289,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar lista de jugadores disponibles al cargar
   cargarJugadoresDisponibles();
 });
+
+function mostrarError(input, mensaje) {
+  eliminarError(input);
+  const error = document.createElement('small');
+  error.classList.add('error-message');
+  error.textContent = mensaje;
+  input.parentNode.appendChild(error);
+  input.classList.add('input-error');
+}
+function eliminarError(input) {
+  const parent = input.parentNode;
+  const error = parent.querySelector('.error-message');
+  if (error) parent.removeChild(error);
+  input.classList.remove('input-error');
+}
 
 localStorage.setItem('deportistas', JSON.stringify(array));
 localStorage.setItem('jugadores', JSON.stringify(array));

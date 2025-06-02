@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const modo = new URLSearchParams(window.location.search).get("modo") || "consultar";
+  const section = document.getElementById('asociar-equipos-section');
+  if (section) {
+    section.style.display = (modo === "consultar") ? "block" : "none";
+  }
+
   const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
   const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
   const form = document.getElementById("form-asociar-equipos");
@@ -35,44 +41,110 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Mostrar sección para asociar equipos
-  function mostrarAsociarEquipos(idxCampeonato) {
-    const section = document.getElementById('asociar-equipos-section');
-    const equiposDisponiblesDiv = document.getElementById('equipos-disponibles');
-    const mensaje = document.getElementById('mensaje-asociar');
-    mensaje.textContent = '';
-    equiposDisponiblesDiv.innerHTML = '';
-
+  window.mostrarAsociarEquipos = function(idxCampeonato) {
+    const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
+    const equipos = JSON.parse(localStorage.getItem("equipos")) || [];
     const campeonato = campeonatos[idxCampeonato];
     if (!campeonato) return;
 
-    // Filtrar equipos por categoría
-    const equiposFiltrados = equipos.filter(e => e.categoria === campeonato.categoria);
+    // Solo equipos de la misma categoría y que no estén ya agregados
+    const equiposDisponibles = equipos.filter(eq =>
+        eq.categoria === campeonato.categoria &&
+        !(campeonato.equiposAsociados || []).includes(eq.nombre)
+    );
+    // Equipos ya asociados
+    const equiposAgregados = (campeonato.equiposAsociados || []).map(nombre => {
+        return equipos.find(eq => eq.nombre === nombre);
+    }).filter(Boolean);
 
-    if (equiposFiltrados.length < 1) {
-      equiposDisponiblesDiv.innerHTML = `<p>No hay suficientes equipos en la categoría "${campeonato.categoria}". Mínimo 1.</p>`;
-      section.style.display = '';
-      return;
+    const section = document.getElementById('asociar-equipos-section');
+    if (!section) return;
+
+    section.innerHTML = `
+        <h3>Asociar equipos a: ${campeonato.nombre}</h3>
+        <form id="form-asociar-equipos" autocomplete="off">
+            <div class="form-group">
+                <label for="equipos-disponibles">Equipos disponibles (${campeonato.categoria}):</label>
+                <select id="equipos-disponibles">
+                    <option value="" disabled selected>Seleccione un equipo</option>
+                    ${equiposDisponibles.map(eq => `<option value="${eq.nombre}">${eq.nombre}</option>`).join("")}
+                </select>
+                <button type="button" class="btn-add" id="btn-add-equipo">+</button>
+                <button type="button" class="btn-remove" id="btn-remove-equipo">−</button>
+            </div>
+            <div id="equipos-agregados" class="lista-equipos" style="margin-bottom:1em;">
+                ${equiposAgregados.map(eq => `<div>${eq.nombre}</div>`).join("")}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Guardar Asociación</button>
+                <button type="button" class="btn-secondary" id="cancelar-asociar">Cancelar</button>
+            </div>
+        </form>
+    `;
+    section.style.display = "block";
+
+    // Lógica para agregar y quitar equipos
+    const selectEquipos = document.getElementById('equipos-disponibles');
+    const listaEquipos = document.getElementById('equipos-agregados');
+    const btnAdd = document.getElementById('btn-add-equipo');
+    const btnRemove = document.getElementById('btn-remove-equipo');
+    let equiposAsociados = equiposAgregados.map(eq => eq.nombre);
+
+    function renderizarLista() {
+        listaEquipos.innerHTML = '';
+        equiposAsociados.forEach(nombre => {
+            const div = document.createElement('div');
+            div.textContent = nombre;
+            listaEquipos.appendChild(div);
+        });
     }
 
-    equiposFiltrados.forEach(e => {
-      const label = document.createElement('label');
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.name = 'equipo';
-      checkbox.value = e.nombre;
-      // Si ya está asociado, marcarlo
-      if (campeonato.equiposAsociados && campeonato.equiposAsociados.includes(e.nombre)) {
-        checkbox.checked = true;
-      }
-      label.appendChild(checkbox);
-      label.append(` ${e.nombre}`);
-      equiposDisponiblesDiv.appendChild(label);
-      equiposDisponiblesDiv.appendChild(document.createElement('br'));
+    btnAdd.addEventListener('click', () => {
+        const seleccionado = selectEquipos.value;
+        if (!seleccionado) {
+            alert('Seleccione un equipo para agregar.');
+            return;
+        }
+        if (equiposAsociados.includes(seleccionado)) {
+            alert('Este equipo ya fue agregado.');
+            return;
+        }
+        equiposAsociados.push(seleccionado);
+        renderizarLista();
+        // Quitar del select
+        selectEquipos.querySelector(`option[value="${seleccionado}"]`).remove();
+        selectEquipos.value = '';
     });
 
-    // Guardar el índice del campeonato seleccionado en el form para el submit
-    form.setAttribute('data-campeonato-idx', idxCampeonato);
-    section.style.display = '';
+    btnRemove.addEventListener('click', () => {
+        const seleccionado = selectEquipos.value;
+        if (!seleccionado) {
+            alert('Seleccione un equipo para quitar.');
+            return;
+        }
+        const idx = equiposAsociados.indexOf(seleccionado);
+        if (idx > -1) {
+            equiposAsociados.splice(idx, 1);
+            // Volver a poner en el select
+            const option = document.createElement('option');
+            option.value = seleccionado;
+            option.textContent = seleccionado;
+            selectEquipos.appendChild(option);
+            renderizarLista();
+        }
+    });
+
+    document.getElementById("form-asociar-equipos").onsubmit = function(e) {
+        e.preventDefault();
+        campeonatos[idxCampeonato].equiposAsociados = equiposAsociados;
+        localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
+        alert("¡Equipos asociados correctamente!");
+        section.style.display = "none";
+    };
+
+    document.getElementById("cancelar-asociar").onclick = function() {
+        section.style.display = "none";
+    };
   }
 
   // Evento para guardar equipos asociados

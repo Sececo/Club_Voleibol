@@ -5,9 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const mensajeNoItems = document.getElementById("mensaje-no-items");
     const filtroContainer = document.getElementById("filtro-categorias");
 
+    // Detectar tipo desde el atributo data-tipo del body
+    const tipo = document.body.getAttribute("data-tipo");
+
     // Claves en localStorage según tipo
     const clavesStorage = {
-        deportistas: "jugadores",
+        deportistas: "deportistas",
         campeonatos: "campeonatos",
         equipos: "equipos"
     };
@@ -33,4 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const claveLS = clavesStorage[tipo];
     const filtroClave = campos[tipo].filtro;
-}
+
+    // ...el resto de tu código...
+});
+

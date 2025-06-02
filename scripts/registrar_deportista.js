@@ -318,7 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!/^\+?[\d\s-]{7,15}$/.test(telefono)) errores.push({input: 'telefono', msg: 'Teléfono inválido.'});
     if (!tipoDocumento) errores.push({input: 'tipo_documento', msg: 'Seleccione tipo documento.'});
     if (!/^\d+$/.test(documento)) errores.push({input: 'documento', msg: 'Documento debe ser numérico.'});
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errores.push({input: 'email', msg: 'Email inválido.'});
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errores.push({input: 'email', msg: 'Email inválido.'});
+    }
     if (!categoria) errores.push({input: 'categoria', msg: 'Seleccione categoría.'});
 
     // Validar representante solo si visible y mayor de edad (por si acaso)
@@ -368,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nombres,
         apellidos,
         usuario,
+        password: document.getElementById('password').value,
         fecha_nacimiento: fechaNacimiento,
         sexo,
         telefono,
@@ -375,12 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
         documento,
         email,
         categoria,
-        pago: false, // o true si corresponde
+        pago: true, // Pago activo al registrar
+        fechaPago: new Date().toISOString(), // Fecha de inicio del contador
+        pdfPagos: [], // Array de comprobantes de pago
         estado: 'activo',
         // ...otros campos...
       };
       deportistas.push(nuevoDeportista);
-      // Guardar en ambas claves
       guardarDeportistas(deportistas);
       alert('Deportista registrado correctamente');
       form.reset();
@@ -392,4 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('deportistas', JSON.stringify(arrayDeDeportistas));
     localStorage.setItem('jugadores', JSON.stringify(arrayDeDeportistas));
   }
+
+  console.log(JSON.parse(localStorage.getItem('deportistas')));
 });

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles/Gestiones.css" />
 </head>
 <body data-tipo="campeonatos">
-
     <header>
         <h1>Gestión de Campeonatos</h1>
     </header>
@@ -15,7 +14,7 @@
         <button class="btn-secondary" title="Volver a Campeonatos" onclick="location.href='campeonatos.html'">
         &#8592; Volver a Campeonatos
         </button>
-        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
+        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
         &#8962; Inicio
         </button>
     </nav>
@@ -26,18 +25,14 @@
         <p id="mensaje-no-items" style="display:none;">No hay campeonatos registrados.</p>
         <!-- Aquí se mostrará la sección de asociación de equipos -->
         <div id="asociar-equipos-section" style="display:none; margin-top:2em;">
-            <h3>Asociar Equipos al Campeonato</h3>
-            <form id="form-asociar-equipos">
-                <div id="equipos-disponibles"></div>
-                <button type="submit" class="btn">Guardar Equipos Asociados</button>
-            </form>
-            <p id="mensaje-asociar"></p>
         </div>
     </main>
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-    <script src="scripts/Gestiones.js"></script>
+    <script src="scripts/mostrar_items.js" type="module"></script>
+    <script src="scripts/eliminar_item.js" type="module"></script>
+    <script src="scripts/descargarPDF.js" type="module"></script>
     <script src="scripts/asociar equipo.js"></script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pagar Mensualidad - Club Voleibol</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="styles/principal.css" />
+  <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
+</head>
+<body>
+  <header>
+    <h1>Pagar Mensualidad</h1>
+  </header>
+  <main>
+    <div class="pago-box">
+      <h2>Subir comprobante de pago</h2>
+      <div class="estado-pago" id="estado-pago"></div>
+      <div class="subir-pago">
+        <input type="file" id="pdf-pago" accept="application/pdf" />
+        <button id="btn-subir-pago" class="btn">Agregar pago</button>
+        <ul id="lista-pdfs"></ul>
+      </div>
+    </div>
+  </main>
+  <nav class="nav-buttons">
+    <button type="button" class="btn-nav" onclick="location.href='Deportista.html'" title="Volver">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </nav>
+  <footer>
+    <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol - Todos los derechos reservados.</i>
+  </footer>
+  <script src="scripts/pago_mensualidad.js"></script>
+</body>
+</html>

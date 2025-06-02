@@ -1,21 +1,22 @@
-    // --- FUNCIÓN PRINCIPAL: MOSTRAR ITEMS ---
+// --- FUNCIÓN PRINCIPAL: MOSTRAR ITEMS ---
     /**
      * Muestra los elementos en pantalla, con opción de filtrar por categoría.
      * Si el modo es "eliminar", muestra botón para eliminar.
      * Si el modo es "consultar", muestra botón para descargar PDF.
      */
 
-import { tipoyModo }  from "/scripts/Gestiones.js";
-    const { tipo, modo } = tipoyModo();
+import { tipoyModo }  from "./Gestiones.js";
 import { eliminarItem } from "./eliminar_item.js";
-import  { descargarPDF }  from "/scripts/descargarPDF.js";
+import { descargarPDF }  from "./descargarPDF.js";
+
+const { tipo, modo } = tipoyModo();
 
 console.log("Tipo:", tipo);
 console.log("Modo:", modo);
     
 
 // --- INICIALIZACIÓN Y CONFIGURACIÓN ---
-(async function mostrarItems(filtro="todas") {
+export async function mostrarItems(filtro="todas") {
 
     const contenedor = document.getElementById("lista-items");
     const mensajeNoItems = document.getElementById("mensaje-no-items");
@@ -23,7 +24,7 @@ console.log("Modo:", modo);
 
     // Claves en localStorage según tipo
     const clavesStorage = {
-        deportistas: "jugadores",
+        deportistas: "deportistas", // <-- Cambia aquí
         campeonatos: "campeonatos",
         equipos: "equipos"
     };
@@ -98,8 +99,7 @@ console.log("hola mundo"),
                         <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
                         <p><strong>Categoría:</strong> ${item.categoria}</p>
                         <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
-                    
-                `;
+                    `;
             } else if (tipo === "campeonatos") {
                 contenido = `
                     <p><strong>Nombre:</strong> ${item.nombre}</p>
@@ -120,16 +120,32 @@ console.log("hola mundo"),
             // Crear div para el elemento
             const div = document.createElement("div");
             div.classList.add("item");
-            div.innerHTML = `
-                ${contenido}
-                ${
-                    modo === "consultar"
-                    ? `<button class="btn btn-descargar" id= "btnjs" data-index="${idxOriginal}">Descargar PDF</button>`
-                    : `<button class="btn btn-eliminar" data-index="${idxOriginal}">Eliminar</button>`
-                }
-            `;
-            contenedor.appendChild(div);
-
+            // --- Cambia solo esta parte ---
+if (modo === "consultar" && tipo === "campeonatos") {
+    div.innerHTML = `
+        ${contenido}
+        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
+        <button class="btn btn-asociar" type="button" onclick="window.mostrarAsociarEquipos(${idxOriginal})">Asociar equipos</button>
+    `;
+} else if (modo === "consultar" && tipo === "deportistas") {
+    div.innerHTML = `
+        ${contenido}
+        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
+        <button class="btn btn-editar" type="button" onclick="window.mostrarEditarDeportista(${idxOriginal})">Editar</button>
+    `;
+} else if (modo === "consultar") {
+    div.innerHTML = `
+        ${contenido}
+        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
+    `;
+} else {
+    div.innerHTML = `
+        ${contenido}
+        <button class="btn btn-eliminar" data-index="${idxOriginal}">Eliminar</button>
+    `;
+}
+contenedor.appendChild(div);
+// --- Fin del cambio ---
 
 
 
@@ -176,19 +192,52 @@ console.log("hola mundo"),
             document.querySelectorAll(".btn-descargar").forEach(btn => {
                 btn.addEventListener("click", e => {
                     const idx = parseInt(e.target.getAttribute("data-index"));
-                    descargarPDF(idx);
+                    const item = filtrados[idxFiltrado];
+                    let contenido = "";
+                    if (tipo === "deportistas") {
+                        contenido = `
+                            <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
+                            <p><strong>Categoría:</strong> ${item.categoria}</p>
+                            <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
+                        `;
+                    } else if (tipo === "campeonatos") {
+                        contenido = `
+                            <p><strong>Nombre:</strong> ${item.nombre}</p>
+                            <p><strong>Categoría:</strong> ${item.categoria}</p>
+                            <p><strong>Fecha:</strong> ${item.fecha}</p>
+                            <p><strong>Estado:</strong> ${item.estado}</p>
+                        `;
+                    } else if (tipo === "equipos") {
+                        contenido = `
+                            <p><strong>Nombre:</strong> ${item.nombre}</p>
+                            <p><strong>Categoría:</strong> ${item.categoria}</p>
+                            <p><strong>Estado:</strong> ${item.estado}</p>
+                        `;
+                    }
+                    descargarPDF(campos[tipo].titulo + " - " + (item.nombres || item.nombre), contenido, (item.nombres || item.nombre) + ".pdf");
                 });
             });
         } else if (modo === "eliminar") {
             document.querySelectorAll(".btn-eliminar").forEach(btn => {
                 btn.addEventListener("click", e => {
                     const idx = parseInt(e.target.getAttribute("data-index"));
-                    eliminarItem(idx);
+                    eliminarItem(idx, claveLS, () => mostrarItems(document.getElementById("categoria-select")?.value || "todas"));
+                });
+            });
+        } else if (modo === "consultar" && tipo === "campeonatos") {
+            document.querySelectorAll(".btn-asociar").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const idx = parseInt(e.target.getAttribute("data-index"));
+                    mostrarAsociarEquipos(idx);
                 });
             });
         }
-    })();
-        
+    }
+window.mostrarItems = mostrarItems; // Para poder llamarla desde otros scripts
+
+// Llamar a la función al cargar el documento  
+mostrarItems();
+
 console.log("Mostrando items...");
 // Llamar a la función al cargar el documento  
 // Esperar a que mostrarItems esté definida antes de llamarl
