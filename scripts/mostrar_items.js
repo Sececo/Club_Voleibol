@@ -1,13 +1,13 @@
 // --- FUNCIÓN PRINCIPAL: MOSTRAR ITEMS ---
-    /**
-     * Muestra los elementos en pantalla, con opción de filtrar por categoría.
-     * Si el modo es "eliminar", muestra botón para eliminar.
-     * Si el modo es "consultar", muestra botón para descargar PDF.
-     */
+/**
+ * Muestra los elementos en pantalla, con opción de filtrar por categoría.
+ * Si el modo es "eliminar", muestra botón para eliminar.
+ * Si el modo es "consultar", muestra botón para descargar PDF.
+ */
 
-import { tipoyModo }  from "./Gestiones.js";
 import { eliminarItem } from "./eliminar_item.js";
 import { descargarPDF }  from "./descargarPDF.js";
+import { editarDeportista } from "./editar_deportista.js";
 
 const { tipo, modo } = tipoyModo();
 
@@ -16,22 +16,17 @@ console.log("Modo:", modo);
     
 
 // --- INICIALIZACIÓN Y CONFIGURACIÓN ---
-export async function mostrarItems(filtro="todas") {
-
+export async function mostrarItems(filtro = "todas") {
     const contenedor = document.getElementById("lista-items");
     const mensajeNoItems = document.getElementById("mensaje-no-items");
     const filtroContainer = document.getElementById("filtro-categorias");
 
-    // Claves en localStorage según tipo
-    const clavesStorage = {
-        deportistas: "deportistas", // <-- Cambia aquí
-        campeonatos: "campeonatos",
-        equipos: "equipos"
+    // Define las rutas de la API según el tipo
+    const rutasAPI = {
+        deportistas: "http://localhost:3000/deportistas",
+        campeonatos: "http://localhost:3000/campeonatos",
+        equipos: "http://localhost:3000/equipos"
     };
-
-    console.log("Clave de localStorage:", clavesStorage[tipo]);
-    console.log("Filtro clave:", clavesStorage[tipo]);  
-
 
     // Campos para mostrar y filtrar según tipo
     const campos = {
@@ -52,191 +47,230 @@ export async function mostrarItems(filtro="todas") {
         }
     };
 
-    console.log("Campos a mostrar:", campos[tipo].camposMostrar);
-    console.log("Filtro clave:", campos[tipo].filtro);
+    // Obtén los datos desde el backend
+    let items = [];
+    try {
+        const res = await fetch(rutasAPI[tipo]);
+        items = await res.json();
+    } catch (err) {
+        contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
+        return;
+    }
 
-const claveLS = clavesStorage[tipo];
-const filtroClave = campos[tipo].filtro;
+    console.log("Deportistas recibidos:", items);
 
-console.log("Clave de localStorage:", claveLS);
-console.log("Filtro clave:", filtroClave);
+    // Filtrar elementos según categoría seleccionada
+    const filtroClave = campos[tipo].filtro; // "categoria"
+    const filtrados = filtro === "todas"
+        ? items
+        : items.filter(i => i[filtroClave] === filtro);
 
+    // Si no hay elementos en la categoría, mostrar mensaje
+    if (filtrados.length === 0) {
+        contenedor.innerHTML = "<p>No hay elementos en esta categoría.</p>";
+        return;
+    }
 
-
-
-
-console.log("hola mundo"),
-
-    console.log("Mostrando items con filtro:", filtro);
+    // Limpiar contenedor antes de renderizar
     contenedor.innerHTML = "";
-    let items = JSON.parse(localStorage.getItem(claveLS)) || [];
 
-
-// Filtrar elementos según categoría seleccionada
-        const filtrados = filtro === "todas"
-            ? items
-            : items.filter(i => i[filtroClave] === filtro);
-
-        // Si no hay elementos en la categoría, mostrar mensaje
-        if (filtrados.length === 0) {
-            contenedor.innerHTML = "<p>No hay elementos en esta categoría.</p>";
-            return;
+    // Mostrar cada elemento
+    filtrados.forEach((item) => {
+        let contenido = "";
+        if (tipo === "deportistas") {
+            contenido = `
+                <container class="containerjs">
+                    <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
+                    <p><strong>Categoría:</strong> ${item.categoria}</p>
+                    <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
+                </container>
+            `;
+        } else if (tipo === "campeonatos") {
+            contenido = `
+                <p><strong>Nombre:</strong> ${item.nombre}</p>
+                <p><strong>Categoría:</strong> ${item.categoria}</p>
+                <p><strong>Fecha:</strong> ${item.fecha}</p>
+                <p><strong>Estado:</strong> ${item.estado}</p>
+            `;
+        } else if (tipo === "equipos") {
+            contenido = `
+                <p><strong>Nombre:</strong> ${item.nombre}</p>
+                <p><strong>Categoría:</strong> ${item.categoria}</p>
+                <p><strong>Estado:</strong> ${item.estado}</p>
+            `;
         }
 
-        // Mostrar cada elemento
-        filtrados.forEach((item, idxFiltrado) => {
+        const div = document.createElement("div");
+        div.classList.add("item");
 
-
-            // Buscar índice real en el array original
-            const idxOriginal = items.findIndex(i => JSON.stringify(i) === JSON.stringify(item));
-            if (idxOriginal === -1) return;
-
-            // Construir contenido según tipo
-            let contenido = "";
-            if (tipo === "deportistas") {
-                contenido = `
-                    <container class="containerjs">
-                        <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
-                        <p><strong>Categoría:</strong> ${item.categoria}</p>
-                        <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
-                    `;
-            } else if (tipo === "campeonatos") {
-                contenido = `
-                    <p><strong>Nombre:</strong> ${item.nombre}</p>
-                    <p><strong>Categoría:</strong> ${item.categoria}</p>
-                    <p><strong>Fecha:</strong> ${item.fecha}</p>
-                    <p><strong>Estado:</strong> ${item.estado}</p>
-                `;
-            } else if (tipo === "equipos") {
-                contenido = `
-                    <p><strong>Nombre:</strong> ${item.nombre}</p>
-                    <p><strong>Categoría:</strong> ${item.categoria}</p>
-                    <p><strong>Estado:</strong> ${item.estado}</p>
-                `;
-            }
-
-
-
-            // Crear div para el elemento
-            const div = document.createElement("div");
-            div.classList.add("item");
-            // --- Cambia solo esta parte ---
-if (modo === "consultar" && tipo === "campeonatos") {
-    div.innerHTML = `
-        ${contenido}
-        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
-        <button class="btn btn-asociar" type="button" onclick="window.mostrarAsociarEquipos(${idxOriginal})">Asociar equipos</button>
-    `;
-} else if (modo === "consultar" && tipo === "deportistas") {
-    div.innerHTML = `
-        ${contenido}
-        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
-        <button class="btn btn-editar" type="button" onclick="window.mostrarEditarDeportista(${idxOriginal})">Editar</button>
-    `;
-} else if (modo === "consultar") {
-    div.innerHTML = `
-        ${contenido}
-        <button class="btn btn-descargar" id="btnjs" data-index="${idxOriginal}">Descargar PDF</button>
-    `;
-} else {
-    div.innerHTML = `
-        ${contenido}
-        <button class="btn btn-eliminar" data-index="${idxOriginal}">Eliminar</button>
-    `;
-}
-contenedor.appendChild(div);
-// --- Fin del cambio ---
-
-
-
-        // Si no hay elementos, mostrar mensaje y salir
-        if (items.length === 0) {
-            mensajeNoItems.style.display = "block";
-            filtroContainer.innerHTML = "";
-            return;
-        } else {
-            mensajeNoItems.style.display = "none";
-            // Crear filtro de categorías si no existe
-            if (!document.getElementById("categoria-select")) {
-                const categorias = [...new Set(items.map(i => i[filtroClave]))];
-                filtroContainer.innerHTML = `
-                    <div class="filter-container">
-                        <label for="categoria-select">Filtrar por categoría:</label>
-                        <select id="categoria-select" class="filtro-select">
-                            <option value="todas">Todas</option>
-                            ${categorias.map(cat => `<option value="${cat}">${cat}</option>`).join("")}
-                        </select>
-                    </div>
-                `;
-                document.getElementById("categoria-select").addEventListener("change", e => {
-                    mostrarItems(e.target.value);
-                });
-                const urlParams = new URLSearchParams(window.location.search);
-
-                const currentFilter = urlParams.get("filtroCategoria") || "todas";
-                document.getElementById("categoria-select").value = currentFilter;
-            }
-
-            // Actualizar valor del filtro si cambió
-            const categoriaSelect = document.getElementById("categoria-select");
-            if (categoriaSelect && categoriaSelect.value !== filtro) {
-                categoriaSelect.value = filtro;
-                }
-            }
-
-        
-        });
-
-        // Asignar eventos a los botones según el modo
-        if (modo === "consultar") {
-            document.querySelectorAll(".btn-descargar").forEach(btn => {
-                btn.addEventListener("click", e => {
-                    const idx = parseInt(e.target.getAttribute("data-index"));
-                    const item = filtrados[idxFiltrado];
-                    let contenido = "";
-                    if (tipo === "deportistas") {
-                        contenido = `
-                            <p><strong>Nombre:</strong> ${item.nombres} ${item.apellidos}</p>
-                            <p><strong>Categoría:</strong> ${item.categoria}</p>
-                            <p><strong>Estado de Pago:</strong> ${item.pago ? "Al día" : "Pendiente"}</p>
-                        `;
-                    } else if (tipo === "campeonatos") {
-                        contenido = `
-                            <p><strong>Nombre:</strong> ${item.nombre}</p>
-                            <p><strong>Categoría:</strong> ${item.categoria}</p>
-                            <p><strong>Fecha:</strong> ${item.fecha}</p>
-                            <p><strong>Estado:</strong> ${item.estado}</p>
-                        `;
-                    } else if (tipo === "equipos") {
-                        contenido = `
-                            <p><strong>Nombre:</strong> ${item.nombre}</p>
-                            <p><strong>Categoría:</strong> ${item.categoria}</p>
-                            <p><strong>Estado:</strong> ${item.estado}</p>
-                        `;
-                    }
-                    descargarPDF(campos[tipo].titulo + " - " + (item.nombres || item.nombre), contenido, (item.nombres || item.nombre) + ".pdf");
-                });
-            });
-        } else if (modo === "eliminar") {
-            document.querySelectorAll(".btn-eliminar").forEach(btn => {
-                btn.addEventListener("click", e => {
-                    const idx = parseInt(e.target.getAttribute("data-index"));
-                    eliminarItem(idx, claveLS, () => mostrarItems(document.getElementById("categoria-select")?.value || "todas"));
-                });
-            });
+        // Botones para deportistas en modo consultar
+        if (modo === "consultar" && tipo === "deportistas") {
+            div.innerHTML = `
+                ${contenido}
+                <button class="btn btn-descargar" data-id="${item.id}"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="btn btn-editar" type="button" data-id="${item.id}"><i class="fas fa-edit"></i> Editar</button>
+                <button class="btn btn-eliminar" data-id="${item.id}"><i class="fas fa-trash"></i> Eliminar</button>
+            `;
         } else if (modo === "consultar" && tipo === "campeonatos") {
-            document.querySelectorAll(".btn-asociar").forEach(btn => {
-                btn.addEventListener("click", e => {
-                    const idx = parseInt(e.target.getAttribute("data-index"));
-                    mostrarAsociarEquipos(idx);
-                });
+            div.innerHTML = `
+                ${contenido}
+                <button class="btn btn-descargar" data-id="${item.id}">Descargar PDF</button>
+                <button class="btn btn-asociar" type="button" data-id="${item.id}">Asociar equipos</button>
+            `;
+        } else if (modo === "consultar") {
+            div.innerHTML = `
+                ${contenido}
+                <button class="btn btn-descargar" data-id="${item.id}">Descargar PDF</button>
+            `;
+        } else {
+            div.innerHTML = `
+                ${contenido}
+                <button class="btn btn-eliminar" data-id="${item.id}">Eliminar</button>
+            `;
+        }
+        contenedor.appendChild(div);
+    });
+
+    // Si no hay elementos, mostrar mensaje y salir
+    if (items.length === 0) {
+        mensajeNoItems.style.display = "block";
+        filtroContainer.innerHTML = "";
+        return;
+    } else {
+        mensajeNoItems.style.display = "none";
+        // Crear filtro de categorías si no existe
+        if (!document.getElementById("categoria-select")) {
+            const categorias = [...new Set(items.map(i => i[filtroClave]))];
+            filtroContainer.innerHTML = `
+                <div class="filter-container">
+                    <label for="categoria-select">Filtrar por categoría:</label>
+                    <select id="categoria-select" class="filtro-select">
+                        <option value="todas">Todas</option>
+                        ${categorias.map(cat => {
+                            let texto = cat.charAt(0).toUpperCase() + cat.slice(1);
+                            if (cat === "benjamin") texto = "Benjamín";
+                            return `<option value="${cat}">${texto}</option>`;
+                        }).join("")}
+                    </select>
+                </div>
+            `;
+            document.getElementById("categoria-select").addEventListener("change", e => {
+                mostrarItems(e.target.value);
             });
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentFilter = urlParams.get("filtroCategoria") || "todas";
+            document.getElementById("categoria-select").value = currentFilter;
+        }
+
+        // Actualizar valor del filtro si cambió
+        const categoriaSelect = document.getElementById("categoria-select");
+        if (categoriaSelect && categoriaSelect.value !== filtro) {
+            categoriaSelect.value = filtro;
         }
     }
+
+    // Asignar eventos a los botones según el modo
+    if (modo === "consultar") {
+        document.querySelectorAll(".btn-descargar").forEach(btn => {
+            btn.addEventListener("click", async e => {
+                const id = e.target.getAttribute("data-id");
+                // Obtener el item desde el backend por ID
+                let itemData = null;
+                if (tipo === "deportistas") {
+                    const res = await fetch(`http://localhost:3000/deportistas/${id}`);
+                    if (!res.ok) return alert("No se pudo obtener la información.");
+                    itemData = await res.json();
+                    const contenido = `
+                        <p><strong>Nombre:</strong> ${itemData.nombres} ${itemData.apellidos}</p>
+                        <p><strong>Categoría:</strong> ${itemData.categoria}</p>
+                        <p><strong>Estado de Pago:</strong> ${itemData.pago ? "Al día" : "Pendiente"}</p>
+                    `;
+                    descargarPDF("Nombre - " + itemData.nombres, contenido, `estado_${itemData.nombres}_${itemData.apellidos}.pdf`);
+                } else if (tipo === "campeonatos") {
+                    const res = await fetch(`http://localhost:3000/campeonatos/${id}`);
+                    if (!res.ok) return alert("No se pudo obtener la información.");
+                    itemData = await res.json();
+                    const contenido = `
+                        <p><strong>Nombre:</strong> ${itemData.nombre}</p>
+                        <p><strong>Categoría:</strong> ${itemData.categoria}</p>
+                        <p><strong>Fecha:</strong> ${itemData.fecha}</p>
+                        <p><strong>Estado:</strong> ${itemData.estado}</p>
+                    `;
+                    descargarPDF("Campeonato - " + itemData.nombre, contenido, `campeonato_${itemData.nombre}.pdf`);
+                } else if (tipo === "equipos") {
+                    const res = await fetch(`http://localhost:3000/equipos/${id}`);
+                    if (!res.ok) return alert("No se pudo obtener la información.");
+                    itemData = await res.json();
+                    const contenido = `
+                        <p><strong>Nombre:</strong> ${itemData.nombre}</p>
+                        <p><strong>Categoría:</strong> ${itemData.categoria}</p>
+                        <p><strong>Estado:</strong> ${itemData.estado}</p>
+                    `;
+                    descargarPDF("Equipo - " + itemData.nombre, contenido, `equipo_${itemData.nombre}.pdf`);
+                }
+            });
+        });
+        if (tipo === "campeonatos") {
+            document.querySelectorAll(".btn-asociar").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const id = e.target.getAttribute("data-id");
+                    window.mostrarAsociarEquipos(id);
+                });
+            });
+        }
+        document.querySelectorAll(".btn-editar").forEach(btn => {
+            btn.addEventListener("click", e => {
+                // El evento onclick ya está en el HTML, pero puedes agregar lógica aquí si lo necesitas
+            });
+        });
+    } else if (modo === "eliminar") {
+        document.querySelectorAll(".btn-eliminar").forEach(btn => {
+            btn.addEventListener("click", e => {
+                const id = e.target.getAttribute("data-id");
+                eliminarItem(id, tipo, () => mostrarItems(document.getElementById("categoria-select")?.value || "todas"));
+            });
+        });
+    }
+}
+
+// Mostrar campeonatos desde la base de datos
+async function mostrarCampeonatos() {
+  const contenedor = document.getElementById("lista-items");
+  const mensajeNoItems = document.getElementById("mensaje-no-items");
+  let campeonatos = [];
+  try {
+    const res = await fetch("http://localhost:3000/campeonatos");
+    campeonatos = await res.json();
+  } catch {
+    contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
+    return;
+  }
+  if (campeonatos.length === 0) {
+    mensajeNoItems.style.display = "block";
+    contenedor.innerHTML = "";
+    return;
+  }
+  mensajeNoItems.style.display = "none";
+  contenedor.innerHTML = "";
+  campeonatos.forEach(item => {
+    const div = document.createElement("div");
+    div.classList.add("item");
+    div.innerHTML = `
+      <p><strong>Nombre:</strong> ${item.nombre}</p>
+      <p><strong>Categoría:</strong> ${item.categoria}</p>
+      <p><strong>Fecha:</strong> ${item.fecha}</p>
+      <p><strong>Estado:</strong> ${item.estado}</p>
+    `;
+    contenedor.appendChild(div);
+  });
+}
+document.addEventListener("DOMContentLoaded", mostrarCampeonatos);
+document.addEventListener("DOMContentLoaded", () => mostrarItems());
+
 window.mostrarItems = mostrarItems; // Para poder llamarla desde otros scripts
 
 // Llamar a la función al cargar el documento  
-mostrarItems();
+document.addEventListener("DOMContentLoaded", () => mostrarItems());
 
 console.log("Mostrando items...");
 // Llamar a la función al cargar el documento  

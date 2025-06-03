@@ -98,7 +98,16 @@ button:hover {
   margin-top: 10px;
 }
 
-
+.error-msg {
+  color: #e74c3c;
+  background: #fff3f3;
+  border: 1px solid #e74c3c;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1em;
+}
 
 /* Estilos para login */
 

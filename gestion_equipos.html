@@ -6,7 +6,7 @@
     <title>Gestión Equipos</title>
     <link rel="stylesheet" href="styles/Gestiones.css" />
 </head>
-<body data-tipo="equipos">
+<body data-tipo="equipos"> <!-- o campeonatos, o deportistas -->
 
     <header>
         <h1>Gestión de Equipos</h1>
@@ -30,8 +30,24 @@
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-    <script src="scripts/mostrar_items.js" type="module"></script>
     <script src="scripts/eliminar_item.js" type="module"></script>
     <script src="scripts/descargarPDF.js" type="module"></script>
+    <script src="scripts/asociar_deportistas.js"></script>
+    <script src="scripts/mostrar_equipos.js"></script>
+
+    <!-- Ejemplo dentro del listado de equipos -->
+    <div id="lista-equipos"></div>
+
+    <!-- Modal para asociar deportistas -->
+    <div id="modal-asociar-deportistas" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="cerrar-modal-asociar">&times;</span>
+        <h3>Asociar Deportistas al Equipo</h3>
+        <form id="form-asociar-deportistas">
+          <div id="lista-deportistas"></div>
+          <button type="submit" class="btn-main">Asociar seleccionados</button>
+        </form>
+      </div>
+    </div>
 </body>
 </html>

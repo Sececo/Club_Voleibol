@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestión Campeonatos</title>
     <link rel="stylesheet" href="styles/Gestiones.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body data-tipo="campeonatos">
+<body data-tipo="equipos"> <!-- o campeonatos, o deportistas -->
     <header>
         <h1>Gestión de Campeonatos</h1>
     </header>
@@ -23,16 +24,10 @@
         <div id="filtro-categorias"></div>
         <div id="lista-items"></div>
         <p id="mensaje-no-items" style="display:none;">No hay campeonatos registrados.</p>
-        <!-- Aquí se mostrará la sección de asociación de equipos -->
-        <div id="asociar-equipos-section" style="display:none; margin-top:2em;">
-        </div>
     </main>
+    <script src="scripts/mostrar_campeonatos.js"></script>
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-    <script src="scripts/mostrar_items.js" type="module"></script>
-    <script src="scripts/eliminar_item.js" type="module"></script>
-    <script src="scripts/descargarPDF.js" type="module"></script>
-    <script src="scripts/asociar equipo.js"></script>
 </body>
 </html>

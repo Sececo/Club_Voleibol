@@ -26,6 +26,46 @@
         <div id="lista-items"></div>
         <p id="mensaje-no-items" style="display:none;">No hay deportistas registrados.</p>
     </main>
+
+    <!-- Modal de edición -->
+    <div id="modal-editar-deportista" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="cerrar-modal-editar">&times;</span>
+        <h3>Editar Deportista</h3>
+        <form id="form-editar-deportista" autocomplete="off">
+          <input type="hidden" id="edit-id" />
+          <div class="form-group">
+            <label for="edit-nombres">Nombres</label>
+            <input type="text" id="edit-nombres" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-apellidos">Apellidos</label>
+            <input type="text" id="edit-apellidos" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-email">Correo</label>
+            <input type="email" id="edit-email" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-categoria">Categoría</label>
+            <select id="edit-categoria" required>
+              <option value="benjamin">Benjamín</option>
+              <option value="mini">Mini</option>
+              <option value="infantil">Infantil</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-estado">Estado</label>
+            <select id="edit-estado" required>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-main">Guardar Cambios</button>
+          <div id="editar-error-msg" class="error-msg"></div>
+        </form>
+      </div>
+    </div>
     <footer>
         <p>&copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.</p>
     </footer>
@@ -33,5 +73,6 @@
     <script src="scripts/eliminar_item.js" type="module"></script>
     <script src="scripts/descargarPDF.js" type="module"></script>
     <script src="scripts/editar_deportista.js"></script>
+    <script src="scripts/mostrar_deportistas.js"></script>
 </body>
 </html>

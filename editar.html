@@ -1,0 +1,26 @@
+<!-- Modal para editar deportista -->
+<div id="modal-editar-deportista" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:9999;">
+  <div style="background:#fff;padding:2em;border-radius:10px;min-width:300px;max-width:90vw;position:relative;">
+    <h3>Editar Deportista</h3>
+    <form id="form-editar-deportista">
+      <label>Teléfono:<br>
+        <input type="text" id="edit-telefono" />
+      </label><br><br>
+      <label>Email:<br>
+        <input type="email" id="edit-email" />
+      </label><br><br>
+      <label>Contraseña:<br>
+        <input type="password" id="edit-password" placeholder="Nueva contraseña" />
+      </label><br><br>
+      <label>Estado de Pago:<br>
+        <select id="edit-pago">
+          <option value="true">Al día</option>
+          <option value="false">Pendiente</option>
+        </select>
+      </label><br><br>
+      <div id="editar-error-msg" style="color:red;margin-bottom:8px;"></div>
+      <button type="submit" class="btn-primary">Guardar</button>
+      <button type="button" class="btn-secondary" id="cancelar-editar">Cancelar</button>
+    </form>
+  </div>
+</div>
