@@ -1,71 +1,46 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const listaCampeonatos = document.getElementById('lista-campeonatos');
+document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modal-asociar-equipos');
   const cerrarModal = document.getElementById('cerrar-modal-asociar-equipos');
-  let campeonatoSeleccionado = null;
+  let campeonatoSeleccionado = null, categoriaSeleccionada = null;
 
-  // Mostrar campeonatos
-  const res = await fetch('http://localhost:3000/campeonatos');
-  const campeonatos = await res.json();
-  listaCampeonatos.innerHTML = '';
-  campeonatos.forEach(camp => {
-    const div = document.createElement('div');
-    div.className = 'item-campeonato';
-    div.innerHTML = `
-      <span>${camp.nombre} (${camp.categoria})</span>
-      <button class="btn-pdf" data-id="${camp.id}">Descargar PDF</button>
-      <button class="btn-asociar-equipos" data-id="${camp.id}" data-categoria="${camp.categoria}">Asociar Equipos</button>
-      <button class="btn-eliminar" data-id="${camp.id}">Eliminar</button>
-    `;
-    listaCampeonatos.appendChild(div);
-  });
+  // Función global para mostrar el modal (llámala desde mostrar_campeonatos.js)
+  window.mostrarModalAsociarEquipos = async function(id, categoria) {
+    campeonatoSeleccionado = id;
+    categoriaSeleccionada = categoria;
 
-  // Descargar PDF
-  listaCampeonatos.addEventListener('click', async e => {
-    if (e.target.classList.contains('btn-pdf')) {
-      const id = e.target.dataset.id;
-      const res = await fetch(`http://localhost:3000/campeonatos/${id}`);
-      if (!res.ok) return alert("No se pudo obtener la información.");
-      const camp = await res.json();
-      const contenido = `
-        <p><strong>Nombre:</strong> ${camp.nombre}</p>
-        <p><strong>Categoría:</strong> ${camp.categoria}</p>
-        <p><strong>Fecha:</strong> ${camp.fecha}</p>
-        <p><strong>Estado:</strong> ${camp.estado}</p>
-      `;
-      // Usa tu función descargarPDF (debes tener html2pdf o jsPDF)
-      if (window.descargarPDF) {
-        window.descargarPDF("Campeonato - " + camp.nombre, contenido, `campeonato_${camp.nombre}.pdf`);
-      } else {
-        alert("Función de descarga PDF no disponible.");
-      }
+    // Traer equipos de la misma categoría
+    const resEq = await fetch('http://localhost:3000/equipos');
+    const equipos = await resEq.json();
+
+    // Traer asociaciones equipo-deportista
+    const resAsoc = await fetch('http://localhost:3000/equipo_deportista');
+    const asociaciones = await resAsoc.json();
+
+    // Contar deportistas por equipo
+    const cantidadPorEquipo = {};
+    asociaciones.forEach(a => {
+      cantidadPorEquipo[a.equipo_id] = (cantidadPorEquipo[a.equipo_id] || 0) + 1;
+    });
+
+    // Mostrar solo equipos de la categoría y con al menos 6 jugadores
+    const listaEq = document.getElementById('lista-equipos-disponibles');
+    listaEq.innerHTML = '';
+    equipos
+      .filter(eq => eq.categoria === categoriaSeleccionada && (cantidadPorEquipo[eq.id] || 0) >= 6)
+      .forEach(eq => {
+        listaEq.innerHTML += `
+          <label>
+            <input type="checkbox" name="equipos" value="${eq.id}" />
+            ${eq.nombre} (${cantidadPorEquipo[eq.id] || 0} jugadores)
+          </label><br>
+        `;
+      });
+
+    if (!listaEq.innerHTML) {
+      listaEq.innerHTML = `<p style="color:red;">No hay equipos con al menos 6 jugadores en esta categoría.</p>`;
     }
-  });
-
-  // Abrir modal al hacer clic en "Asociar Equipos"
-  listaCampeonatos.addEventListener('click', async e => {
-    if (e.target.classList.contains('btn-asociar-equipos')) {
-      campeonatoSeleccionado = e.target.dataset.id;
-      const categoria = e.target.dataset.categoria;
-
-      // Traer equipos de la misma categoría
-      const resEq = await fetch(`http://localhost:3000/equipos`);
-      const equipos = await resEq.json();
-      const listaEq = document.getElementById('lista-equipos-disponibles');
-      listaEq.innerHTML = '';
-      equipos
-        .filter(eq => eq.categoria === categoria)
-        .forEach(eq => {
-          listaEq.innerHTML += `
-            <label>
-              <input type="checkbox" name="equipos" value="${eq.id}" />
-              ${eq.nombre}
-            </label><br>
-          `;
-        });
-      modal.style.display = 'flex';
-    }
-  });
+    modal.style.display = 'flex';
+  };
 
   cerrarModal.onclick = () => { modal.style.display = 'none'; };
   modal.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
@@ -88,18 +63,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  // Eliminar campeonato
-  listaCampeonatos.addEventListener('click', async e => {
-    if (e.target.classList.contains('btn-eliminar')) {
-      const id = e.target.dataset.id;
-      if (!confirm("¿Seguro que quieres eliminar este campeonato?")) return;
-      const res = await fetch(`http://localhost:3000/campeonatos/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        alert("Campeonato eliminado correctamente.");
-        location.reload();
-      } else {
-        alert("Error al eliminar el campeonato.");
+  // Código nuevo para manejar el clic en el botón de asociar
+  document.querySelectorAll(".btn-asociar").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.getAttribute("data-id");
+      const categoria = btn.getAttribute("data-categoria");
+      if (window.mostrarModalAsociarEquipos) {
+        window.mostrarModalAsociarEquipos(id, categoria);
       }
-    }
+    };
   });
 });

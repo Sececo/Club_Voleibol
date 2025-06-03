@@ -103,7 +103,7 @@ export async function mostrarItems(filtro = "todas") {
         const div = document.createElement("div");
         div.classList.add("item");
 
-        // Botones para deportistas en modo consultar
+        // Botones según tipo y modo
         if (modo === "consultar" && tipo === "deportistas") {
             div.innerHTML = `
                 ${contenido}
@@ -114,18 +114,19 @@ export async function mostrarItems(filtro = "todas") {
         } else if (modo === "consultar" && tipo === "campeonatos") {
             div.innerHTML = `
                 ${contenido}
-                <button class="btn btn-descargar" data-id="${item.id}">Descargar PDF</button>
-                <button class="btn btn-asociar" type="button" data-id="${item.id}">Asociar equipos</button>
+                <button class="btn btn-descargar" data-id="${item.id}"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="btn btn-asociar" type="button" data-id="${item.id}"><i class="fas fa-users"></i> Asociar equipos</button>
             `;
-        } else if (modo === "consultar") {
+        } else if (modo === "consultar" && tipo === "equipos") {
             div.innerHTML = `
                 ${contenido}
-                <button class="btn btn-descargar" data-id="${item.id}">Descargar PDF</button>
+                <button class="btn btn-descargar" data-id="${item.id}"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="btn btn-asociar" type="button" data-id="${item.id}"><i class="fas fa-users"></i> Asociar deportistas</button>
             `;
         } else {
             div.innerHTML = `
                 ${contenido}
-                <button class="btn btn-eliminar" data-id="${item.id}">Eliminar</button>
+                <button class="btn btn-eliminar" data-id="${item.id}"><i class="fas fa-trash"></i> Eliminar</button>
             `;
         }
         contenedor.appendChild(div);

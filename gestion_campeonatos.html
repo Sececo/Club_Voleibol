@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="styles/Gestiones.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body data-tipo="equipos"> <!-- o campeonatos, o deportistas -->
+<body>
     <header>
         <h1>Gestión de Campeonatos</h1>
     </header>
-    <nav class="nav-buttons" aria-label="Navegación principal">
-        <button class="btn-secondary" title="Volver a Campeonatos" onclick="location.href='campeonatos.html'">
-        &#8592; Volver a Campeonatos
+    <nav class="nav-buttons" aria-label="Navegación principal" style="display:flex; justify-content:center; gap:16px; margin-bottom:24px;">
+        <button class="btn-secondary" title="Volver a Campeonatos" onclick="location.href='campeonatos.html'" style="display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-arrow-left"></i> Volver a Campeonatos
         </button>
-        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
-        &#8962; Inicio
+        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'" style="display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-home"></i> Inicio
         </button>
     </nav>
     <main>
@@ -25,9 +25,30 @@
         <div id="lista-items"></div>
         <p id="mensaje-no-items" style="display:none;">No hay campeonatos registrados.</p>
     </main>
-    <script src="scripts/mostrar_campeonatos.js"></script>
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
+
+    <!-- Modal para asociar equipos -->
+    <div id="modal-asociar-equipos" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span id="cerrar-modal-asociar-equipos" class="close">&times;</span>
+        <h3>Asociar Equipos al Campeonato</h3>
+        <form id="form-asociar-equipos">
+          <div id="lista-equipos-disponibles"></div>
+          <button type="submit" class="btn-asociar-blanco">
+            <i class="fas fa-users"></i> Asociar seleccionados
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Solo scripts JS aquí -->
+    <script src="scripts/mostrar_campeonatos.js"></script>
+    <script src="scripts/eliminar_item.js" type="module"></script>
+    <script src="scripts/asociar_equipos.js" type="module"></script>
+    <script src="scripts/descargarPDF.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="scripts/principal.js"></script>
 </body>
 </html>

@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const filtroContainer = document.getElementById("filtro-categorias");
   const mensajeNoItems = document.getElementById("mensaje-no-items");
 
+  function getModo() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("modo") || "consultar";
+  }
+  const modo = getModo();
+
   contenedor.innerHTML = "<p>Cargando equipos...</p>";
   try {
     const res = await fetch("http://localhost:3000/equipos");
@@ -56,9 +62,15 @@ document.addEventListener("DOMContentLoaded", async () => {
               <td>${eq.categoria.charAt(0).toUpperCase() + eq.categoria.slice(1)}</td>
               <td>${eq.sexo.charAt(0).toUpperCase() + eq.sexo.slice(1)}</td>
               <td>
-                <button class="btn-pdf" title="Descargar PDF" data-id="${eq.id}"><i class="fas fa-file-pdf"></i></button>
-                <button class="btn-asociar" title="Asociar Deportistas" data-id="${eq.id}" data-categoria="${eq.categoria}" data-sexo="${eq.sexo}"><i class="fas fa-users"></i></button>
-                <button class="btn-eliminar" title="Eliminar" data-id="${eq.id}"><i class="fas fa-trash"></i></button>
+                <button class="btn-descargar-equipo" data-id="${eq.id}" title="Descargar PDF">
+                  <i class="fas fa-file-pdf"></i>
+                </button>
+                <button class="btn-asociar" data-id="${eq.id}" data-categoria="${eq.categoria}" title="Asociar Deportistas">
+                  <i class="fas fa-users"></i>
+                </button>
+                <button class="btn-eliminar" data-id="${eq.id}" title="Eliminar">
+                  <i class="fas fa-trash"></i>
+                </button>
               </td>
             </tr>
           `).join("")}
@@ -81,8 +93,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const categoria = btn.getAttribute("data-categoria");
       const sexo = btn.getAttribute("data-sexo");
 
-      if (btn.classList.contains("btn-pdf")) {
-        // Lógica para PDF
+      // Descargar PDF
+      if (btn.classList.contains("btn-descargar") || btn.classList.contains("btn-pdf")) {
         const res = await fetch(`http://localhost:3000/equipos/${id}`);
         if (!res.ok) return alert("No se pudo obtener la información.");
         const eq = await res.json();
@@ -96,16 +108,19 @@ document.addEventListener("DOMContentLoaded", async () => {
           );
         }
       }
+
+      // Asociar deportistas
       if (btn.classList.contains("btn-asociar")) {
-        // Lógica para asociar deportistas
         if (window.mostrarModalAsociarDeportistas) {
           window.mostrarModalAsociarDeportistas(id, categoria, sexo);
         } else {
-          // Si usas el modal ya incluido, simplemente dispara el evento
+          // Si tienes otro método para abrir el modal, llama aquí
           const evento = new CustomEvent("abrirModalAsociar", { detail: { id, categoria, sexo } });
           window.dispatchEvent(evento);
         }
       }
+
+      // Eliminar equipo
       if (btn.classList.contains("btn-eliminar")) {
         if (confirm("¿Seguro que deseas eliminar este equipo?")) {
           const res = await fetch(`http://localhost:3000/equipos/${id}`, { method: "DELETE" });

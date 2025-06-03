@@ -116,13 +116,14 @@ app.post('/campeonato_equipo', async (req, res) => {
   try {
     for (const equipo_id of equipos) {
       await pool.query(
-        `INSERT INTO campeonato_equipo (campeonato_id, equipo_id) VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+        'INSERT INTO campeonato_equipo (campeonato_id, equipo_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
         [campeonato_id, equipo_id]
       );
     }
-    res.status(201).json({ ok: true });
+    res.json({ success: true });
   } catch (error) {
-    res.status(500).json({ error: 'Error al asociar equipos a campeonato' });
+    console.error(error);
+    res.status(500).json({ error: 'Error al asociar equipos al campeonato' });
   }
 });
 
@@ -215,6 +216,48 @@ app.delete('/campeonatos/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar campeonato' });
   }
+});
+
+// Actualizar deportista
+app.put('/deportistas/:id', async (req, res) => {
+  const { nombres, apellidos, telefono, email, categoria, estado, pago, password } = req.body;
+  try {
+    if (password && password.trim() !== "") {
+      // Si se envía nueva contraseña, actualiza todo incluido password
+      await pool.query(
+        `UPDATE deportistas SET 
+          nombres=$1, apellidos=$2, telefono=$3, email=$4, categoria=$5, estado=$6, pago=$7, password=$8
+         WHERE id=$9`,
+        [nombres, apellidos, telefono, email, categoria, estado, pago, password, req.params.id]
+      );
+    } else {
+      // Si no se envía password, no la cambia
+      await pool.query(
+        `UPDATE deportistas SET 
+          nombres=$1, apellidos=$2, telefono=$3, email=$4, categoria=$5, estado=$6, pago=$7
+         WHERE id=$8`,
+        [nombres, apellidos, telefono, email, categoria, estado, pago, req.params.id]
+      );
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar deportista' });
+  }
+});
+
+// Obtener un deportista por id
+app.get('/deportistas/:id', async (req, res) => {
+  const result = await pool.query('SELECT * FROM deportistas WHERE id=$1', [req.params.id]);
+  if (result.rows.length === 0) {
+    return res.status(404).json({ error: 'No encontrado' });
+  }
+  res.json(result.rows[0]);
+});
+
+app.get('/equipo_deportista', async (req, res) => {
+  const result = await pool.query('SELECT * FROM equipo_deportista');
+  res.json(result.rows);
 });
 
 app.listen(3000, () => {

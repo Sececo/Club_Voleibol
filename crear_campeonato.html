@@ -5,12 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Campeonato - Club de Voleibol</title>
   <link rel="stylesheet" href="styles/Formularios.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header>
     <h1>Crear Campeonato</h1>
   </header>
   <div class="container">
+    <nav class="nav-buttons nav-center" aria-label="Navegación principal">
+      <button type="button" class="btn-secondary" onclick="location.href='campeonatos.html'">
+        <i class="fas fa-arrow-left"></i> Volver a Campeonatos
+      </button>
+      <button type="button" class="btn-secondary" onclick="location.href='principal.html'">
+        <i class="fas fa-home"></i> Inicio
+      </button>
+    </nav>
     <main>
       <form id="form-campeonato" autocomplete="off" novalidate>
         <div class="form-group">
@@ -31,7 +40,6 @@
         </div>
         <div class="form-group">
           <label for="categoria">Categoría *</label>
-          <!-- Solo asegúrate que el select tenga los valores correctos -->
           <select id="categoria" required>
             <option value="" disabled selected>Seleccionar Categoría</option>
             <option value="benjamin">Benjamín</option>

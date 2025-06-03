@@ -70,12 +70,15 @@ document.addEventListener("DOMContentLoaded", async () => {
               <td>${d.categoria.charAt(0).toUpperCase() + d.categoria.slice(1)}</td>
               <td>${d.estado}</td>
               <td>
-                ${
-                  modo === "consultar"
-                    ? `<button class="btn-pdf" title="Descargar PDF" data-id="${d.id}"><i class="fas fa-file-pdf"></i></button>
-                       <button class="btn-editar" title="Editar" data-id="${d.id}"><i class="fas fa-edit"></i></button>`
-                    : `<button class="btn-eliminar" title="Eliminar" data-id="${d.id}"><i class="fas fa-trash"></i></button>`
-                }
+                <button class="btn-descargar-deportista" data-id="${d.id}" title="Descargar PDF">
+                  <i class="fas fa-file-pdf"></i>
+                </button>
+                <button class="btn-editar" data-id="${d.id}" title="Editar">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-eliminar" data-id="${d.id}" title="Eliminar">
+                  <i class="fas fa-trash"></i>
+                </button>
               </td>
             </tr>
           `).join("")}
@@ -95,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const id = e.target.closest("button")?.getAttribute("data-id");
       if (!id) return;
 
-      if (e.target.closest(".btn-pdf")) {
+      if (e.target.closest(".btn-descargar-deportista")) {
         // Lógica para PDF
         const res = await fetch(`http://localhost:3000/deportistas/${id}`);
         if (!res.ok) return alert("No se pudo obtener la información.");
@@ -118,7 +121,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           const res = await fetch(`http://localhost:3000/deportistas/${id}`, { method: "DELETE" });
           if (res.ok) {
             alert("Deportista eliminado correctamente.");
-            // Quitar la fila de la tabla
             e.target.closest("tr").remove();
           } else {
             alert("No se pudo eliminar el deportista.");
