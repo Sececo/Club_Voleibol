@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Administrador registrado correctamente');
         window.location.href = "index.html";
       } else {
+        console.log(res)
         console.log(email);
         mostrarMensajeRegistro ("Error del servidor al registrar Administrador");
       }
