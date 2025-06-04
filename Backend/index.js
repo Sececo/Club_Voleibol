@@ -131,10 +131,7 @@ app.post('/campeonato_equipo', async (req, res) => {
 
 // Registrar un nuevo administrador
 app.post('/administradores', async (req, res) => {
-  const nombre = document.getElementById('nombre').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirm-password').value;
+  const { nombre, email, password } = req.body;
   try {
     const result = await pool.query(
       `INSERT INTO administrador (nombre, correo, password)       VALUES ($1, $2, $3) RETURNING *`,
