@@ -130,7 +130,7 @@ app.post('/campeonato_equipo', async (req, res) => {
 });
 
 // Registrar un nuevo administrador
-app.post('/administradores', async (req, res) => {
+app.post('/registerForm', async (req, res) => {
   const { nombre, email, password } = req.body;
   try {
     const result = await pool.query(
