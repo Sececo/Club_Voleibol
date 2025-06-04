@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const res = await fetch('http://localhost:3000/login_admin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ correo: email, password })
+          body: JSON.stringify({ email: email, password })
         });
         if (res.ok) {
           window.location.href = "principal.html";
