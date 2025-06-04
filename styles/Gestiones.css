@@ -1,40 +1,39 @@
-/* styles/gestion.css */
-
+/* =========================
+   ESTILO GENERAL
+========================= */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #0C2461;
-    color: #333;
+    background: #0C2461; /* Solo azul, sin degradado */
+    color: #222;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    box-sizing: border-box;
 }
 
 header {
-    background-color: #0C2461;
-    color: white;
-    padding: 30px 20px;
+    background: #0C2461;
+    color: #fff;
+    padding: 36px 0 24px 0;
     text-align: center;
-    margin-bottom: 30px;
-    width: 100%;
-    box-sizing: border-box;
+    box-shadow: 0 4px 18px rgba(12,36,97,0.10);
 }
 
 header h1 {
     font-size: 2.5em;
     margin: 0;
-    color: white;
+    letter-spacing: 1px;
+    font-weight: 700;
 }
 
 main {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 900px;
+    background: #fff;
+    padding: 36px 32px 28px 32px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(12,36,97,0.18);
+    width: 92%;
+    max-width: 1050px;
     margin: 0 auto 40px auto;
     flex-grow: 1;
     box-sizing: border-box;
@@ -43,8 +42,49 @@ main {
 h2 {
     margin-top: 0;
     color: #0C2461;
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 18px;
 }
 
+/* =========================
+   NAVEGACIÓN
+========================= */
+.nav-buttons {
+    padding: 18px 0 18px 0;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 4px 18px rgba(12,36,97,0.10);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.nav-buttons button {
+    background: #fff;
+    border: 2px solid #E85B26;
+    border-radius: 8px;
+    font-size: 1.13em;
+    font-weight: 600;
+    padding: 12px 28px;
+    box-shadow: 0 2px 8px rgba(12,36,97,0.08);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background: linear-gradient(90deg, #E85B26 60%, #0C2461 100%);
+    color: #fff;
+    border-color: #C8461E;
+    box-shadow: 0 4px 16px rgba(12,36,97,0.18);
+}
+
+/* =========================
+   FILTROS Y LISTA
+========================= */
 .filter-container {
     margin-bottom: 20px;
     display: flex;
@@ -69,8 +109,8 @@ select.filtro-select {
 
 select.filtro-select:hover,
 select.filtro-select:focus {
-    border-color: #1e40af;
-    box-shadow: 0 0 5px #1e40af;
+    border-color: #E85B26;
+    box-shadow: 0 0 5px #E85B26;
 }
 
 #lista-items {
@@ -79,285 +119,325 @@ select.filtro-select:focus {
     gap: 18px;
 }
 
-.item {
-    border: 1px solid #0C2461;
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 12px rgba(12, 36, 97, 0.2);
-    transition: transform 0.3s ease;
+/* =========================
+   TABLAS MODERNAS
+========================= */
+.tabla-deportistas,
+.tabla-equipos,
+.tabla-campeonatos {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #f8faff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(12,36,97,0.10);
+    margin-bottom: 30px;
+}
+
+.tabla-deportistas th, .tabla-deportistas td,
+.tabla-equipos th, .tabla-equipos td,
+.tabla-campeonatos th, .tabla-campeonatos td {
+    padding: 14px 12px;
+    text-align: left;
+}
+
+.tabla-deportistas th, .tabla-equipos th, .tabla-campeonatos th {
+    background: #0C2461;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.08em;
+    border-bottom: 3px solid #E85B26;
+}
+
+.tabla-deportistas tr, .tabla-equipos tr, .tabla-campeonatos tr {
+    transition: background 0.2s;
+}
+
+.tabla-deportistas tr:nth-child(even),
+.tabla-equipos tr:nth-child(even),
+.tabla-campeonatos tr:nth-child(even) {
     background: #f0f4ff;
 }
 
-.item:hover {
-    transform: scale(1.02);
+.tabla-deportistas tr:hover,
+.tabla-equipos tr:hover,
+.tabla-campeonatos tr:hover {
+    background: #eaf0ff;
 }
 
-.item p {
-    margin: 6px 0;
-    font-size: 1.1em;
+.tabla-deportistas td, .tabla-equipos td, .tabla-campeonatos td {
+    font-size: 1.04em;
+    color: #222;
+    border-bottom: 1px solid #e0e7ff;
+}
+
+/* =========================
+   BOTONES DE ACCIÓN EN TABLA
+========================= */
+.tabla-deportistas .btn-editar,
+.tabla-deportistas .btn-pdf,
+.tabla-deportistas .btn-eliminar,
+.tabla-equipos .btn-editar,
+.tabla-equipos .btn-pdf,
+.tabla-equipos .btn-eliminar,
+.tabla-campeonatos .btn-editar,
+.tabla-campeonatos .btn-pdf,
+.tabla-campeonatos .btn-eliminar {
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    margin: 0 4px;
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(12,36,97,0.08);
+    cursor: pointer;
+}
+
+.btn-editar {
+    background: #fffbe6;
+    color: #E85B26;
+}
+.btn-editar:hover {
+    background: #ffe0b2;
+    color: #C8461E;
+}
+
+.btn-pdf {
+    background: #eaf7ff;
     color: #0C2461;
 }
-
-/* Botón principal */
-.btn {
-    margin-top: 10px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1em;
-    cursor: pointer;
-    font-weight: 600;
-    background-color: #E85B26;
-    color: white;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: inline-block;
-    user-select: none;
-}
-
-.btn:hover {
-    background-color: #C8461E;
-    color: #fff;
-}
-
-/* Botones de descargar y eliminar */
-.btn-descargar {
-    background-color: #0C2461;
-    color: white;
-}
-
-.btn-descargar:hover {
-    background-color: #1e40af;
+.btn-pdf:hover {
+    background: #b3e0ff;
+    color: #0C2461;
 }
 
 .btn-eliminar {
-    background-color: #c0392b;
-    color: white;
+    background: #ffeaea;
+    color: #c0392b;
 }
-
 .btn-eliminar:hover {
-    background-color: #e74c3c;
+    background: #ffb3b3;
+    color: #e74c3c;
 }
 
-/* Botones de navegación (centrados y separados debajo del título) */
-.nav-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    margin: 25px 0 20px 0;
-}
-
-/* Botón secundario (volver, inicio, etc) */
-.btn-secondary,
-nav.nav-buttons button,
-button[title^="Volver"],
-button[title^="Ir a Inicio"],
-button[title^="Volver a inicio"] {
-    background-color: #fff;
-    color: #0C2461;
-    border: 2px solid #E85B26;
-    padding: 8px 18px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0; /* Elimina margen lateral para que el gap funcione */
-}
-
-.btn-secondary:hover,
-nav.nav-buttons button:hover,
-button[title^="Volver"]:hover,
-button[title^="Ir a Inicio"]:hover,
-button[title^="Volver a inicio"]:hover {
-    background-color: #E85B26;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Botón para asociar equipos y otros botones de acción secundarios */
-.btn-asociar,
-.btn-filtrar,
-.btn-limpiar,
-.btn-cancelar,
-.btn-guardar,
-.btn-editar {
-    background-color: #fff;
-    color: #0C2461;
-    border: 2px solid #E85B26;
-    padding: 8px 18px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-    display: inline-block;
-    margin: 0 8px 8px 0;
-    vertical-align: middle;
-}
-
-.btn-asociar:hover,
-.btn-filtrar:hover,
-.btn-limpiar:hover,
-.btn-cancelar:hover,
-.btn-guardar:hover,
-.btn-editar:hover {
-    background-color: #E85B26;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Botón para mensajes de alerta o confirmación */
-.btn-alerta,
-.btn-confirmar {
-    background-color: #0C2461;
-    color: #fff;
-    border: 2px solid #E85B26;
-    padding: 8px 18px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-    display: inline-block;
-    margin: 0 8px 8px 0;
-    vertical-align: middle;
-}
-
-.btn-alerta:hover,
-.btn-confirmar:hover {
-    background-color: #E85B26;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Botones de formulario internos */
-form button,
-form input[type="submit"] {
-    background-color: #E85B26;
+/* =========================
+   BOTONES GENERALES
+========================= */
+.btn,
+.btn-main,
+.btn-primary {
+    background: linear-gradient(90deg, #E85B26 60%, #0C2461 100%);
     color: #fff;
     border: none;
-    border-radius: 6px;
-    padding: 10px 18px;
-    font-size: 1em;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1.1em;
     font-weight: 600;
+    box-shadow: 0 2px 8px rgba(12,36,97,0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-top: 18px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn:hover,
+.btn-main:hover,
+.btn-primary:hover {
+    background: linear-gradient(90deg, #0C2461 60%, #E85B26 100%);
+    box-shadow: 0 4px 16px rgba(12,36,97,0.18);
+}
+
+.btn-cerrar {
+    background: #fff;
+    color: #c0392b;
+    border: 2px solid #c0392b;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    margin-top: 18px;
+}
+.btn-cerrar:hover {
+    background: #c0392b;
+    color: #fff;
+    border-color: #E85B26;
+}
+
+/* =========================
+   BOTÓN BLANCO CON BORDE TOMATE PARA ASOCIAR
+========================= */
+.btn-asociar-blanco {
+    background: #fff;
+    color: #E85B26;
+    border: 2px solid #E85B26;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1.1em;
+    font-weight: 600;
+    box-shadow: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    margin-top: 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-asociar-blanco:hover {
+    background: #E85B26;
+    color: #fff;
+    border-color: #E85B26;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(12,36,97,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: none;
+    padding: 38px 32px 28px 32px;
+    max-width: 420px;
+    margin: 60px auto;
+    position: relative;
+    animation: modalFadeIn 0.4s;
+    border: 1.5px solid #eee;
+}
+@keyframes modalFadeIn {
+    from { transform: translateY(-40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+.modal-content h3 {
+    color: #0C2461;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 1.35em;
+    text-align: center;
+}
+.modal-content .close {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 1.5em;
+    color: #E85B26;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-content .close:hover {
+    color: #c0392b;
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+.form-group label {
+    font-weight: 600;
+    color: #0C2461;
+    margin-bottom: 4px;
+    display: block;
+}
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #e0e7ff;
+    margin-bottom: 14px;
+    font-size: 1em;
+    background: #f8faff;
+    transition: border 0.2s;
+}
+.form-group input:focus, .form-group select:focus {
+    border-color: #E85B26;
+    outline: none;
+}
+.form-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+.error-msg {
+    color: #c0392b;
     margin-top: 10px;
-    transition: background-color 0.3s, color 0.3s;
+    text-align: right;
+    font-size: 0.98em;
 }
 
-form button:hover,
-form input[type="submit"]:hover {
-    background-color: #C8461E;
-    color: #fff;
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+    main {
+        padding: 12px 2vw;
+        width: 99%;
+    }
+    .modal-content {
+        padding: 18px 6px 18px 6px;
+    }
 }
-
-/* Botón para cerrar o salir (por ejemplo, en modales) */
-.btn-cerrar,
-.btn-salir {
-    background-color: #c0392b;
-    color: #fff;
-    border: 2px solid #E85B26;
-    padding: 8px 18px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-    display: inline-block;
-    margin: 0 8px 8px 0;
-    vertical-align: middle;
-}
-
-.btn-cerrar:hover,
-.btn-salir:hover {
-    background-color: #e74c3c;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Botón para acciones de tabla/lista (por ejemplo, editar, eliminar) */
-.tabla-btn,
-.lista-btn {
-    background-color: #fff;
-    color: #0C2461;
-    border: 2px solid #E85B26;
-    padding: 6px 14px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    margin: 0 4px;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-}
-
-.tabla-btn:hover,
-.lista-btn:hover {
-    background-color: #E85B26;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Botón de limpiar filtros */
-.btn-limpiar-filtros {
-    background-color: #fff;
-    color: #0C2461;
-    border: 2px solid #E85B26;
-    padding: 6px 14px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-}
-
-.btn-limpiar-filtros:hover {
-    background-color: #E85B26;
-    color: #fff;
-    border-color: #C8461E;
-}
-
-/* Responsive para nav-buttons */
 @media (max-width: 700px) {
     .nav-buttons {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+        border-radius: 0 0 10px 10px;
     }
-    .btn, .btn-secondary, nav.nav-buttons button {
-        width: 100%;
-        font-size: 1rem;
+    .nav-buttons button {
+        width: 95%;
+        font-size: 1em;
     }
-}
-
-/* Responsive para botones y menú */
-@media (max-width: 700px) {
     main {
-        padding: 10px;
-        width: 98%;
+        padding: 8px 2vw;
+        width: 99%;
     }
-    .btn, .btn-secondary, nav.nav-buttons button {
+    .btn, .btn-main, .btn-primary, .btn-cerrar {
         width: 100%;
-        margin: 10px 0;
-        font-size: 1rem;
-    }
-    button[title^="Volver"], button[title^="Volver a inicio"] {
-        left: 10px;
-        top: 10px;
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
+        font-size: 1em;
+        margin-top: 10px;
     }
 }
 
 footer {
-    background-color: #0C2461;
+    background: #0C2461;
     color: white;
     padding: 20px 0;
     text-align: center;
     font-size: 0.9em;
     flex-shrink: 0;
+}
+
+.btn-secondary, .btn-asociar-blanco {
+  background: #fff;
+  color: #E85B26;
+  border: 2px solid #E85B26;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-secondary:hover, .btn-asociar-blanco:hover {
+  background: #E85B26;
+  color: #fff;
 }

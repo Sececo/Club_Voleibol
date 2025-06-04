@@ -5,71 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Campeonato - Club de Voleibol</title>
   <link rel="stylesheet" href="styles/Formularios.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
+  <header>
+    <h1>Crear Campeonato</h1>
+  </header>
   <div class="container">
-    <header>
-      <h1>Crear Campeonato</h1>
-    </header>
-
-    <nav class="nav-buttons">
-      <button class="btn-secondary" onclick="location.href='campeonatos.html'" title="Volver a Campeonatos">
-        &#8592; Volver
+    <nav class="nav-buttons nav-center" aria-label="Navegación principal">
+      <button type="button" class="btn-secondary" onclick="location.href='campeonatos.html'">
+        <i class="fas fa-arrow-left"></i> Volver a Campeonatos
       </button>
-      <button class="btn-secondary" onclick="location.href='inicio.html'" title="Ir a Inicio">
-        &#8962; Inicio
+      <button type="button" class="btn-secondary" onclick="location.href='principal.html'">
+        <i class="fas fa-home"></i> Inicio
       </button>
     </nav>
-
     <main>
-      <form id="formCampeonato" autocomplete="off" novalidate>
-
-        <input type="hidden" id="id_campeonato" name="id_campeonato" />
-
+      <form id="form-campeonato" autocomplete="off" novalidate>
         <div class="form-group">
-          <label for="nombre_campeonato">Nombre del Campeonato *</label>
-          <input type="text" id="nombre_campeonato" name="nombre_campeonato" required />
+          <label for="nombre-campeonato">Nombre del Campeonato *</label>
+          <input type="text" id="nombre-campeonato" required />
         </div>
-
         <div class="form-group">
           <label for="fecha">Fecha de Inicio *</label>
-          <input type="date" id="fecha" name="fecha" required />
+          <input type="date" id="fecha" required />
         </div>
-
         <div class="form-group">
           <label for="hora">Hora de Inicio *</label>
-          <input type="time" id="hora" name="hora" required />
+          <input type="time" id="hora" required />
         </div>
-
         <div class="form-group">
           <label for="sede">Sede *</label>
-          <input type="text" id="sede" name="sede" required />
+          <input type="text" id="sede" required />
         </div>
-
         <div class="form-group">
           <label for="categoria">Categoría *</label>
-          <select id="categoria" name="categoria" required>
+          <select id="categoria" required>
             <option value="" disabled selected>Seleccionar Categoría</option>
             <option value="benjamin">Benjamín</option>
             <option value="mini">Mini</option>
             <option value="infantil">Infantil</option>
           </select>
         </div>
-
         <div class="form-actions">
           <button type="submit" class="btn-primary">Guardar</button>
           <button type="reset" class="btn-secondary">Cancelar</button>
         </div>
       </form>
     </main>
-
     <footer>
       &copy; 2025 Club Deportivo de Voleibol
     </footer>
   </div>
-
   <script src="scripts/crear_campeonato.js"></script>
 </body>
 </html>

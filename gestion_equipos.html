@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gestión Equipos</title>
+    <title>Gestión de Equipos</title>
     <link rel="stylesheet" href="styles/Gestiones.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body data-tipo="equipos">
-
     <header>
         <h1>Gestión de Equipos</h1>
     </header>
-
-       <nav class="nav-buttons" aria-label="Navegación principal">
-      <button class="btn-secondary" title="Volver a Equipos" onclick="location.href='equipos.html'">
-        &#8592; Volver a Equipos
-      </button>
-      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
-        &#8962; Inicio
-      </button>
+    <nav class="nav-buttons" aria-label="Navegación principal">
+        <button class="btn-secondary" title="Volver a Equipos" onclick="location.href='equipos.html'">
+            <i class="fas fa-arrow-left"></i> Volver a Equipos
+        </button>
+        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
+            <i class="fas fa-home"></i> Inicio
+        </button>
     </nav>
-    
     <main>
         <h2>Lista de Equipos</h2>
         <div id="filtro-categorias"></div>
@@ -30,6 +28,25 @@
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-    <script src="scripts/Gestiones.js"></script>
+    <script src="scripts/eliminar_item.js" type="module"></script>
+    <script src="scripts/descargarPDF.js" type="module"></script>
+    <script src="scripts/asociar_deportistas.js"></script>
+    <script src="scripts/mostrar_equipos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="scripts/principal.js"></script>
+
+    <!-- Modal para asociar deportistas -->
+    <div id="modal-asociar-deportistas" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="cerrar-modal-asociar">&times;</span>
+        <h3>Asociar Deportistas al Equipo</h3>
+        <form id="form-asociar-deportistas">
+          <div id="lista-deportistas"></div>
+          <button type="submit" class="btn-asociar-blanco">
+            <i class="fas fa-users"></i> Asociar seleccionados
+          </button>
+        </form>
+      </div>
+    </div>
 </body>
 </html>

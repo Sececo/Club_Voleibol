@@ -1,0 +1,8 @@
+body, div, p, h1, h2, h3, h4, h5, h6, ul, li, table, th, td {
+    font-family: Arial, sans-serif !important;
+    font-size: 12pt !important;
+}
+h2, h3, h4 {
+    color: #E85B26 !important;
+    font-weight: bold !important;
+}

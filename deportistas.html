@@ -2,10 +2,11 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Menú Principal - Club de Voleibol</title>
+        <title>Deportistas</title>
         <link rel="stylesheet" href="styles/principal.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
     </head>
 <body>
     <header>
@@ -13,25 +14,25 @@
         <h2>Deportistas</h2>
     </header>
     <!-- Botón de volver lateral izquierdo -->
-    <button title="Volver a inicio" onclick="location.href='inicio.html'">
-        &#8592;
+    <button title="Volver a inicio" onclick="location.href='principal.html'">
+        <i class="fas fa-arrow-left"></i>
     </button>
     <div class="menu">
         <div class="menu-item" onclick="location.href='registrar_deportista.html'">
         <i class="fas fa-user-plus"></i>
         <p>Registrar</p>
         </div>
-      <div class="menu-item" onclick="location.href='gestion_deportistas.html?modo=consultar'">
+        <div class="menu-item" onclick="location.href='consultar_deportista.html?modo=consultar'">
         <i class="fas fa-magnifying-glass"></i>
         <p>Consultar</p>
         </div>
-        <div class="menu-item" onclick="location.href='gestion_deportistas.html?modo=eliminar'">
+        <div class="menu-item" onclick="location.href='consultar_deportista.html?modo=eliminar'">
         <i class="fas fa-close"></i>
         <p>Eliminar</p>
         </div>
     </div>
     <footer>
-        &copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.
+        <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol - Todos los derechos reservados.</i>
     </footer>
 
 </body>

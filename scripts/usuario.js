@@ -1,43 +1,102 @@
-// Validar longitud de contraseña en tiempo real
-document.getElementById('confirm-password').addEventListener('input', function() {
-  const msg = document.getElementById('msg-confirm-password');
-  if (this.value.length < 8) {
-    msg.textContent = "La contraseña debe tener mínimo 8 caracteres.";
-  } else {
-    msg.textContent = "";
+document.addEventListener('DOMContentLoaded', () => {
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.onsubmit = async function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const correo = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm-password').value;
+      const errorMsg = document.getElementById('error-msg');
+      errorMsg.textContent = "";
+
+      if (!nombre || !correo || !password || !confirm) {
+        errorMsg.textContent = "Todos los campos son obligatorios.";
+        return;
+      }
+      if (password !== confirm) {
+        errorMsg.textContent = "Las contraseñas no coinciden.";
+        return;
+      }
+
+      const res = await fetch('http://localhost:3000/administradores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, correo, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Administrador registrado correctamente');
+        window.location.href = "index.html";
+      } else {
+        errorMsg.textContent = data.error || "Error al registrar administrador";
+      }
+    };
   }
-});
 
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+  // -------- LOGIN --------
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    function mostrarMensajeRegistro(msg) {
+      let errorMsg = document.getElementById('error-msg');
+      if (!errorMsg) {
+        errorMsg = document.createElement('p');
+        errorMsg.id = 'error-msg';
+        errorMsg.className = 'error-msg';
+        loginForm.appendChild(errorMsg);
+      }
+      errorMsg.innerHTML = `${msg} <a href="registro.html" style="color:#007bff;text-decoration:underline;">Regístrate aquí</a>`;
+      errorMsg.style.display = 'block';
+    }
 
-  const email = document.getElementById('new-password').value.trim();
-  const password = document.getElementById('confirm-password').value.trim();
-  const errorMsg = document.getElementById('error-msg');
-  const passMsg = document.getElementById('msg-confirm-password');
+    // Elimina mensaje al escribir
+    loginForm.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', () => {
+        const errorMsg = document.getElementById('error-msg');
+        if (errorMsg) errorMsg.style.display = 'none';
+      });
+    });
 
-  errorMsg.textContent = '';
-  passMsg.textContent = '';
+    loginForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-  const dominiosValidos = ['@gmail.com', '@hotmail.com', '@unicatolica.edu.co'];
-  const emailValido = dominiosValidos.some(dominio => email.endsWith(dominio));
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-  if (!emailValido) {
-    errorMsg.textContent = "El correo debe terminar en @gmail.com, @hotmail.com o @unicatolica.edu.co";
-    return;
+      // Validaciones básicas
+      if (email === "" || password === "") {
+        mostrarMensajeRegistro("Debes ingresar tu correo y contraseña.");
+        return;
+      }
+
+      // Validar formato de correo
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        mostrarMensajeRegistro("Correo electrónico inválido.");
+        return;
+      }
+
+      // Intentar login como administrador
+      try {
+        const res = await fetch('http://localhost:3000/login_admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ correo: email, password })
+        });
+        if (res.ok) {
+          // Opcional: puedes guardar info en localStorage/sessionStorage si lo necesitas
+          window.location.href = "principal.html";
+          return;
+        } else {
+          const data = await res.json();
+          if (data && data.error === 'Credenciales incorrectas') {
+            mostrarMensajeRegistro("No tienes una cuenta registrada.");
+          } else {
+            mostrarMensajeRegistro("Error al iniciar sesión.");
+          }
+        }
+      } catch (err) {
+        mostrarMensajeRegistro("Error de conexión con el servidor.");
+      }
+    });
   }
-
-  if (password.length < 8) {
-    passMsg.textContent = "La contraseña debe tener mínimo 8 caracteres.";
-    return;
-  }
-
-  // Guardar usuario en el array de usuarios
-  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-  usuarios.push({ email, password });
-  localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-  alert('Formulario válido. Usuario registrado correctamente.');
-
-  window.location.href = "index.html";
 });

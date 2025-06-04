@@ -9,19 +9,22 @@
 </head>
 <body>
 
+  <header>
+    <h1>Crear Equipo</h1>
+  </header>
+
   <div class="container">
-    <header>
-      <h1>Crear Equipo</h1>
-    </header>
 
     <nav class="nav-buttons" aria-label="Navegación principal">
       <button class="btn-secondary" title="Volver a Equipos" onclick="location.href='equipos.html'">
         &#8592; Volver a Equipos
       </button>
-      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
+      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
         &#8962; Inicio
       </button>
     </nav>
+
+    <h2 style="text-align:center; color:#0C2461; margin-bottom: 0;">Datos del Equipo</h2>
 
     <main>
       <form id="formEquipo" autocomplete="off" novalidate>
@@ -46,39 +49,8 @@
             <option value="" disabled selected>Seleccione</option>
             <option value="masculino">Masculino</option>
             <option value="femenino">Femenino</option>
-            <option value="mixto">Mixto</option>
+            <option value="otro">Otro</option>
           </select>
-        </div>
-
-        <div class="form-group">
-          <label for="entrenador">Nombre del Entrenador *</label>
-          <input type="text" id="entrenador" name="entrenador" required />
-        </div>
-
-        <div class="form-group">
-          <label for="telefono_entrenador">Teléfono del Entrenador *</label>
-          <input type="tel" id="telefono_entrenador" name="telefono_entrenador" placeholder="+57 300 1234567" required />
-        </div>
-
-        <div class="form-group">
-          <label for="email_entrenador">Correo Electrónico del Entrenador *</label>
-          <input type="email" id="email_entrenador" name="email_entrenador" placeholder="correo@ejemplo.com" required />
-        </div>
-
-        <div class="form-group">
-          <label for="jugadores_disponibles">Jugadores Disponibles</label>
-          <div class="jugadores-wrapper">
-            <select id="jugadores_disponibles" name="jugadores_disponibles">
-              <option value="" disabled selected>Seleccione un jugador</option>
-              <!-- Jugadores registrados aparecerán aquí -->
-            </select>
-            <button type="button" class="btn-add" title="Agregar jugador">+</button>
-            <button type="button" class="btn-remove" title="Quitar jugador">−</button>
-          </div>
-        </div>
-
-        <div id="jugadores_agregados" class="lista-jugadores">
-          <!-- Aquí se mostrarán los jugadores seleccionados -->
         </div>
 
         <div class="form-actions">
@@ -94,6 +66,5 @@
   </div>
 
   <script src="scripts/crear_equipo.js"></script>
-
 </body>
 </html>

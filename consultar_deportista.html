@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Deportistas</title>
+    <link rel="stylesheet" href="styles/Gestiones.css" />
+    <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body data-tipo="deportistas">
+    <header>
+        <h1>Gestión de Deportistas</h1>
+    </header>
+    <nav class="nav-buttons" aria-label="Navegación principal">
+        <button class="btn-secondary" title="Volver a Deportistas" onclick="location.href='deportistas.html'">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
+            <i class="fas fa-home"></i> Inicio
+        </button>
+    </nav>
+    <main>
+        <h2>Lista de Deportistas</h2>
+        <div id="filtro-categorias"></div>
+        <div id="lista-items"></div>
+        <p id="mensaje-no-items" style="display:none;">No hay deportistas registrados.</p>
+    </main>
+
+    <!-- Modal de edición -->
+    <div id="modal-editar-deportista" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="cerrar-modal-editar" title="Cerrar">&times;</span>
+        <h3>Editar Deportista</h3>
+        <form id="form-editar-deportista" autocomplete="off">
+          <input type="hidden" id="edit-id" />
+          <div class="form-group">
+            <label for="edit-nombres"><i class="fas fa-user"></i> Nombres</label>
+            <input type="text" id="edit-nombres" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-apellidos"><i class="fas fa-user"></i> Apellidos</label>
+            <input type="text" id="edit-apellidos" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-telefono"><i class="fas fa-phone"></i> Teléfono</label>
+            <input type="text" id="edit-telefono" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-email"><i class="fas fa-envelope"></i> Correo</label>
+            <input type="email" id="edit-email" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-password"><i class="fas fa-lock"></i> Contraseña</label>
+            <input type="password" id="edit-password" placeholder="Dejar en blanco para no cambiar" />
+          </div>
+          <div class="form-group">
+            <label for="edit-categoria"><i class="fas fa-layer-group"></i> Categoría</label>
+            <select id="edit-categoria" required>
+              <option value="benjamin">Benjamín</option>
+              <option value="mini">Mini</option>
+              <option value="infantil">Infantil</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-estado"><i class="fas fa-toggle-on"></i> Estado</label>
+            <select id="edit-estado" required>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-pago"><i class="fas fa-money-bill-wave"></i> Estado de Pago</label>
+            <select id="edit-pago" required>
+              <option value="true">Al día</option>
+              <option value="false">Pendiente</option>
+            </select>
+          </div>
+          <div class="form-actions" style="display:flex; gap:12px; justify-content:flex-end;">
+            <button type="submit" class="btn-main">
+              <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <button type="button" class="btn-cerrar" id="cerrar-modal-editar-btn">
+              <i class="fas fa-times"></i> Cancelar
+            </button>
+          </div>
+          <div id="editar-error-msg" class="error-msg"></div>
+        </form>
+      </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Club Deportivo de Voleibol - Todos los derechos reservados.</p>
+    </footer>
+    <script src="scripts/mostrar_items.js" type="module"></script>
+    <script src="scripts/eliminar_item.js" type="module"></script>
+    <script src="scripts/descargarPDF.js" type="module"></script>
+    <script src="scripts/editar_deportista.js"></script>
+    <script src="scripts/mostrar_deportistas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="scripts/principal.js"></script>
+</body>
+</html>

@@ -5,137 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestión Campeonatos</title>
     <link rel="stylesheet" href="styles/Gestiones.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body data-tipo="campeonatos">
-
+<body>
     <header>
         <h1>Gestión de Campeonatos</h1>
     </header>
-        <nav class="nav-buttons" aria-label="Navegación principal">
-      <button class="btn-secondary" title="Volver a Campeonatos" onclick="location.href='campeonatos.html'">
-        &#8592; Volver a Campeonatos
-      </button>
-      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='inicio.html'">
-        &#8962; Inicio
-      </button>
+    <nav class="nav-buttons" aria-label="Navegación principal" style="display:flex; justify-content:center; gap:16px; margin-bottom:24px;">
+        <button class="btn-secondary" title="Volver a Campeonatos" onclick="location.href='campeonatos.html'" style="display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-arrow-left"></i> Volver a Campeonatos
+        </button>
+        <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'" style="display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-home"></i> Inicio
+        </button>
     </nav>
     <main>
         <h2>Lista de Campeonatos</h2>
         <div id="filtro-categorias"></div>
         <div id="lista-items"></div>
         <p id="mensaje-no-items" style="display:none;">No hay campeonatos registrados.</p>
-        <!-- Aquí se mostrará la sección de asociación de equipos -->
-        <div id="asociar-equipos-section" style="display:none; margin-top:2em;">
-            <h3>Asociar Equipos al Campeonato</h3>
-            <form id="form-asociar-equipos">
-                <div id="equipos-disponibles"></div>
-                <button type="submit" class="btn">Guardar Equipos Asociados</button>
-            </form>
-            <p id="mensaje-asociar"></p>
-        </div>
     </main>
     <footer>
         <p>&copy; 2025 Tu Organización Deportiva</p>
     </footer>
-    <script>
-    // --- NUEVO CÓDIGO PARA ASOCIAR EQUIPOS ---
-    // Variables globales para la sección de asociación
-    let campeonatoSeleccionado = null;
 
-    // Función para renderizar campeonatos y agregar botón "Asociar equipos"
-    function renderizarCampeonatos(campeonatos) {
-        const lista = document.getElementById('lista-items');
-        lista.innerHTML = '';
-        if (!campeonatos || campeonatos.length === 0) {
-            document.getElementById('mensaje-no-items').style.display = '';
-            return;
-        }
-        document.getElementById('mensaje-no-items').style.display = 'none';
-        campeonatos.forEach((c, idx) => {
-            const div = document.createElement('div');
-            div.className = 'campeonato-item';
-            div.innerHTML = `
-                <strong>${c.nombre}</strong> - ${c.categoria} - ${c.fecha} - ${c.sede}
-                <button class="btn-asociar" data-index="${idx}">Asociar equipos</button>
-            `;
-            lista.appendChild(div);
-        });
+    <!-- Modal para asociar equipos -->
+    <div id="modal-asociar-equipos" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span id="cerrar-modal-asociar-equipos" class="close">&times;</span>
+        <h3>Asociar Equipos al Campeonato</h3>
+        <form id="form-asociar-equipos">
+          <div id="lista-equipos-disponibles"></div>
+          <button type="submit" class="btn-asociar-blanco">
+            <i class="fas fa-users"></i> Asociar seleccionados
+          </button>
+        </form>
+      </div>
+    </div>
 
-        // Asignar evento a los botones de asociar
-        document.querySelectorAll('.btn-asociar').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const idx = this.getAttribute('data-index');
-                campeonatoSeleccionado = campeonatos[idx];
-                mostrarAsociarEquipos(campeonatoSeleccionado);
-            });
-        });
-    }
-
-    // Función para mostrar la sección de asociación de equipos
-    function mostrarAsociarEquipos(campeonato) {
-        const section = document.getElementById('asociar-equipos-section');
-        const equiposDisponiblesDiv = document.getElementById('equipos-disponibles');
-        const mensaje = document.getElementById('mensaje-asociar');
-        mensaje.textContent = '';
-        equiposDisponiblesDiv.innerHTML = '';
-
-        // Obtener equipos de localStorage y filtrar por categoría del campeonato
-        const equipos = JSON.parse(localStorage.getItem('equipos')) || [];
-        const equiposFiltrados = equipos.filter(e => e.categoria === campeonato.categoria);
-
-        if (equiposFiltrados.length < 4) {
-            equiposDisponiblesDiv.innerHTML = `<p>No hay suficientes equipos en la categoría "${campeonato.categoria}". Mínimo 4.</p>`;
-            section.style.display = '';
-            return;
-        }
-
-        equiposFiltrados.forEach(e => {
-            const label = document.createElement('label');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.name = 'equipo';
-            checkbox.value = e.nombre;
-            // Si ya está asociado, marcarlo
-            if (campeonato.equiposAsociados && campeonato.equiposAsociados.includes(e.nombre)) {
-                checkbox.checked = true;
-            }
-            label.appendChild(checkbox);
-            label.append(` ${e.nombre}`);
-            equiposDisponiblesDiv.appendChild(label);
-            equiposDisponiblesDiv.appendChild(document.createElement('br'));
-        });
-
-        section.style.display = '';
-    }
-
-    // Evento para guardar equipos asociados
-    document.getElementById('form-asociar-equipos').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!campeonatoSeleccionado) return;
-        const seleccionados = Array.from(document.querySelectorAll("input[name='equipo']:checked"))
-            .map(cb => cb.value);
-
-        if (seleccionados.length < 4) {
-            document.getElementById('mensaje-asociar').textContent = "Debes seleccionar al menos 4 equipos para asociar.";
-            return;
-        }
-
-        // Actualizar en localStorage
-        const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
-        const idx = campeonatos.findIndex(c => c.nombre === campeonatoSeleccionado.nombre && c.fecha === campeonatoSeleccionado.fecha);
-        if (idx !== -1) {
-            campeonatos[idx].equiposAsociados = seleccionados;
-            localStorage.setItem("campeonatos", JSON.stringify(campeonatos));
-            document.getElementById('mensaje-asociar').textContent = "Equipos asociados correctamente al campeonato.";
-        }
-    });
-
-    // --- INICIALIZACIÓN ---
-    // Cargar campeonatos al cargar la página
-    document.addEventListener('DOMContentLoaded', function() {
-        const campeonatos = JSON.parse(localStorage.getItem("campeonatos")) || [];
-        renderizarCampeonatos(campeonatos);
-    });
-    </script>
+    <!-- Solo scripts JS aquí -->
+    <script src="scripts/mostrar_campeonatos.js"></script>
+    <script src="scripts/eliminar_item.js" type="module"></script>
+    <script src="scripts/asociar_equipos.js" type="module"></script>
+    <script src="scripts/descargarPDF.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="scripts/principal.js"></script>
 </body>
 </html>

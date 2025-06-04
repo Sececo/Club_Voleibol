@@ -1,10 +1,8 @@
-/* Todo tu CSS existente */
-
 body {
   margin: auto;
   font-family: 'Roboto', sans-serif;
   background-color: #0C2461; /* Azul oscuro */
-  color: rgb(0, 0, 0); /* Negro */
+  color: #000; /* Negro */
   max-width: 70%;
 }
 
@@ -23,10 +21,11 @@ header h1 {
   font-size: 46px;
 }
 
-header h2 {
+header h2, p {
   margin-top: 0;
   font-size: 28px;
 }
+
 
 .menu {
   display: grid;
@@ -75,7 +74,7 @@ header h2 {
 /* Botón principal */
 .btn {
   background-color: #E85B26;
-  color: white;
+  color: #fff;
   border: none;
   padding: 10px 16px;
   margin: 20px auto 0 auto; /* Centrado horizontal y algo de margen arriba */
@@ -149,13 +148,61 @@ button[title^="Volver a inicio"]:hover {
   border-color: #C8461E;
 }
 
-/* Nav-buttons container */
+/* Botones de navegación modernos */
 .nav-buttons {
   display: flex;
-  flex-direction: row;
+  gap: 18px;
+  justify-content: flex-start;
   align-items: center;
-  margin: 20px 0 10px 0;
+  margin: 24px 0 18px 0;
+  flex-wrap: wrap;
+}
+
+.btn-nav {
+  background: linear-gradient(90deg, #E85B26 0%, #0C2461 100%);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 32px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  box-shadow: 0 4px 18px rgba(12,36,97,0.10);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   gap: 10px;
+  transition: 
+    background 0.25s, 
+    transform 0.18s, 
+    box-shadow 0.25s, 
+    color 0.25s;
+  outline: none;
+  position: relative;
+}
+
+.btn-nav i {
+  font-size: 1.3em;
+}
+
+.btn-nav:hover, .btn-nav:focus {
+  background: linear-gradient(90deg, #0C2461 0%, #E85B26 100%);
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px #E85B26aa;
+}
+
+@media (max-width: 900px) {
+  .nav-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .btn-nav {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
 }
 
 /* Responsive para botones y menú */
