@@ -140,6 +140,8 @@ app.post('/administradores', async (req, res) => {
     if (error.code === '23505') {
       res.status(400).json({ error: 'El correo ya está registrado.' });
     } else {
+      console.log(email);
+      console.log(correo);
       console.error(error); // <-- Aquí verás el error real en consola
       res.status(500).json({ error: 'Error al registrar administrador' });
     }
