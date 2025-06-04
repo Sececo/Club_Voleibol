@@ -182,7 +182,7 @@ select:focus {
   border: none;
   color: #fff;
   font-weight: 700;
-  
+  font-size: 2rem;
   border-radius: 30px;
   cursor: pointer;
   border: 2px solid #BF4A1C; /* Naranja oscuro */
@@ -286,16 +286,7 @@ footer {
 
 
 
-  .btn-primary, .btn-secondary {
-    padding: 10px 20px;
-    font-size: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap:15px;
-  }
 
-}
 
 @media (max-width: 600px) {
   .nav-buttons.nav-center,
@@ -347,4 +338,5 @@ footer {
   align-items: center;
   gap: 8px;
   margin: 10px 0;
+}
 }

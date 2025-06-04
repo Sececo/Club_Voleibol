@@ -172,7 +172,7 @@ export async function mostrarItems(filtro = "todas") {
 
     // Asignar eventos a los botones según el modo
     if (modo === "consultar") {
-        document.querySelectorAll(".btn-descargar").forEach(btn => {
+        document.querySelectorAll(".btn-descargar-deportista").forEach(btn => {
             btn.addEventListener("click", async e => {
                 const id = e.target.getAttribute("data-id");
                 // Obtener el item desde el backend por ID

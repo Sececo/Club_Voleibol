@@ -12,12 +12,12 @@
     <h1>Crear Campeonato</h1>
   </header>
   <div class="container">
-    <nav class="nav-buttons nav-center" aria-label="Navegación principal">
-      <button type="button" class="btn-secondary" onclick="location.href='campeonatos.html'">
-        <i class="fas fa-arrow-left"></i> Volver a Campeonatos
+    <nav class="nav-buttons" aria-label="Navegación principal">
+      <button class="btn-secondary" title="Volver a Equipos" onclick="location.href='campeonatos.html'">
+        <i class="fas fa-arrow-left"></i>
       </button>
-      <button type="button" class="btn-secondary" onclick="location.href='principal.html'">
-        <i class="fas fa-home"></i> Inicio
+      <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
+        <i class="fas fa-home"></i>
       </button>
     </nav>
     <main>
@@ -47,14 +47,14 @@
             <option value="infantil">Infantil</option>
           </select>
         </div>
-        <div class="form-actions">
-          <button type="submit" class="btn-primary">Guardar</button>
-          <button type="reset" class="btn-secondary">Cancelar</button>
-        </div>
+    <nav class="nav-buttons" aria-label="Navegación principal">
+          <button type="submit" class="btn-primary"><i class="fas fa-save"></i></button>
+          <button type="reset" class="btn-primary"><i class="fas fa-cancel"></i></button>
+    </nav>
       </form>
     </main>
     <footer>
-      &copy; 2025 Club Deportivo de Voleibol
+      <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol</i>
     </footer>
   </div>
   <script src="scripts/crear_campeonato.js"></script>

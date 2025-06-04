@@ -2,14 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="assets/volleyball-ball-solid.svg" type="image/x-icon" />
   <title>Registro Administrador - Club Voleibol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="scripts/usuario.js"></script>
+
 </head>
 <body>
-  <div class="blur-bg"></div>
-  <div class="login-box">
-    <h2>Registro Administrador</h2>
+
+    <!-- Botón de volver lateral izquierdo -->
+    <button id="volver" onclick="location.href='index.html'">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+  <container class="login-box">
+    <h2>Registrar Administrador</h2>
     <form id="registerForm">
       <div class="input-group">
         <label for="nombre">Nombre completo</label>
@@ -21,24 +30,20 @@
       </div>
       <div class="input-group">
         <label for="password">Contraseña</label>
-        <input type="password" id="password" name="password" placeholder="Contraseña" required minlength="8" maxlength="255" autocomplete="new-password" />
-        <div id="password-strength" style="margin-top:4px;">
-          <div id="password-strength-bar"></div>
-        </div>
-        <span id="password-strength-text"></span>
+        <input type="password" id="password" name="password" 
+        placeholder="Contraseña" required minlength="8" maxlength="255" autocomplete="new-password" />
       </div>
       <div class="input-group">
         <label for="confirm-password">Confirmar contraseña</label>
-        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar contraseña" required minlength="8" maxlength="255" autocomplete="new-password" />
+        <input type="password" id="confirm-password" name="confirm-password" 
+        placeholder="Confirmar contraseña" required minlength="8" maxlength="255" autocomplete="new-password" />
         <span id="msg-confirm-password"></span>
       </div>
       <button type="submit">Registrarme</button>
-      <p id="error-msg" class="error-msg"></p>
     </form>
     <div style="margin-top:10px;">
       <a href="index.html">¿Ya tienes cuenta? Inicia sesión</a>
     </div>
-  </div>
-  <script src="scripts/usuario.js"></script>
+  </container>
 </body>
 </html>

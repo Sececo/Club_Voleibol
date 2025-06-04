@@ -103,8 +103,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(`http://localhost:3000/deportistas/${id}`);
         if (!res.ok) return alert("No se pudo obtener la información.");
         const d = await res.json();
-        if (window.descargarPDF) {
-          window.descargarPDF(
+        if (descargarPDF) {
+          descargarPDF(
             "Estado de Cuenta - " + d.nombres,
             `<p><strong>Nombre:</strong> ${d.nombres} ${d.apellidos}</p>
              <p><strong>Categoría:</strong> ${d.categoria}</p>

@@ -167,26 +167,32 @@ button:hover {
 /* Aquí puedes agregar estilos para login-box, inputs, etc. */
 
 /* Medidor de contraseña */
-#password-strength {
-  height: 8px;
-  width: 100%;
-  background: #eee;
-  border-radius: 4px;
-  margin-top: 4px;
-}
-#password-strength-bar {
-  height: 100%;
-  width: 0%;
-  background: red;
-  border-radius: 4px;
-  transition: width 0.3s;
-}
-#password-strength-text {
-  display: block;
-  margin-top: 2px;
-  color: #888;
-}
 #msg-confirm-password {
   color: red;
   font-size: 0.9em;
+}
+
+#volver {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  background: #fff;
+  color: #0C2461;
+  border: 2px solid #E85B26;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+#volver:hover {
+  background: #E85B26;
+  color: #fff;
+  border-color: #C8461E;
 }

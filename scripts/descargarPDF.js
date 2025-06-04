@@ -1,6 +1,4 @@
-import { descargarPDF } from "./descargarPDF.js"; // Si usas módulos, si no, omite esta línea
-
-window.descargarPDF = function(titulo, contenidoHTML, nombreArchivo = "documento.pdf") {
+function descargarPDF(titulo, contenidoHTML, nombreArchivo = "documento.pdf") {
     const contenedor = document.createElement("div");
     contenedor.innerHTML = `
         <div style="font-family: Arial, sans-serif; font-size: 12pt; padding: 20px;">
@@ -27,7 +25,7 @@ document.addEventListener("click", async function(e) {
     const res = await fetch(`http://localhost:3000/deportistas/${id}`);
     if (!res.ok) return alert("No se pudo obtener la información.");
     const d = await res.json();
-    window.descargarPDF(
+    descargarPDF(
       "Ficha Deportista",
       `<p><b>Nombre:</b> ${d.nombres} ${d.apellidos}</p>
        <p><b>Usuario:</b> ${d.usuario}</p>
@@ -66,7 +64,7 @@ document.addEventListener("click", async function(e) {
         .join("");
     }
 
-    window.descargarPDF(
+descargarPDF(
       "Ficha Equipo",
       `<p><b>Nombre:</b> ${equipo.nombre}</p>
        <p><b>Categoría:</b> ${equipo.categoria}</p>
@@ -102,7 +100,7 @@ document.addEventListener("click", async function(e) {
         .join("");
     }
 
-    window.descargarPDF(
+descargarPDF(
       "Ficha Campeonato",
       `<p><b>Nombre:</b> ${camp.nombre}</p>
        <p><b>Fecha:</b> ${camp.fecha}</p>

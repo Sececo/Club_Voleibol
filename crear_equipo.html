@@ -6,6 +6,7 @@
   <title>Crear Equipo - Club de Voleibol</title>
   <link rel="stylesheet" href="styles/Formularios.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -17,10 +18,10 @@
 
     <nav class="nav-buttons" aria-label="Navegación principal">
       <button class="btn-secondary" title="Volver a Equipos" onclick="location.href='equipos.html'">
-        &#8592; Volver a Equipos
+        <i class="fas fa-arrow-left"></i>
       </button>
       <button class="btn-secondary" title="Ir a Inicio" onclick="location.href='principal.html'">
-        &#8962; Inicio
+        <i class="fas fa-home"></i>
       </button>
     </nav>
 
@@ -53,15 +54,17 @@
           </select>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn-primary">Guardar</button>
-          <button type="reset" class="btn-secondary">Cancelar</button>
-        </div>
+
+
+    <nav class="nav-buttons" aria-label="Navegación principal">
+          <button type="submit" class="btn-primary"><i class="fas fa-save"></i></button>
+          <button type="reset" class="btn-primary"><i class="fas fa-cancel"></i></button>
+    </nav>
       </form>
     </main>
 
     <footer>
-      &copy; 2025 Club Deportivo de Voleibol
+      <i class="fas fa-copyright"> 2025 Club Deportivo de Voleibol</i>
     </footer>
   </div>
 

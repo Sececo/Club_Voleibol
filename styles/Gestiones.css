@@ -61,8 +61,8 @@ h2 {
 }
 
 .nav-buttons button {
-    background: #fff;
-    border: 2px solid #E85B26;
+    background: #E85B26;
+    border: 2px solid #c0392b;
     border-radius: 8px;
     font-size: 1.13em;
     font-weight: 600;
@@ -71,13 +71,12 @@ h2 {
     transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 40px;
     cursor: pointer;
 }
 
 .nav-buttons button:hover {
-    background: linear-gradient(90deg, #E85B26 60%, #0C2461 100%);
-    color: #fff;
+    background: #c0392b;
     border-color: #C8461E;
     box-shadow: 0 4px 16px rgba(12,36,97,0.18);
 }
@@ -231,7 +230,7 @@ select.filtro-select:focus {
 .btn,
 .btn-main,
 .btn-primary {
-    background: linear-gradient(90deg, #E85B26 60%, #0C2461 100%);
+    background: #E85B26;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -249,7 +248,7 @@ select.filtro-select:focus {
 .btn:hover,
 .btn-main:hover,
 .btn-primary:hover {
-    background: linear-gradient(90deg, #0C2461 60%, #E85B26 100%);
+    background: #e74c3c;
     box-shadow: 0 4px 16px rgba(12,36,97,0.18);
 }
 
@@ -424,8 +423,8 @@ footer {
 }
 
 .btn-secondary, .btn-asociar-blanco {
-  background: #fff;
-  color: #E85B26;
+  background: #E85B26;
+  color: #FFF;
   border: 2px solid #E85B26;
   border-radius: 6px;
   padding: 8px 18px;
@@ -438,6 +437,6 @@ footer {
   gap: 8px;
 }
 .btn-secondary:hover, .btn-asociar-blanco:hover {
-  background: #E85B26;
+  background: #0C2461;
   color: #fff;
 }

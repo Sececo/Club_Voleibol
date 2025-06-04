@@ -95,8 +95,7 @@ header h2, p {
 .btn-secondary,
 nav.nav-buttons button,
 button[title^="Volver"],
-button[title^="Ir a Inicio"],
-button[title^="Volver a inicio"] {
+button[title^="Ir a Inicio"] {
   background-color: #fff;
   color: #0C2461;
   border: 2px solid #E85B26;
@@ -114,15 +113,14 @@ button[title^="Volver a inicio"] {
 .btn-secondary:hover,
 nav.nav-buttons button:hover,
 button[title^="Volver"]:hover,
-button[title^="Ir a Inicio"]:hover,
-button[title^="Volver a inicio"]:hover {
+button[title^="Ir a Inicio"]:hover {
   background-color: #E85B26;
   color: #fff;
   border-color: #C8461E;
 }
 
 /* Botón flecha lateral (si se usa en posición absoluta) */
-button[title^="Volver"], button[title^="Volver a inicio"] {
+button[title^="Volver"], #volver {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -133,7 +131,8 @@ button[title^="Volver"], button[title^="Volver a inicio"] {
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  padding: 0;
+  padding: 8px 18px;
+  margin: 10px 10px 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,54 +141,19 @@ button[title^="Volver"], button[title^="Volver a inicio"] {
 }
 
 button[title^="Volver"]:hover,
-button[title^="Volver a inicio"]:hover {
+#volver:hover {
   background: #E85B26;
   color: #fff;
   border-color: #C8461E;
-}
-
-/* Botones de navegación modernos */
-.nav-buttons {
-  display: flex;
-  gap: 18px;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 24px 0 18px 0;
-  flex-wrap: wrap;
-}
-
-.btn-nav {
-  background: linear-gradient(90deg, #E85B26 0%, #0C2461 100%);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 32px;
-  font-size: 1.15rem;
-  font-weight: 600;
-  box-shadow: 0 4px 18px rgba(12,36,97,0.10);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 
-    background 0.25s, 
-    transform 0.18s, 
-    box-shadow 0.25s, 
-    color 0.25s;
-  outline: none;
-  position: relative;
 }
+
+
 
 .btn-nav i {
   font-size: 1.3em;
 }
 
-.btn-nav:hover, .btn-nav:focus {
-  background: linear-gradient(90deg, #0C2461 0%, #E85B26 100%);
-  color: #fff;
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 24px #E85B26aa;
-}
 
 @media (max-width: 900px) {
   .nav-buttons {
@@ -217,7 +181,7 @@ button[title^="Volver a inicio"]:hover {
     margin: 10px 0;
     font-size: 1rem;
   }
-  button[title^="Volver"], button[title^="Volver a inicio"] {
+  button[title^="Volver"], #volver {
     left: 10px;
     top: 10px;
     width: 40px;
