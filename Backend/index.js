@@ -13,12 +13,12 @@ const pool = new Pool({
 
 // --- ADMINISTRADOR ---
 app.post('/administradores', async (req, res) => {
-  const { nombre, correo, password } = req.body;
+  const { nombre, email, password } = req.body;
   try {
     const result = await pool.query(
       `INSERT INTO administrador (nombre, correo, password)
        VALUES ($1, $2, $3) RETURNING *`,
-      [nombre, correo, password]
+      [nombre, email, password]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -129,11 +129,11 @@ app.post('/campeonato_equipo', async (req, res) => {
 
 // Registrar un nuevo administrador
 app.post('/administradores', async (req, res) => {
-  const { nombre, correo, password } = req.body;
+  const { nombre, email, password } = req.body;
   try {
     const result = await pool.query(
       `INSERT INTO administrador (nombre, correo, password)       VALUES ($1, $2, $3) RETURNING *`,
-      [nombre, correo, password]
+      [nombre, email, password]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -148,11 +148,11 @@ app.post('/administradores', async (req, res) => {
 
 // Login de administrador
 app.post('/login_admin', async (req, res) => {
-  const { correo, password } = req.body;
+  const { email, password } = req.body;
   try {
     const result = await pool.query(
       `SELECT * FROM administrador WHERE correo = $1 AND password = $2`,
-      [correo, password]
+      [email, password]
     );
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
