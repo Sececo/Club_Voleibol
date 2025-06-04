@@ -142,6 +142,7 @@ app.post('/administradores', async (req, res) => {
     } else {
       console.log(email);
       console.log(correo);
+      console.log(nombre);
       console.error(error); // <-- Aquí verás el error real en consola
       res.status(500).json({ error: 'Error al registrar administrador' });
     }
