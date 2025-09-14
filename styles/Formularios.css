@@ -6,33 +6,83 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: #0C2461; /* Azul oscuro */
   margin: auto;
-  color: #000; /* Negro */
-  
-  justify-content: center;
-  
-  min-height: 100vh;
-  padding: 40px 15px;
-}
-
-
-
-.container, .containerjs {
-  background: #fff; /* Blanco */
-  margin:auto;
-  max-width: 80%;
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  padding: 40px 40px 30px;
+  max-width: 70%;
+  font-family: 'Roboto', sans-serif;
+  background-color: #0C2461;
+  color: #000;
+  height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
-.containerjs {
+
+
+.nav-buttons{
+    /*posicion*/
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  display: flex;
+  flex-direction: row;
+  gap:  30px;
+  z-index: 100;
+  /*margenes*/
+  margin: 10px;
+  width: 45px;
+  height: 45px;
+}
+
+.nav-buttons button {
+  padding: 6px 12px;
+  font-size: 1.7rem;
+  background: #fff;
+  color: #403e40;
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s;
+  border: none;
+}
+
+.nav-buttons button:hover {
+  background: #E85B26;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+
+header {
+  /*posicion*/
+  text-align: center;
+  max-width: 100%;
+  padding-top: 15px;
+  /*estilos*/
+  color: #fff;
+}
+
+header h1 {
+  margin-bottom: 15px;
+  font-size: 46px;
+}
+
+header p {
+  margin-top: 0;
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+
+
+.container/*, .containerjs */{
+  background: #fff; /* Blanco */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 40px;
+  margin: 20px auto 40px auto;
+  width: 70%;
+}
+
+/*.containerjs {
   font-size: 1.3rem;
   padding: 3px;
   box-shadow: 0 3px 20px#0C2461;
@@ -40,125 +90,114 @@ body {
   border-radius: 2px 12px 12px 2px ;
   margin-top: 30px;
   padding: 5px 10px 10px 10px;
-}
+}*/
 
-.containerjs p{
+/*.containerjs p{
   padding: 5px 0;
   margin: 0;
   
-}
+}*/
 
-header {
-  padding-top: 10px;
-  text-align: center;
-  color: #fff;
-  border-bottom: 1px solid #fff;
-  max-width: 85%;
-  margin:auto;
-  margin-bottom: 20px;
-}
-
-header h1 {
-  margin-bottom: 10px;
-  font-size: 46px;
-}
-
-header p {
-  margin-top: 0;
-  font-size: 28px;
-}
-
-
-
-
-.nav-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px;
-}
-
-.nav-buttons button {
-  padding: 10px 65px;
-  border-radius: 30px;
-  background: #E85B26;
-  color: #FFF; /* Naranja */
-  font-weight: 600;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.nav-buttons button:hover {
-  background: #E85B26;
-  color: white;
-  box-shadow: 0 4px 15px rgba(232, 91, 38, 0.6);
-}
-
-main {
-  width: 100%;
-}
-
-form, main {
+/*
+.container {
+  background-color: #fff;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  min-height: 100vh;
+}*/
+
+
+
+
+.titulo-formulario{
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #0C2461; /* Naranja */
+  padding: 0;
+  margin: 0;
+  margin-top: 20px;
+
 }
+
+.formulario{
+  margin-top: 0;
+  padding-top: 0;
+}
+
 
 .form-section{
   border-top: 3px solid #0C2461; /* Naranja */
-  padding-top: 20px;
+  padding-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-section h2{
-  font-weight: 600;
+  font-weight: bold;
   font-size: 1.3rem;
   margin-bottom: 20px;
-  color: #0C2461; /* Naranja */
-  border-left: 6px solid #0C2461; /* Naranja */
+  color: #0C2461; 
+  border-left: 6px solid #0C2461; 
   padding-left: 10px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
 
 label {
+  margin-top: 15px;
   font-weight: 600;
   margin-bottom: 8px;
   font-size: 0.95rem;
-  color: #000; /* Negro */
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="password"],
-select {
+.form-section input,
+.form-section select {
   padding: 12px 15px;
   border: 1.8px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  color: #000; /* Negro */
   background: #fff; /* Blanco */
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
-input[type="date"]:focus,
-input[type="password"]:focus,
-select:focus {
+.form-section input:focus,
+.form-section select:focus {
   border-color: #E85B26; /* Naranja */
   box-shadow: 0 0 8px rgba(232, 91, 38, 0.4);
   outline: none;
-  color: #000;
-  background: #fff;
 }
 
+
+#botonRegistrarDeportista {
+  font-size: 1.3rem;
+  background-color:#E85B26;
+  color: #fff;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  
+  border: none;
+  border-radius: 15px;
+}
+
+#botonRegistrarDeportista:hover {
+  cursor: pointer;
+  background-color: #e74c3c;
+  border: none;
+}
+
+
+
+
+
+
+comentado {
+
+/*
 .form-row {
   display: flex;
   gap: 20px;
@@ -175,30 +214,31 @@ select:focus {
   font-size: 2rem;
   padding: 10px 65px;
   width: 100%;
-}
+}*/
 
+/*
 .btn-primary, #btnjs {
-  background-color: #E85B26; /* Naranja */
+  background-color: #E85B26;
   border: none;
   color: #fff;
   font-weight: 700;
   font-size: 2rem;
   border-radius: 30px;
   cursor: pointer;
-  border: 2px solid #BF4A1C; /* Naranja oscuro */
+  border: 2px solid #BF4A1C; 
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
+}*/
+/*
 .btn-primary:hover, #btnjs:hover {
-  background-color: #BF4A1C; /* Naranja oscuro */
+  background-color: #BF4A1C; 
   box-shadow: 0 6px 25px #5c74b1;
-  border: 2px solid #BF4A1C; /* Naranja oscuro */
+  border: 2px solid #BF4A1C;
 }
 
 .btn-secondary {
   background: transparent;
-  border: 2px solid #E85B26; /* Naranja */
-  color: #E85B26; /* Naranja */
+  border: 2px solid #E85B26;
+  color: #E85B26; 
   font-weight: 600;
   
   
@@ -209,11 +249,17 @@ select:focus {
 
 .btn-secondary:hover {
   background-color: #BF4A1C;
-  border: 2px solid #BF4A1C; /* Naranja oscuro */
+  border: 2px solid #BF4A1C;
   box-shadow: 0 6PX 25PX #eb2a2afb;
   color: white;
   transition: background-color 0.35s ease, color 0.3s ease;
 }
+*/
+}
+
+
+
+
 
 .btn-asociar, .btn-descargar, .btn-eliminar {
   background: #fff;
@@ -236,14 +282,18 @@ select:focus {
 }
 
 footer {
-  position: relative;
-  width: 100%;
-  bottom: 6px;
-  text-align: center;
-  font-size: 0.85rem;
-  background-color: transparent;
-  color: #fff; /* Blanco para buen contraste sobre azul oscuro */
-  margin-top: 30px;
+/*posicion*/
+/*psoition absolute con respecto a su contenedor padre container (position relative)*/
+  position: absolute;
+  bottom: 0;
+
+  
+
+  /*margenes*/
+
+  width: 100%; /* altura fija del footer */
+  /*estilos*/
+  color: red;
 }
 
 /* Centrado profesional para navegación y acciones */
